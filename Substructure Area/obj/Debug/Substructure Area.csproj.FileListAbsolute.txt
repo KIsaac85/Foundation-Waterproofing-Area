@@ -1,0 +1,83 @@
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\obj\Debug\Substructure Area.csproj.AssemblyReference.cache
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\obj\Debug\getAreaControl.g.cs
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\obj\Debug\Substructure Area_MarkupCompile.cache
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\obj\Debug\Substructure Area_MarkupCompile.lref
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\Substructure Area.dll
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\Substructure Area.pdb
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\RevitAPI.dll
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\RevitAPIUI.dll
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\AdpSDKCSharpWrapper.dll
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\RevitAPIFoundation.dll
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\RevitDBAPI.dll
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\PersistenceDBAPI.dll
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\UtilityAPI.dll
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\APIDBAPI.dll
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\GraphicsAPI.dll
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\ElementGroupDBAPI.dll
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\EssentialsDBAPI.dll
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\GeomUtilAPI.dll
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\FamilyDBAPI.dll
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\DetailDBAPI.dll
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\CurtainGridFamilyDBAPI.dll
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\ArrayElemsDBAPI.dll
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\EnergyAnalysisDBAPI.dll
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\BuildingSystemsDBAPI.dll
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\HostObjDBAPI.dll
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\RoomAreaPlanDBAPI.dll
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\SiteDBAPI.dll
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\SculptingDBAPI.dll
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\StructuralDBAPI.dll
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\InterfaceAPI.dll
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\InterfaceUtilAPI.dll
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\RebarDBAPI.dll
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\StructuralAnalysisDBAPI.dll
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\MassingDBAPI.dll
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\AssemblyDBAPI.dll
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\DPartDBAPI.dll
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\NumberingDBAPI.dll
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\PointCloudAccessAPI.dll
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\StairRampDBAPI.dll
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\AnalysisAppsDBAPI.dll
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\MaterialDBAPI.dll
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\IntfATFAPI.dll
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\DBManagedServices.dll
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\AdWindows.dll
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\RevitAddInUtility.dll
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\APIInterop.dll
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\UIFramework.dll
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\AddInManager.dll
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\RevitUIAPI.dll
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\BuildingSystemsUIAPI.dll
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\DesktopMFCAPI.dll
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\APIUIAPI.dll
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\RevitMFCAPI.dll
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\EssentialsUIAPI.dll
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\EnergyAnalysisUtilitiesAPI.dll
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\DetailUIAPI.dll
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\UIFrameworkServices.dll
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\Autodesk.UI.Windows.dll
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\Autodesk.UI.Themes.dll
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\Xceed.Wpf.AvalonDock.dll
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\RevitAPI.xml
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\RevitAPIUI.xml
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\RevitAddInUtility.xml
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\cs-CZ\AdWindows.resources.dll
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\de-DE\AdWindows.resources.dll
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\en-GB\AdWindows.resources.dll
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\en-US\AdWindows.resources.dll
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\es-ES\AdWindows.resources.dll
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\fr-FR\AdWindows.resources.dll
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\it-IT\AdWindows.resources.dll
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\ja-JP\AdWindows.resources.dll
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\ko-KR\AdWindows.resources.dll
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\pl-PL\AdWindows.resources.dll
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\pt-BR\AdWindows.resources.dll
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\ru-RU\AdWindows.resources.dll
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\zh-CN\AdWindows.resources.dll
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\zh-TW\AdWindows.resources.dll
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\obj\Debug\getAreaControl.baml
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\obj\Debug\Substructure Area.g.resources
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\obj\Debug\Substructure Area.csproj.CoreCompileInputs.cache
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\obj\Debug\Substructure Area.csproj.CopyComplete
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\obj\Debug\Substructure Area.dll
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\obj\Debug\Substructure Area.pdb
