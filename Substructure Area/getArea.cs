@@ -14,9 +14,6 @@ namespace Substructure_Area
             //UI doc
             UIDocument uidoc = commandData.Application.ActiveUIDocument;
 
-            //Doc
-           // Document doc = uidoc.Document;
-
             UserControl1 wPF = new UserControl1(uidoc);
             
             wPF.ShowDialog();
@@ -28,9 +25,6 @@ namespace Substructure_Area
             
         }
         
-        //public Result OnShutdown(UIControlledApplication application)
-        //{
-        //    return Result.Cancelled;
-        //}
+       
     }
 }
