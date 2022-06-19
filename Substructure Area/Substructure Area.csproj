@@ -57,6 +57,7 @@
     <Compile Include="getAreaControl.xaml.cs">
       <DependentUpon>getAreaControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Publisher.cs" />
     <Compile Include="SingleFootingCalculation.cs" />
     <Compile Include="singleSelectionFilter.cs" />
     <Compile Include="Userselection.cs" />
