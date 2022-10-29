@@ -24,6 +24,7 @@ namespace Substructure_Area._3_Calculation
 
         private List<ElementId> ElementTopParameterID { get; set; }
         private List<double> ElementTopOffsetID { get; set; }
+        private List<int> elementsindexbottom { get; set; }
 
         public ColumnSplit(Document doc)
         {
@@ -40,8 +41,23 @@ namespace Substructure_Area._3_Calculation
         }
         public List<Element> columnsListChecked()
         {
+
             columnsList = ColumnsElementCollector.OfCategory(BuiltInCategory.OST_StructuralColumns)
                 .OfClass(typeof(FamilyInstance)).WhereElementIsNotElementType().ToElements();
+
+            foreach (var item in columnsList)
+            {
+                ElementId bottomlevelpara = item
+                            .LookupParameter(LabelUtils.GetLabelFor(BuiltInParameter.SCHEDULE_BASE_LEVEL_PARAM))
+                            .AsElementId();
+                Level bottomlevel = doc.GetElement(bottomlevelpara) as Level;
+                if (bottomlevel.Elevation < getLevel.Userinput)
+                {
+                    elementsindexbottom.Add(columnsList.IndexOf(item));
+                }
+            }
+            
+
 
 
             ElementTopParameterID.AddRange(columnsList.Select(x =>
@@ -55,8 +71,8 @@ namespace Substructure_Area._3_Calculation
             {
                 
                 Level toplevel = doc.GetElement(item) as Level;
-                elElevation.Add(UnitUtils.ConvertFromInternalUnits(toplevel.Elevation, levelUnit) +
-                    ElementTopOffsetID.ElementAt(count));
+                double x = UnitUtils.ConvertFromInternalUnits(toplevel.Elevation, levelUnit);
+                elElevation.Add(x + ElementTopOffsetID.ElementAt(count));
                 count++;
             }
 
