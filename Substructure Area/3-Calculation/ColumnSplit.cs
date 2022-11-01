@@ -23,8 +23,11 @@ namespace Substructure_Area._3_Calculation
         private ForgeTypeId levelUnit { get; set; }
 
         private List<ElementId> ElementTopParameterID { get; set; }
-        private List<double> ElementTopOffsetID { get; set; }
+        private List<double> ElementTopOffsetValues { get; set; }
         private List<int> elementsindexbottom { get; set; }
+
+        private double bottomElementElevation { get; set; }
+        private double bottomoffsetValue { get; set; }
 
         public ColumnSplit(Document doc)
         {
@@ -37,7 +40,7 @@ namespace Substructure_Area._3_Calculation
             ColumnsElementCollector = new FilteredElementCollector(doc);
             columnsList = new List<Element>() ;
             ElementTopParameterID = new List<ElementId>();
-            ElementTopOffsetID = new List<double>();
+            ElementTopOffsetValues = new List<double>();
         }
         public List<Element> columnsListChecked()
         {
@@ -49,8 +52,9 @@ namespace Substructure_Area._3_Calculation
             foreach (var item in levels)
             {
                 Level lev = doc.GetElement(item) as Level;
-                double levelelv = UnitUtils.ConvertFromInternalUnits(lev.Elevation, levelUnit);
-                if (levelelv < getLevel.Userinput)
+                bottomElementElevation = UnitUtils.ConvertFromInternalUnits(lev.Elevation, levelUnit);
+                
+                if (bottomElementElevation < getLevel.Userinput)
                 {
                     listoflevels.Add(lev.Id) ;
                 }
@@ -74,18 +78,20 @@ namespace Substructure_Area._3_Calculation
             }
 
             ElementTopParameterID.AddRange(modifiedColumnsList.Select(x =>
-                 x.LookupParameter(LabelUtils.GetLabelFor(BuiltInParameter.SCHEDULE_TOP_LEVEL_PARAM)).AsElementId()));
+                 x.LookupParameter(LabelUtils.GetLabelFor(BuiltInParameter.SCHEDULE_TOP_LEVEL_PARAM))
+                 .AsElementId()));
 
-            
-            ElementTopOffsetID.AddRange(modifiedColumnsList.Select(x =>
-            x.LookupParameter(LabelUtils.GetLabelFor(BuiltInParameter.SCHEDULE_TOP_LEVEL_OFFSET_PARAM)).AsDouble()));
+
+            ElementTopOffsetValues.AddRange(modifiedColumnsList.Select(x =>
+            x.LookupParameter(LabelUtils.GetLabelFor(BuiltInParameter.SCHEDULE_TOP_LEVEL_OFFSET_PARAM))
+            .AsDouble()));
             int count = 0;
             foreach (var item in ElementTopParameterID)
             {
                 
                 Level toplevel = doc.GetElement(item) as Level;
                 double elementtoplevel = UnitUtils.ConvertFromInternalUnits(toplevel.Elevation, levelUnit);
-                elElevation.Add(elementtoplevel + ElementTopOffsetID.ElementAt(count));
+                elElevation.Add(elementtoplevel + ElementTopOffsetValues.ElementAt(count));
                 count++;
             }
 
