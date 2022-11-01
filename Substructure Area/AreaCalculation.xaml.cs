@@ -75,8 +75,11 @@ namespace Substructure_Area
             {
                 Select_Family.Items.Add("Strip Footings");
             }
+            ColumnSplit columnSplit = new ColumnSplit(doc);
+            
             FamilyinstanceList = FamilyInstanceList.documentLoopFamilyInstance();
-            columnsList = FamilyInstanceList.documentLoopcolumnList(FamilyinstanceList);
+            //columnsList = FamilyInstanceList.documentLoopcolumnList(FamilyinstanceList);
+            columnsList = columnSplit.columnsListChecked();
             if (columnsList.Any())
             {
                 Select_Family.Items.Add("Columns");
