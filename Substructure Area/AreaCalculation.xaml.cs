@@ -77,7 +77,7 @@ namespace Substructure_Area
             }
             ColumnSplit columnSplit = new ColumnSplit(doc);
             
-            FamilyinstanceList = FamilyInstanceList.documentLoopFamilyInstance();
+            //FamilyinstanceList = FamilyInstanceList.documentLoopFamilyInstance();
             //columnsList = FamilyInstanceList.documentLoopcolumnList(FamilyinstanceList);
             columnsList = columnSplit.columnsListChecked();
             if (columnsList.Any())

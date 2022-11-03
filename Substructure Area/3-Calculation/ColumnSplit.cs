@@ -15,22 +15,24 @@ namespace Substructure_Area._3_Calculation
         private IList<Element> columnsList { get; set; }
         private List<Element> modifiedColumnsList { get; set; }
         private FormatOptions elevationformatoptions { get; set; }
-        private double elementTopElevationValue;
+       
 
 
         private static FilteredElementCollector ColumnsElementCollector { get; set; }
-        private List<double> TopelementElevationList { get; set; }
+        
         private ForgeTypeId levelUnit { get; set; }
 
         private List<ElementId> ElementTopParameterID { get; set; }
-        private List<double> ElementTopOffsetValues { get; set; }
-        private List<double> ElementbottomoffsetValues { get; set; }
         private ICollection<ElementId> listofAlllevelsID { get; set; }
         private List<ElementId> listofLevelsBelowUserInput { get; set; }
+        private List<double> ElementTopOffsetValues { get; set; }
+        private List<double> ElementbottomoffsetValues { get; set; }
+        private List<double> TopelementElevationList { get; set; }
         private Level bottomElementLevel { get; set; }
+        private Level topElementLevel { get; set; }
         private double bottomElementElevation { get; set; }
         private double topElementElevation { get; set; }
-        
+        private double elementTopElevationValue { get; set; }
         private int count { get; set; }
 
         public ColumnSplit(Document doc)
@@ -103,23 +105,25 @@ namespace Substructure_Area._3_Calculation
             count = 0;
             foreach (var item in ElementTopParameterID)
             {
-                
-                Level toplevel = doc.GetElement(item) as Level;
-                topElementElevation = UnitUtils.ConvertFromInternalUnits(toplevel.Elevation, levelUnit);
+
+                topElementLevel = doc.GetElement(item) as Level;
+                topElementElevation = UnitUtils
+                    .ConvertFromInternalUnits(topElementLevel.Elevation, levelUnit);
                 TopelementElevationList.Add(topElementElevation + ElementTopOffsetValues.ElementAt(count));
                 count++;
             }
-
+            ElementTopParameterID.Clear();
+            count = 0;
             if (TopelementElevationList.Where(x => x > getLevel.Userinput).Any())
             {
+
                 switch (MessageBox.Show("Top level for some columns are above the entered level. " +
                     "Would you Like to split them at the entered level?", "Columns Top Level",
                     MessageBoxButton.YesNo, MessageBoxImage.Question))
 
                 {
                     case MessageBoxResult.Yes:
-                        ElementTopParameterID.Clear();
-                        count = 0;
+                        
                         foreach (var ele in modifiedColumnsList)
                         {
                             
@@ -128,23 +132,24 @@ namespace Substructure_Area._3_Calculation
                             ElementTopParameterID.Add(column
                                 .LookupParameter(LabelUtils.GetLabelFor(BuiltInParameter.SCHEDULE_TOP_LEVEL_PARAM))
                                 .AsElementId());
-                            Level tolevel = doc.GetElement(ElementTopParameterID.ElementAt(count)) as Level;
-                            elementTopElevationValue = UnitUtils.ConvertFromInternalUnits(tolevel.Elevation, levelUnit);
+                            topElementLevel = doc.GetElement(ElementTopParameterID.ElementAt(count)) as Level;
+                            elementTopElevationValue = UnitUtils.ConvertFromInternalUnits(topElementLevel.Elevation, levelUnit);
 
                             ElementId bottomlevelpara = column
                             .LookupParameter(LabelUtils.GetLabelFor(BuiltInParameter.SCHEDULE_BASE_LEVEL_PARAM))
                             .AsElementId();
                             Level bottomlevel = doc.GetElement(bottomlevelpara) as Level;
-                            bottomElementElevation = UnitUtils.ConvertFromInternalUnits(bottomlevel.Elevation, levelUnit);
 
-                            double topoffsetvalue = column
+                            bottomElementElevation = UnitUtils.ConvertFromInternalUnits(bottomlevel.Elevation,levelUnit);
+
+                            double topoffsetvalue = UnitUtils.ConvertFromInternalUnits(column
                             .LookupParameter(LabelUtils.GetLabelFor(BuiltInParameter.SCHEDULE_TOP_LEVEL_OFFSET_PARAM))
-                            .AsDouble();
+                            .AsDouble(),levelUnit);
 
 
-                            double splitRatio = (getLevel.Userinput - elebottom)
-                                                    / (eletop + topoffsetvalue - elebottom);
-                            if (eletop + topoffsetvalue > getLevel.Userinput)
+                            double splitRatio = (getLevel.Userinput - bottomElementElevation)
+                                                    / (bottomElementElevation + topoffsetvalue);
+                            if (bottomElementElevation + topoffsetvalue > getLevel.Userinput)
                             {
                                 using (Transaction tran = new Transaction(doc, "Split Columns"))
                                 {
