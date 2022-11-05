@@ -19,10 +19,11 @@ namespace Substructure_Area._3_Calculation
 
 
         private static FilteredElementCollector ColumnsElementCollector { get; set; }
-        
-        
+
+        private FamilyInstance Column { get; set; }
 
         private List<ElementId> ElementTopParameterID { get; set; }
+        private List<ElementId> ElementBottomParameterID { get; set; }
         private ICollection<ElementId> listofAlllevelsID { get; set; }
         private List<ElementId> listofLevelsBelowUserInput { get; set; }
         private List<double> ElementTopOffsetValues { get; set; }
@@ -33,6 +34,7 @@ namespace Substructure_Area._3_Calculation
         private double bottomElementElevation { get; set; }
         private double topElementElevation { get; set; }
         private double elementTopElevationValue { get; set; }
+        private double splitRatio { get; set; }
         private int count { get; set; }
 
         public ColumnSplit(Document doc)
@@ -46,6 +48,7 @@ namespace Substructure_Area._3_Calculation
             ColumnsElementCollector = new FilteredElementCollector(doc);
             columnsList = new List<Element>() ;
             ElementTopParameterID = new List<ElementId>();
+            ElementBottomParameterID = new List<ElementId>();
             listofAlllevelsID = new List<ElementId>();
             listofLevelsBelowUserInput = new List<ElementId>();
             ElementTopOffsetValues = new List<double>();
@@ -129,28 +132,28 @@ namespace Substructure_Area._3_Calculation
                         foreach (var ele in modifiedColumnsList)
                         {
                             
-                            FamilyInstance column = ele as FamilyInstance;
+                            Column = ele as FamilyInstance;
 
-                            ElementTopParameterID.Add(column
+                            ElementTopParameterID.Add(Column
                                 .LookupParameter(LabelUtils.GetLabelFor(BuiltInParameter.SCHEDULE_TOP_LEVEL_PARAM))
                                 .AsElementId());
                             topElementLevel = doc.GetElement(ElementTopParameterID.ElementAt(count)) as Level;
                             elementTopElevationValue = UnitUtils.ConvertFromInternalUnits(topElementLevel.Elevation, levelUnit);
-
-                            ElementId bottomlevelpara = column
+                            
+                            ElementBottomParameterID.Add(Column
                             .LookupParameter(LabelUtils.GetLabelFor(BuiltInParameter.SCHEDULE_BASE_LEVEL_PARAM))
-                            .AsElementId();
-                            Level bottomlevel = doc.GetElement(bottomlevelpara) as Level;
-                            bottomElementElevation = UnitUtils.ConvertFromInternalUnits(bottomlevel.Elevation,levelUnit);
+                            .AsElementId());
+                            bottomElementLevel = doc.GetElement(ElementBottomParameterID.ElementAt(count)) as Level;
+                            bottomElementElevation = UnitUtils.ConvertFromInternalUnits(bottomElementLevel.Elevation,levelUnit);
 
-                            ElementTopOffsetValues.Add(UnitUtils.ConvertFromInternalUnits(column
+                            ElementTopOffsetValues.Add(UnitUtils.ConvertFromInternalUnits(Column
                             .LookupParameter(LabelUtils.GetLabelFor(BuiltInParameter.SCHEDULE_TOP_LEVEL_OFFSET_PARAM))
                             .AsDouble(),levelUnit));
 
-                            ElementbottomoffsetValues.Add(UnitUtils.ConvertFromInternalUnits(column
+                            ElementbottomoffsetValues.Add(UnitUtils.ConvertFromInternalUnits(Column
                             .LookupParameter(LabelUtils.GetLabelFor(BuiltInParameter.SCHEDULE_BASE_LEVEL_OFFSET_PARAM))
                             .AsDouble(), levelUnit));
-                            double splitRatio = (getLevel.Userinput - bottomElementElevation - ElementbottomoffsetValues.ElementAt(count))
+                            splitRatio = (getLevel.Userinput - bottomElementElevation - ElementbottomoffsetValues.ElementAt(count))
                                                     / (elementTopElevationValue - bottomElementElevation 
                                                     + ElementTopOffsetValues.ElementAt(count) - ElementbottomoffsetValues.ElementAt(count));
                             
@@ -159,22 +162,26 @@ namespace Substructure_Area._3_Calculation
                                 using (Transaction tran = new Transaction(doc, "Split Columns"))
                                 {
                                     tran.Start();
-                                    column.Split(splitRatio);
+                                    Column.Split(splitRatio);
                                     tran.Commit();
                                 }
                             }
                             count++;
                         }
                         break;
+
+                    case MessageBoxResult.No:
+                        TaskDialog.Show("Split Columns",
+                            "Calculated areas may not be accurate based on the entered levels");
+                        break;
                 }
             }
-            else if (TopelementElevationList.Where(x => x < getLevel.Userinput).Any())
-            {
-                TaskDialog.Show("Split Columns", "Columns top level is equal to the top elevation level");
-            }
+            //else if (TopelementElevationList.Where(x => x < getLevel.Userinput).Any())
+            //{
+            //    TaskDialog.Show("Split Columns", "Columns top level is equal to the top elevation level");
+            //}
      
             return modifiedColumnsList;
-            
         }
    
     }

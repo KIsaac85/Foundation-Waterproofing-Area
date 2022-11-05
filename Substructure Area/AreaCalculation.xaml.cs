@@ -57,14 +57,13 @@ namespace Substructure_Area
             stripFootingsList = new List<Element>();
             columnsList = new List<Element>();
             FamilyInstanceList famlist = new FamilyInstanceList(doc);
-            wallsList = FamilyInstanceList.documentLoopWall();
-            ColumnSplit spcol = new ColumnSplit(doc);
 
-            columnsList = spcol.columnsListChecked();
+            wallsList = FamilyInstanceList.documentLoopWall();
             if (wallsList.Any())
             {
-                Select_Family.Items.Add("Wall Structure");
+                Select_Family.Items.Add("Retaining Walls");
             }
+
             raftList = FamilyInstanceList.documentLoopRaftFoundation();
             if (raftList.Any())
             {
@@ -77,7 +76,7 @@ namespace Substructure_Area
             }
             ColumnSplit columnSplit = new ColumnSplit(doc);
             
-            //FamilyinstanceList = FamilyInstanceList.documentLoopFamilyInstance();
+            FamilyinstanceList = FamilyInstanceList.documentLoopFamilyInstance();
             //columnsList = FamilyInstanceList.documentLoopcolumnList(FamilyinstanceList);
             columnsList = columnSplit.columnsListChecked();
             if (columnsList.Any())
