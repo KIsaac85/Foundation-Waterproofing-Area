@@ -152,7 +152,7 @@ namespace Substructure_Area._3_Calculation
                             .AsDouble(), levelUnit));
                             double splitRatio = (getLevel.Userinput - bottomElementElevation - ElementbottomoffsetValues.ElementAt(count))
                                                     / (elementTopElevationValue - bottomElementElevation 
-                                                    + ElementTopOffsetValues.ElementAt(count) + ElementbottomoffsetValues.ElementAt(count));
+                                                    + ElementTopOffsetValues.ElementAt(count) - ElementbottomoffsetValues.ElementAt(count));
                             
                             if (Math.Round(elementTopElevationValue,2) + Math.Round( ElementTopOffsetValues.ElementAt(count),2) > getLevel.Userinput)
                             {
