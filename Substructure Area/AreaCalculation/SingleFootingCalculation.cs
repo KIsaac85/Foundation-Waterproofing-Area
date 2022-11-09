@@ -40,19 +40,14 @@ namespace Substructure_Area
             table.Columns.Add(header);
             foreach (GeometryObject geomObj in geoElem)
             {
-                
                 GeometryInstance geoInst = geomObj as GeometryInstance;
-                
                 //isolated footing data
                 if (null != geoInst)
                 {
-
                     foreach (Solid geoSolid in geoInst.SymbolGeometry)
                     {
-
                         if (null != geoSolid && geoSolid.Id != -1)
                         {
-                            
                             foreach (Face geomFace in geoSolid.Faces)
                             {
                                 //for (int i = 0; i < faces; i++)
@@ -63,7 +58,6 @@ namespace Substructure_Area
                                     table.Rows.Add(UnitUtils.ConvertFromInternalUnits(geomFace.Area, areaUnit));
                                     
                                     totalArea += geomFace.Area;
-                                    
                                 }
                                 
                             }

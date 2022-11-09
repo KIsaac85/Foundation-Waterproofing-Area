@@ -100,7 +100,7 @@ namespace Substructure_Area
         private void Element_Selection_Click(object sender, RoutedEventArgs e)
         {
             Hide();
-
+            
             Reference obj = userSelection.Object();
             Element ele = doc.GetElement(obj.ElementId);
 
@@ -125,7 +125,7 @@ namespace Substructure_Area
                     || ele.Category.Id.IntegerValue == (int)BuiltInCategory.OST_StructuralFraming)
                 {
                     
-                    datagrid.ItemsSource = col.Faceinfo(geoElem, doc);
+                    datagrid.ItemsSource = col.Faceinfo(ele,geoElem, doc).DefaultView;
                 }
             }
             else
