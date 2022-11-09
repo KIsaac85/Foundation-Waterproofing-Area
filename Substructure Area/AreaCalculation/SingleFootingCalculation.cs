@@ -97,7 +97,7 @@ namespace Substructure_Area
 
                                 //faceInfo += "Number of faces: " + faces + "\n";
                                 header = new DataColumn("Face" + faces, typeof(double));
-                                table.Columns.Add(header);
+                                //table.Columns.Add(header);
                                 table.Rows.Add(UnitUtils.ConvertFromInternalUnits(geoface.Area, areaUnit));
                                 faceInfo += "Total area: " + UnitUtils.ConvertFromInternalUnits(totalArea, areaUnit).ToString() + "\n";
                             }
