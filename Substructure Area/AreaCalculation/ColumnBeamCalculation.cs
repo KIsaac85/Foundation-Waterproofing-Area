@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,14 +9,23 @@ using Autodesk.Revit.UI;
 
 namespace Substructure_Area
 {
-    class ColumnBeamCalculation
+    public class ColumnBeamCalculation
     {
         private string faceInfo = "";
+
+        private FormatOptions areaFormatOptions { get; set; }
+        private ForgeTypeId areaUnit { get; set; }
+        private DataTable table { get; set;  }
+
+        public ColumnBeamCalculation()
+        {
+            table = new DataTable();
+        }
         public string Faceinfo(GeometryElement geoElem, Document doc)
         {
 
-            FormatOptions areaFormatOptions = doc.GetUnits().GetFormatOptions(SpecTypeId.Area);
-            ForgeTypeId areaUnit = areaFormatOptions.GetUnitTypeId();
+            areaFormatOptions = doc.GetUnits().GetFormatOptions(SpecTypeId.Area);
+            areaUnit = areaFormatOptions.GetUnitTypeId();
 
 
             int faces = 0;

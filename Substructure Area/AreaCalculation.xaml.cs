@@ -31,6 +31,7 @@ namespace Substructure_Area
         public static double Userinput;
         public List<double> facesdata;
         public SingleFootingCalculation foot;
+        private ColumnBeamCalculation col { get; set; }
         public List<Element> FamilyinstanceList { get; set; }
         public IList<Element> wallsList { get; set; }
         public IList<Element> columnsList { get; set; }
@@ -48,6 +49,7 @@ namespace Substructure_Area
             doc = uidoc.Document;
             userSelection = new Userselection(uidoc);
             foot = new SingleFootingCalculation();
+            col = new ColumnBeamCalculation();
 
             FamilyinstanceList = new List<Element>();
             wallsList = new List<Element>();
@@ -105,7 +107,7 @@ namespace Substructure_Area
 
 
             double levelelement = SingleElementLevel.ElementLevelCalculation(obj, doc);
-            //Userinput = double.Parse(UserInputLevel);
+            
 
 
 
@@ -117,17 +119,13 @@ namespace Substructure_Area
                 if (ele.Category.Id.IntegerValue == (int)BuiltInCategory.OST_StructuralFoundation
                     || ele.Category.Id.IntegerValue == (int)BuiltInCategory.OST_Walls)
                 {
-
-
                     datagrid.ItemsSource = foot.faceinfor(ele, geoElem, doc).DefaultView;
-                    
-
                 }
                 else if (ele.Category.Id.IntegerValue == (int)BuiltInCategory.OST_StructuralColumns
                     || ele.Category.Id.IntegerValue == (int)BuiltInCategory.OST_StructuralFraming)
                 {
-                    ColumnBeamCalculation col = new ColumnBeamCalculation();
-                    col.Faceinfo(geoElem, doc);
+                    
+                    datagrid.ItemsSource = col.Faceinfo(geoElem, doc);
                 }
             }
             else

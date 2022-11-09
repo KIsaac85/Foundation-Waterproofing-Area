@@ -22,6 +22,7 @@ namespace Substructure_Area
         public DataColumn header { get; set; }
         public static List<string> infofaces { get; set; }
         public SingleFootingCalculation()
+
         {
             infofaces = new List<string>();
         }
