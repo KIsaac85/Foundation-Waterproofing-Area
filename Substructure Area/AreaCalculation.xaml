@@ -51,6 +51,7 @@
                   AutoGenerateColumns= "True"
                   Grid.Row="2" Grid.Column="5" 
                   Grid.ColumnSpan="5" CanUserAddRows="False"
+                  
                   Grid.RowSpan="2" ColumnWidth="*"
                   Margin="3.9,9.8,44,170.2"   >
         </DataGrid>
@@ -59,13 +60,13 @@
                  SelectionMode="Extended" AllowDrop="True" Height="auto" Grid.ColumnSpan="2">
 
             <ListBox.Resources>
-                <Style TargetType="ListBox">
-                    <Style.Triggers>
+                <Style TargetType="Table" >
+                    <!--<Style.Triggers>
                         <DataTrigger Binding="{Binding ElementName = Receive_Level,
                             Path= (Validation.HasError)}" Value="True">
                             <Setter Property="IsEnabled" Value="False"/>
                         </DataTrigger>
-                    </Style.Triggers>
+                    </Style.Triggers>-->
                 </Style>
             </ListBox.Resources>
 
