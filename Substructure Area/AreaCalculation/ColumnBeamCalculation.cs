@@ -64,7 +64,10 @@ namespace Substructure_Area
                     //faceInfo += "Number of faces: " + faces + "\n";
                     //faceInfo += "Total area: " + totalArea.ToString() + "\n";
                     double result = table.AsEnumerable().Sum(x => Convert.ToDouble(x[ele.Name]));
+                    rowData = table.NewRow();
+                    rowData[header] = "Total";
                     rowData[header2] = result;
+                    table.Rows.Add(rowData);
                     //table.Rows.Add(result);
                 }
             }

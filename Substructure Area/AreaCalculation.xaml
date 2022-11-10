@@ -44,7 +44,7 @@
                 Content="Select Element" Grid.Column="1"
                 Grid.Row="2" Margin="1,9.8,23.1,170.2" 
                 Click="Element_Selection_Click" 
-                Grid.ColumnSpan="1" Grid.RowSpan="1"   >
+                Height="20"  >
         </Button>
 
         <DataGrid x:Name="datagrid" 
