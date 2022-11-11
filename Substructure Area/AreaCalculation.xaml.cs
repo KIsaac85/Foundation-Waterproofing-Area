@@ -148,10 +148,9 @@ namespace Substructure_Area
             
         }
 
-        private void splitcolumn_Click(object sender, RoutedEventArgs e)
+        private void DataGrid_CopyingRowClipboardContent(object sender, DataGridRowClipboardEventArgs e)
         {
-            
-            
+            Clipboard.SetDataObject(datagrid.SelectedItem.ToString());
         }
     }
 }

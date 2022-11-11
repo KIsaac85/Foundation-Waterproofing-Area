@@ -51,9 +51,10 @@
                   AutoGenerateColumns= "True"
                   Grid.Row="2" Grid.Column="5" 
                   Grid.ColumnSpan="5" CanUserAddRows="False"
-                  
+                                   
                   Grid.RowSpan="2" ColumnWidth="*"
-                  Margin="3.9,9.8,44,170.2"   >
+                  Margin="3.9,9.8,44,170.2" 
+                  >
         </DataGrid>
         <ListBox x:Name="Select_Family" Grid.Column="1"
                  Grid.Row="3" Margin="1,10.2,23.1,0.2"
