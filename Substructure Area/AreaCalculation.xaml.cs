@@ -151,7 +151,7 @@ namespace Substructure_Area
 
         private void DataGridRow_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
-
+            
         }
     }
 }
