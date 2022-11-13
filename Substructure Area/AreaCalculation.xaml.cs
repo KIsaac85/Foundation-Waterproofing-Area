@@ -95,6 +95,7 @@ namespace Substructure_Area
             {
                 Select_Family.Items.Add("Rectangular Footings");
             }
+            
         }
 
         private void Element_Selection_Click(object sender, RoutedEventArgs e)
@@ -134,10 +135,10 @@ namespace Substructure_Area
             }
 
 
-
+            
             //datagrid.Items.Add(facesdata);
 
-            
+
             Show();
 
         }
@@ -148,9 +149,9 @@ namespace Substructure_Area
             
         }
 
-        private void DataGrid_CopyingRowClipboardContent(object sender, DataGridRowClipboardEventArgs e)
+        private void DataGridRow_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
-            Clipboard.SetDataObject(datagrid.SelectedItem.ToString());
+
         }
     }
 }
