@@ -58,7 +58,11 @@
             <DataGrid.Resources>
                 <Style TargetType="DataGridRow">
                     <EventSetter Event="MouseRightButtonUp" 
-                                 Handler="DataGridRow_MouseRightButtonUp"/>
+                                 Handler="DataGridRow_MouseRightButtonUp">
+                        
+
+
+                    </EventSetter>
                 </Style>
             </DataGrid.Resources>
         </DataGrid>

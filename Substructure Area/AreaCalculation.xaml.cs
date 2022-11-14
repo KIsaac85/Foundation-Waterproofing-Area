@@ -154,7 +154,13 @@ namespace Substructure_Area
         {
             ContextMenu cm = new ContextMenu();
             cm.Items.Add("Copy");
+            cm.Items.Add("Delete");
             datagrid.ContextMenu = cm;
+            MessageBox.Show(sender.ToString(), e.Source.ToString());
+            if (true)
+            {
+                
+            }
         }
     }
 }
