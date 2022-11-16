@@ -135,11 +135,6 @@ namespace Substructure_Area
                 TaskDialog.Show("Invalid Selection", "the element is above the entered level");
             }
 
-
-            
-            //datagrid.Items.Add(facesdata);
-
-
             Show();
 
         }
@@ -147,12 +142,7 @@ namespace Substructure_Area
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
             Close();
-            
         }
-
-        
-
-
     }
 }
 
