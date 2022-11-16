@@ -22,6 +22,7 @@ namespace Substructure_Area
         public DataColumn header { get; set; }
         public static List<string> infofaces { get; set; }
         public SingleFootingCalculation()
+
         {
             infofaces = new List<string>();
         }
@@ -39,19 +40,14 @@ namespace Substructure_Area
             table.Columns.Add(header);
             foreach (GeometryObject geomObj in geoElem)
             {
-                
                 GeometryInstance geoInst = geomObj as GeometryInstance;
-                
                 //isolated footing data
                 if (null != geoInst)
                 {
-
                     foreach (Solid geoSolid in geoInst.SymbolGeometry)
                     {
-
                         if (null != geoSolid && geoSolid.Id != -1)
                         {
-                            
                             foreach (Face geomFace in geoSolid.Faces)
                             {
                                 //for (int i = 0; i < faces; i++)
@@ -62,7 +58,6 @@ namespace Substructure_Area
                                     table.Rows.Add(UnitUtils.ConvertFromInternalUnits(geomFace.Area, areaUnit));
                                     
                                     totalArea += geomFace.Area;
-                                    
                                 }
                                 
                             }
@@ -97,7 +92,7 @@ namespace Substructure_Area
 
                                 //faceInfo += "Number of faces: " + faces + "\n";
                                 header = new DataColumn("Face" + faces, typeof(double));
-                                table.Columns.Add(header);
+                                //table.Columns.Add(header);
                                 table.Rows.Add(UnitUtils.ConvertFromInternalUnits(geoface.Area, areaUnit));
                                 faceInfo += "Total area: " + UnitUtils.ConvertFromInternalUnits(totalArea, areaUnit).ToString() + "\n";
                             }
