@@ -52,19 +52,14 @@
                   Grid.Row="2" Grid.Column="5" 
                   Grid.ColumnSpan="5" CanUserAddRows="False"        
                   Grid.RowSpan="2" ColumnWidth="*"
-                  Margin="3.9,9.8,44,170.2" 
-                   
-                  >
-            <DataGrid.Resources>
-                <Style TargetType="DataGridRow">
-                    <EventSetter Event="MouseRightButtonUp" 
-                                 Handler="DataGridRow_MouseRightButtonUp">
-                        
+                  Margin="3.9,9.8,44,170.2" >
 
+            <DataGrid.ContextMenu >
+                <ContextMenu>
+                    <MenuItem Header="Copy" Command="Copy"/>
+                </ContextMenu>
+            </DataGrid.ContextMenu>
 
-                    </EventSetter>
-                </Style>
-            </DataGrid.Resources>
         </DataGrid>
         
         <ListBox x:Name="Select_Family" Grid.Column="1"
