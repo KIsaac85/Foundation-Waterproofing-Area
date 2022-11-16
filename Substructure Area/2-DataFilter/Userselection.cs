@@ -36,13 +36,19 @@ namespace Substructure_Area
         }
         public  Reference Object()
         {
+            
+           
+                obj = _uidoc.Selection.PickObject(ObjectType.Element, SingleSelectionFilter);
 
-            obj = _uidoc.Selection.PickObject(ObjectType.Element, SingleSelectionFilter);
+
+            return obj;
+
+            
                 
 
            
 
-            return obj;
+            
         }
         
     }
