@@ -56,12 +56,12 @@
 
             <ListBox.Resources>
                 <Style TargetType="ListBox">
-                    <Style.Triggers>
+                    <!--<Style.Triggers>
                         <DataTrigger Binding="{Binding ElementName = Receive_Level,
                             Path= (Validation.HasError)}" Value="True">
                             <Setter Property="IsEnabled" Value="False"/>
                         </DataTrigger>
-                    </Style.Triggers>
+                    </Style.Triggers>-->
                 </Style>
             </ListBox.Resources>
 
