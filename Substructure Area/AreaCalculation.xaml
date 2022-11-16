@@ -56,12 +56,7 @@
 
             <DataGrid.ContextMenu >
                 <ContextMenu>
-                    <!--<Style TargetType="DataGridRow">
-                        <EventSetter Event="MouseRightButtonUp" 
-                                 Handler="DataGridRow_MouseRightButtonUp">
-                        </EventSetter>
-                    </Style>-->
-                    <MenuItem Header="Copy Data" />
+                    <MenuItem Header="Copy" Command="Copy"/>
                 </ContextMenu>
             </DataGrid.ContextMenu>
 

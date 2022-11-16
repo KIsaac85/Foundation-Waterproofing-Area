@@ -150,16 +150,9 @@ namespace Substructure_Area
             
         }
 
-        private void DataGridRow_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            //ContextMenu cm = new ContextMenu();
+        
 
-            //cm.Items.Add("Copy");
-            //cm.Items.Add("Delete");
-            //datagrid.ContextMenu = cm;
-            MessageBox.Show("Clicked");
 
-        }
     }
 }
 
