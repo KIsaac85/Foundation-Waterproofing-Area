@@ -84,7 +84,6 @@
     <Compile Include="2-DataFilter\SelectionFilter.cs" />
     <Compile Include="3-Calculation\SingleElementLevel.cs" />
     <Compile Include="AreaCalculation\SingleFootingCalculation.cs" />
-    <Compile Include="2-DataFilter\Userselection.cs" />
     <Compile Include="AreaCalculation.xaml.cs">
       <DependentUpon>AreaCalculation.xaml</DependentUpon>
     </Compile>
