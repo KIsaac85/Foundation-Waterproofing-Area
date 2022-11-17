@@ -42,10 +42,12 @@ namespace Substructure_Area
             header2 = new DataColumn(ele.Name);
             table.Columns.Add(header);
             table.Columns.Add(header2);
+
+            //isolated footing data
             foreach (GeometryObject geomObj in geoElem)
             {
                 geoInst = geomObj as GeometryInstance;
-                //isolated footing data
+               
                 if (null != geoInst)
                 {
                     foreach (Solid geoSolid in geoInst.SymbolGeometry)
@@ -55,35 +57,19 @@ namespace Substructure_Area
                             faces = 0;
                             foreach (Face geomFace in geoSolid.Faces)
                             {
-                                //for (int i = 0; i < faces; i++)
                                 {
-                                    
                                     faces++;
                                     rowData = table.NewRow();
                                     rowData[header] = faces;
-                                    rowData[header2] = UnitUtils.ConvertFromInternalUnits(geomFace.Area, areaUnit);
+                                    rowData[header2] = Math.Round(UnitUtils.ConvertFromInternalUnits(geomFace.Area, areaUnit),2);
                                     table.Rows.Add(rowData);
-                                    //faceInfo += "Face " + faces + " area: " + UnitUtils.ConvertFromInternalUnits(geomFace.Area, areaUnit).ToString() + "\n";
-                                    //infofaces.Add(UnitUtils.ConvertFromInternalUnits(geomFace.Area, areaUnit).ToString());
-                                    //table.Rows.Add(UnitUtils.ConvertFromInternalUnits(geomFace.Area, areaUnit));
-                                    
-                                    //totalArea += geomFace.Area;
                                 }
-                                
                             }
-
                             double result = table.AsEnumerable().Sum(x => Convert.ToDouble(x[ele.Name]));
                             rowData = table.NewRow();
                             rowData[header] = "Total";
                             rowData[header2] = result;
                             table.Rows.Add(rowData);
-
-
-
-                            //faceInfo += "Number of faces: " + faces + "\n";
-                            //faceInfo += "Total area: " + UnitUtils.ConvertFromInternalUnits(totalArea, areaUnit).ToString() + "\n";
-                            
-
                         }
                     }
                 }
@@ -99,26 +85,13 @@ namespace Substructure_Area
                         {
                             if (null != geoface && geoface.Id != -1)
                             {
-                                //infofaces.Add(UnitUtils.ConvertFromInternalUnits(geoface.Area, areaUnit).ToString());
-                                
                                 faces++;
-                                
                                 rowData = table.NewRow();
                                 rowData[header] = faces;
-                                rowData[header2] = UnitUtils.ConvertFromInternalUnits(geoface.Area, areaUnit);
+                                rowData[header2] = Math.Round(UnitUtils.ConvertFromInternalUnits(geoface.Area, areaUnit), 2);
                                 table.Rows.Add(rowData);
-                                //faceInfo += "Face " + faces + " area: " + UnitUtils.ConvertFromInternalUnits(geoface.Area, areaUnit).ToString() + "\n";
-
-                                //totalArea += geoface.Area;
-
-                                //faceInfo += "Number of faces: " + faces + "\n";
-                                //header = new DataColumn("Face" + faces, typeof(double));
-                                //table.Columns.Add(header);
-                                //table.Rows.Add(UnitUtils.ConvertFromInternalUnits(geoface.Area, areaUnit));
-                                //faceInfo += "Total area: " + UnitUtils.ConvertFromInternalUnits(totalArea, areaUnit).ToString() + "\n";
                             }
                         }
-                        //faceInfo += "Number of faces: " + faces + "\n";
                         double result = table.AsEnumerable().Sum(x => Convert.ToDouble(x[ele.Name]));
                         rowData = table.NewRow();
                         rowData[header] = "Total";
@@ -127,9 +100,6 @@ namespace Substructure_Area
                     }
                 }
             }
-            
-           
-            
             return table;
         }
     }

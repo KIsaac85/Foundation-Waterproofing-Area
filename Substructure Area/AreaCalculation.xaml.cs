@@ -111,20 +111,13 @@ namespace Substructure_Area
             try
             {
                 obj = _uidoc.Selection.PickObject(ObjectType.Element, SingleSelectionFilter);
-                ele = doc.GetElement(obj.ElementId);
-                
             }
-            catch (Exception)
-            {
-                
-                
-                
-            }
+            catch (Exception){}
 
 
             if (obj!=null)
             {
-
+                ele = doc.GetElement(obj.ElementId);
                 double levelelement = SingleElementLevel.ElementLevelCalculation(obj, doc);
 
 
