@@ -112,44 +112,48 @@ namespace Substructure_Area
             {
                 obj = _uidoc.Selection.PickObject(ObjectType.Element, SingleSelectionFilter);
                 ele = doc.GetElement(obj.ElementId);
-                //Result r = Result.Succeeded;
+                
             }
             catch (Exception)
             {
                 
                 Show();
+                
             }
-            
-            
 
 
-
-            double levelelement = SingleElementLevel.ElementLevelCalculation(obj, doc);
-            
-
-
-
-            if (UserInputLevel > levelelement)
+            if (obj!=null)
             {
-                GeometryElement geoElem = null;
-                geoElem = ele.GetGeometryObjectFromReference(obj) as GeometryElement;
 
-                if (ele.Category.Id.IntegerValue == (int)BuiltInCategory.OST_StructuralFoundation
-                    || ele.Category.Id.IntegerValue == (int)BuiltInCategory.OST_Walls)
+                double levelelement = SingleElementLevel.ElementLevelCalculation(obj, doc);
+
+
+
+
+                if (UserInputLevel > levelelement)
                 {
-                    datagrid.ItemsSource = foot.faceinfor(ele, geoElem, doc).DefaultView;
+                    GeometryElement geoElem = null;
+                    geoElem = ele.GetGeometryObjectFromReference(obj) as GeometryElement;
+
+                    if (ele.Category.Id.IntegerValue == (int)BuiltInCategory.OST_StructuralFoundation
+                        || ele.Category.Id.IntegerValue == (int)BuiltInCategory.OST_Walls)
+                    {
+                        datagrid.ItemsSource = foot.faceinfor(ele, geoElem, doc).DefaultView;
+                    }
+                    else if (ele.Category.Id.IntegerValue == (int)BuiltInCategory.OST_StructuralColumns
+                        || ele.Category.Id.IntegerValue == (int)BuiltInCategory.OST_StructuralFraming)
+                    {
+
+                        datagrid.ItemsSource = col.Faceinfo(ele, geoElem, doc).DefaultView;
+                    }
                 }
-                else if (ele.Category.Id.IntegerValue == (int)BuiltInCategory.OST_StructuralColumns
-                    || ele.Category.Id.IntegerValue == (int)BuiltInCategory.OST_StructuralFraming)
+                else
                 {
-                    
-                    datagrid.ItemsSource = col.Faceinfo(ele,geoElem, doc).DefaultView;
+                    TaskDialog.Show("Invalid Selection", "the element is above the entered level");
                 }
             }
-            else
-            {
-                TaskDialog.Show("Invalid Selection", "the element is above the entered level");
-            }
+
+
 
             Show();
 

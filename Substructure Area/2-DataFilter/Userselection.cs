@@ -16,7 +16,7 @@ namespace Substructure_Area
 
 
         private static UIDocument _uidoc;
-        private Document _doc;
+        private readonly Document _doc;
         private  Reference obj;
         private static SelectionFilter SingleSelectionFilter;
         public double Elevation { get; set; }
