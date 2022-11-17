@@ -11,7 +11,7 @@ namespace Substructure_Area
 {
     public class ColumnBeamCalculation
     {
-        //private string faceInfo = "";
+        
 
         private FormatOptions areaFormatOptions { get; set; }
         private ForgeTypeId areaUnit { get; set; }
@@ -21,11 +21,7 @@ namespace Substructure_Area
         private DataRow rowData { get; set; }
         private Element ele { get; set; }
 
-        public ColumnBeamCalculation()
-        {
-            
-            
-        }
+
         public DataTable Faceinfo(Element ele, GeometryElement geoElem, Document doc)
         {
             this.ele = ele;
@@ -51,7 +47,6 @@ namespace Substructure_Area
                     {
 
                         faces++;
-                        //faceInfo += "Face " + faces + " area: " + geomFace.Area.ToString() + "\n";
                         rowData = table.NewRow();
                         rowData[header] = faces;
                         rowData[header2] = UnitUtils.ConvertFromInternalUnits(geomFace.Area, areaUnit);

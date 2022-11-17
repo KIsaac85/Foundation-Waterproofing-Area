@@ -7,6 +7,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit;
 using Autodesk.Revit.UI.Selection;
 using Autodesk.Revit.UI;
+using System.Diagnostics;
 
 namespace Substructure_Area
 {
@@ -15,7 +16,7 @@ namespace Substructure_Area
 
 
         private static UIDocument _uidoc;
-        private Document _doc;
+        private readonly Document _doc;
         private  Reference obj;
         private static SelectionFilter SingleSelectionFilter;
         public double Elevation { get; set; }
@@ -36,13 +37,32 @@ namespace Substructure_Area
         }
         public  Reference Object()
         {
+            
+            
+                
+            
+            do
+            {
+                try
+                {
+                    obj = _uidoc.Selection.PickObject(ObjectType.Element, SingleSelectionFilter);
+                }
+                catch (OperationCanceledException e)
+                {
 
-            obj = _uidoc.Selection.PickObject(ObjectType.Element, SingleSelectionFilter);
+                    return null;
+                }
+            } while (obj!=null);
+            
+          
+            return obj;
+
+            
                 
 
            
 
-            return obj;
+            
         }
         
     }

@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using Autodesk.Revit.UI.Selection;
 using Substructure_Area._2_DataFilter;
 using Substructure_Area._3_Calculation;
 
@@ -29,6 +30,8 @@ namespace Substructure_Area
         private UIDocument _uidoc;
         private Document doc;
         private Userselection userSelection;
+        private Element ele;
+        private Reference obj;
         public static double Userinput;
         public List<double> facesdata;
         public SingleFootingCalculation foot;
@@ -40,11 +43,13 @@ namespace Substructure_Area
         public IList<Element> raftList { get; set; }
         public IList<Element> recFootingsList { get; set; }
         public IList<Element> stripFootingsList { get; set; }
+        private static SelectionFilter SingleSelectionFilter;
         public areaCalculation(UIDocument uidoc)
         {
             InitializeComponent();
 
             this.UserInputLevel = UserInputLevel;
+            SingleSelectionFilter = new SelectionFilter();
             facesdata = new List<double>();
             _uidoc = uidoc;
             doc = uidoc.Document;
@@ -102,42 +107,52 @@ namespace Substructure_Area
         private void Element_Selection_Click(object sender, RoutedEventArgs e)
         {
             Hide();
-            
-            Reference obj = userSelection.Object();
-            Element ele = doc.GetElement(obj.ElementId);
 
-
-
-            double levelelement = SingleElementLevel.ElementLevelCalculation(obj, doc);
-            
-
-
-
-            if (UserInputLevel > levelelement)
+            try
             {
-                GeometryElement geoElem = null;
-                geoElem = ele.GetGeometryObjectFromReference(obj) as GeometryElement;
-
-                if (ele.Category.Id.IntegerValue == (int)BuiltInCategory.OST_StructuralFoundation
-                    || ele.Category.Id.IntegerValue == (int)BuiltInCategory.OST_Walls)
-                {
-                    datagrid.ItemsSource = foot.faceinfor(ele, geoElem, doc).DefaultView;
-                }
-                else if (ele.Category.Id.IntegerValue == (int)BuiltInCategory.OST_StructuralColumns
-                    || ele.Category.Id.IntegerValue == (int)BuiltInCategory.OST_StructuralFraming)
-                {
-                    
-                    datagrid.ItemsSource = col.Faceinfo(ele,geoElem, doc).DefaultView;
-                }
+                obj = _uidoc.Selection.PickObject(ObjectType.Element, SingleSelectionFilter);
+                ele = doc.GetElement(obj.ElementId);
+                
             }
-            else
+            catch (Exception)
             {
-                TaskDialog.Show("Invalid Selection", "the element is above the entered level");
+                
+                Show();
+                
             }
 
 
-            
-            //datagrid.Items.Add(facesdata);
+            if (obj!=null)
+            {
+
+                double levelelement = SingleElementLevel.ElementLevelCalculation(obj, doc);
+
+
+
+
+                if (UserInputLevel > levelelement)
+                {
+                    GeometryElement geoElem = null;
+                    geoElem = ele.GetGeometryObjectFromReference(obj) as GeometryElement;
+
+                    if (ele.Category.Id.IntegerValue == (int)BuiltInCategory.OST_StructuralFoundation
+                        || ele.Category.Id.IntegerValue == (int)BuiltInCategory.OST_Walls)
+                    {
+                        datagrid.ItemsSource = foot.faceinfor(ele, geoElem, doc).DefaultView;
+                    }
+                    else if (ele.Category.Id.IntegerValue == (int)BuiltInCategory.OST_StructuralColumns
+                        || ele.Category.Id.IntegerValue == (int)BuiltInCategory.OST_StructuralFraming)
+                    {
+
+                        datagrid.ItemsSource = col.Faceinfo(ele, geoElem, doc).DefaultView;
+                    }
+                }
+                else
+                {
+                    TaskDialog.Show("Invalid Selection", "the element is above the entered level");
+                }
+            }
+
 
 
             Show();
@@ -147,12 +162,7 @@ namespace Substructure_Area
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
             Close();
-            
         }
-
-        
-
-
     }
 }
 
