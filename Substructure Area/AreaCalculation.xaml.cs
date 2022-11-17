@@ -29,7 +29,7 @@ namespace Substructure_Area
         public double UserInputLevel { get; set; }
         private UIDocument _uidoc;
         private Document doc;
-        private Userselection userSelection;
+        
         private Element ele;
         private Reference obj;
         public static double Userinput;
@@ -53,7 +53,7 @@ namespace Substructure_Area
             facesdata = new List<double>();
             _uidoc = uidoc;
             doc = uidoc.Document;
-            userSelection = new Userselection(uidoc);
+            
             foot = new SingleFootingCalculation();
             col = new ColumnBeamCalculation();
 
@@ -117,7 +117,7 @@ namespace Substructure_Area
             catch (Exception)
             {
                 
-                Show();
+                
                 
             }
 

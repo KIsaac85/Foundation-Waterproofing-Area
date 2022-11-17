@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Substructure_Area" 
         mc:Ignorable="d" 
         Height="200" Width="250" 
-        Title="Substructure Area" WindowStartupLocation="CenterScreen" >
+        Title="Substructure Area" WindowStartupLocation="CenterScreen" Topmost="True" >
     <Window.DataContext>
         <local:RegistrationVM/>
     </Window.DataContext>
