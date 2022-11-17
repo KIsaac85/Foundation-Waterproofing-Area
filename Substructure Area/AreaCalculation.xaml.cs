@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using Autodesk.Revit.UI.Selection;
 using Substructure_Area._2_DataFilter;
 using Substructure_Area._3_Calculation;
 
@@ -29,6 +30,8 @@ namespace Substructure_Area
         private UIDocument _uidoc;
         private Document doc;
         private Userselection userSelection;
+        private Element ele;
+        private Reference obj;
         public static double Userinput;
         public List<double> facesdata;
         public SingleFootingCalculation foot;
@@ -40,11 +43,13 @@ namespace Substructure_Area
         public IList<Element> raftList { get; set; }
         public IList<Element> recFootingsList { get; set; }
         public IList<Element> stripFootingsList { get; set; }
+        private static SelectionFilter SingleSelectionFilter;
         public areaCalculation(UIDocument uidoc)
         {
             InitializeComponent();
 
             this.UserInputLevel = UserInputLevel;
+            SingleSelectionFilter = new SelectionFilter();
             facesdata = new List<double>();
             _uidoc = uidoc;
             doc = uidoc.Document;
@@ -102,9 +107,20 @@ namespace Substructure_Area
         private void Element_Selection_Click(object sender, RoutedEventArgs e)
         {
             Hide();
+
+            try
+            {
+                obj = _uidoc.Selection.PickObject(ObjectType.Element, SingleSelectionFilter);
+                ele = doc.GetElement(obj.ElementId);
+                //Result r = Result.Succeeded;
+            }
+            catch (Exception)
+            {
+                
+                Show();
+            }
             
-            Reference obj = userSelection.Object();
-            Element ele = doc.GetElement(obj.ElementId);
+            
 
 
 

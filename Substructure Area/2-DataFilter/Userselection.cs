@@ -7,6 +7,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit;
 using Autodesk.Revit.UI.Selection;
 using Autodesk.Revit.UI;
+using System.Diagnostics;
 
 namespace Substructure_Area
 {
@@ -37,10 +38,23 @@ namespace Substructure_Area
         public  Reference Object()
         {
             
-           
-                obj = _uidoc.Selection.PickObject(ObjectType.Element, SingleSelectionFilter);
+            
+                
+            
+            do
+            {
+                try
+                {
+                    obj = _uidoc.Selection.PickObject(ObjectType.Element, SingleSelectionFilter);
+                }
+                catch (OperationCanceledException e)
+                {
 
-
+                    return null;
+                }
+            } while (obj!=null);
+            
+          
             return obj;
 
             
