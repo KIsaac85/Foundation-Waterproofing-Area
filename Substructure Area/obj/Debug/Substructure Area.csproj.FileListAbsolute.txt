@@ -78,16 +78,7 @@ E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\obj\Debug\
 E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\obj\Debug\Substructure Area.csproj.CopyComplete
 E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\obj\Debug\Substructure Area.dll
 E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\obj\Debug\Substructure Area.pdb
-E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\Caliburn.Micro.Core.dll
-E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\Caliburn.Micro.Platform.Core.dll
-E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\Caliburn.Micro.Platform.dll
 E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\Microsoft.Xaml.Behaviors.dll
-E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\Caliburn.Micro.Core.pdb
-E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\Caliburn.Micro.Core.xml
-E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\Caliburn.Micro.Platform.pdb
-E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\Caliburn.Micro.Platform.xml
-E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\Caliburn.Micro.Platform.Core.pdb
-E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\Caliburn.Micro.Platform.Core.xml
 E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\Microsoft.Xaml.Behaviors.pdb
 E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\Microsoft.Xaml.Behaviors.xml
 E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\obj\Debug\GeneratedInternalTypeHelper.g.cs
@@ -96,3 +87,9 @@ E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\obj\Debug\
 E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\obj\Debug\AreaCalculation.baml
 E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\obj\Debug\getLevel.g.cs
 E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\obj\Debug\getLevel.baml
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\EPPlus.dll
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\EPPlus.Interfaces.dll
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\EPPlus.System.Drawing.dll
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\Microsoft.IO.RecyclableMemoryStream.dll
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\EPPlus.xml
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\Microsoft.IO.RecyclableMemoryStream.xml
