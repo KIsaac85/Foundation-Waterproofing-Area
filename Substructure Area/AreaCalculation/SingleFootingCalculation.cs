@@ -42,14 +42,16 @@ namespace Substructure_Area
             header2 = new DataColumn(ele.Name);
             table.Columns.Add(header);
             table.Columns.Add(header2);
-
+            int count=0;
             //isolated footing data
             foreach (GeometryObject geomObj in geoElem)
             {
+                
                 geoInst = geomObj as GeometryInstance;
                
                 if (null != geoInst)
                 {
+                    count++;
                     foreach (Solid geoSolid in geoInst.SymbolGeometry)
                     {
                         if (null != geoSolid && geoSolid.Id != -1)
@@ -78,7 +80,7 @@ namespace Substructure_Area
                 else if(null == geoInst)
                 {
                     Solid geoSolid = geomObj as Solid;
-                    if (null != geoSolid)
+                    if (null != geoSolid&&geoSolid.Id!=-1)
                     {
                         faces = 0;
                         foreach (Face geoface in geoSolid.Faces)
