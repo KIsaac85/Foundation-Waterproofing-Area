@@ -80,7 +80,7 @@
     <Compile Include="1-Entry\getArea.cs" />
     <Compile Include="2-DataFilter\FamilyInstanceList.cs" />
     <Compile Include="3-Calculation\ColumnSplit.cs" />
-    <Compile Include="AreaCalculation\ColumnBeamCalculation.cs" />
+    <Compile Include="AreaCalculation\ColumnBeam.cs" />
     <Compile Include="ObserveData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="getLevel.xaml.cs">
@@ -89,7 +89,7 @@
     <Compile Include="RegistrationVM.cs" />
     <Compile Include="2-DataFilter\SelectionFilter.cs" />
     <Compile Include="3-Calculation\SingleElementLevel.cs" />
-    <Compile Include="AreaCalculation\SingleFootingCalculation.cs" />
+    <Compile Include="AreaCalculation\FoundationandWalls.cs" />
     <Compile Include="AreaCalculation.xaml.cs">
       <DependentUpon>AreaCalculation.xaml</DependentUpon>
     </Compile>

@@ -33,8 +33,13 @@ namespace Substructure_Area
 
 			else if (Element.Category.Id.IntegerValue == (int)BuiltInCategory.OST_StructuralFraming && Element.LevelId.IntegerValue == -1)
 			{
+
 				FamilyInstance beam = doc.GetElement(obj.ElementId) as FamilyInstance;
-				levelelement = beam.Host as Level;
+				if (beam.Host!=null)
+				{
+					levelelement = beam.Host as Level;
+				}
+				
 			}
 
 			else if (Element.Category.Id.IntegerValue == (int)BuiltInCategory.OST_StructuralFoundation && Element.LevelId.IntegerValue == -1)

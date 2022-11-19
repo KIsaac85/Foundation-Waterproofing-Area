@@ -152,57 +152,7 @@ namespace Substructure_Area._2_DataFilter
             return raftList;
         }
 
-        public static List<Element> documentLoopcolumnList(List<Element> Listofelements)
-        {
-            //elementsList = Listofelements;
-            //foreach (var element in elementsList)
-            //{
-            //    if (element.Category.Id.IntegerValue == (int)BuiltInCategory.OST_StructuralColumns)
-            //    {
 
-            //        Level columnBottomLevel = doc.GetElement(element.LevelId) as Level;
-            //        BottomColumnElevation = UnitUtils.ConvertFromInternalUnits(columnBottomLevel.Elevation, levelUnit);
-
-            //        ColumnTopParameterID = element
-            //            .LookupParameter(LabelUtils.GetLabelFor(BuiltInParameter.SCHEDULE_TOP_LEVEL_PARAM)).AsElementId();
-            //        Level columntopLevel = doc.GetElement(ColumnTopParameterID) as Level;
-            //        TopColumnElevation = UnitUtils.ConvertFromInternalUnits(columntopLevel.Elevation, levelUnit);
-
-                    
-
-            //        if (BottomColumnElevation < getLevel.Userinput && TopColumnElevation <= getLevel.Userinput)
-            //        {
-
-            //            columnsList.Add(element);
-            //        }
-            //        else if (BottomColumnElevation < getLevel.Userinput && TopColumnElevation > getLevel.Userinput)
-            //        {
-            //            switch (MessageBox.Show("Top level for some columns are above the entered level. " +
-            //              "Would you Like to split them at the entered level?", "Columns Top Level",
-            //                MessageBoxButton.YesNo, MessageBoxImage.Question))
-
-            //            {
-            //                case MessageBoxResult.No:
-            //                    columnsList.Add(element);
-            //                    break;
-            //                case MessageBoxResult.Yes:
-            //                    FamilyInstance column = element as FamilyInstance;
-            //                    NewcolumnLength = (getLevel.Userinput - BottomColumnElevation)
-            //                                        / (TopColumnElevation - BottomColumnElevation);
-            //                    using (Transaction tran = new Transaction(doc,"Split Columns"))
-            //                    {
-            //                        tran.Start();
-            //                        column.Split(NewcolumnLength);
-            //                        tran.Commit();
-            //                    }
-                                  
-            //                    break;
-            //            }
-            //        }
-            //    }
-            //}
-            return columnsList;
-        }
 
         public static List<Element> documentLoopsemellsList(List<Element> Listofelements)
         {
@@ -221,6 +171,10 @@ namespace Substructure_Area._2_DataFilter
                         {
                             beamsList.Add(element);
                         }
+                    }
+                    else
+                    {
+                        beaminstance.LookupParameter(LabelUtils.GetLabelFor(BuiltInParameter.INSTANCE_REFERENCE_LEVEL_PARAM)).AsElementId());
                     }
 
                 }

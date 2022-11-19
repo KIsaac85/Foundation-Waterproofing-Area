@@ -15,16 +15,16 @@ namespace Substructure_Area
 
         private FormatOptions areaFormatOptions { get; set; }
         private ForgeTypeId areaUnit { get; set; }
+        private Solid solid { get; set; }
         private DataTable table { get; set;  }
         private DataColumn header { get; set; }
         private DataColumn header2 { get; set; }
         private DataRow rowData { get; set; }
-        private Element ele { get; set; }
-
-
+        private int faces { get; set; }
+        private double result { get; set; }
         public DataTable Faceinfo(Element ele, GeometryElement geoElem, Document doc)
         {
-            this.ele = ele;
+            
             table = new DataTable();
             areaFormatOptions = doc.GetUnits().GetFormatOptions(SpecTypeId.Area);
             areaUnit = areaFormatOptions.GetUnitTypeId();
@@ -34,10 +34,10 @@ namespace Substructure_Area
             table.Columns.Add(header);
             table.Columns.Add(header2);
 
-            int faces = 0;
+            
             foreach (GeometryObject geomObj in geoElem)
             {
-                Solid solid = geomObj as Solid;
+                solid = geomObj as Solid;
                 if (null != solid && solid.Id != -1)
                 {
 
@@ -49,11 +49,15 @@ namespace Substructure_Area
                         rowData[header2] = Math.Round(UnitUtils.ConvertFromInternalUnits(geomFace.Area, areaUnit),2);
                         table.Rows.Add(rowData);
                     }
-                    double result = table.AsEnumerable().Sum(x => Convert.ToDouble(x[ele.Name]));
-                    rowData = table.NewRow();
-                    rowData[header] = "Total";
-                    rowData[header2] = result;
-                    table.Rows.Add(rowData);
+                    if (solid.SurfaceArea != 0)
+                    {
+                        result = Math.Round(UnitUtils.ConvertFromInternalUnits(solid.SurfaceArea, areaUnit), 2);
+                        rowData = table.NewRow();
+                        rowData[header] = "Total";
+                        rowData[header2] = result;
+                        table.Rows.Add(rowData);
+                    }
+                    
                 }
             }
             return table;

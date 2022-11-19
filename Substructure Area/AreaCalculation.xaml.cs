@@ -34,7 +34,7 @@ namespace Substructure_Area
         private Reference obj;
         public static double Userinput;
         public List<double> facesdata;
-        public SingleFootingCalculation foot;
+        public FoundationWall foot;
         private ColumnBeamCalculation col { get; set; }
         public List<Element> FamilyinstanceList { get; set; }
         public IList<Element> wallsList { get; set; }
@@ -54,7 +54,7 @@ namespace Substructure_Area
             _uidoc = uidoc;
             doc = uidoc.Document;
             
-            foot = new SingleFootingCalculation();
+            foot = new FoundationWall();
             col = new ColumnBeamCalculation();
 
             FamilyinstanceList = new List<Element>();
