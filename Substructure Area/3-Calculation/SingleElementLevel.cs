@@ -39,7 +39,13 @@ namespace Substructure_Area
 				{
 					levelelement = beam.Host as Level;
 				}
-				
+				else if (beam.Host == null)
+				{
+					levelelement = doc.GetElement(beam.LookupParameter(LabelUtils
+						.GetLabelFor(BuiltInParameter.INSTANCE_REFERENCE_LEVEL_PARAM)).AsElementId()) as Level;
+
+				}
+
 			}
 
 			else if (Element.Category.Id.IntegerValue == (int)BuiltInCategory.OST_StructuralFoundation && Element.LevelId.IntegerValue == -1)

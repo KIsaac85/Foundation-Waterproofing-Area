@@ -40,7 +40,7 @@ namespace Substructure_Area
                 solid = geomObj as Solid;
                 if (null != solid && solid.Id != -1)
                 {
-
+                    faces = 0;
                     foreach (Face geomFace in solid.Faces)
                     {
                         faces++;
@@ -59,6 +59,42 @@ namespace Substructure_Area
                     }
                     
                 }
+                else if (null == solid)
+                {
+                    GeometryInstance geoInst = geomObj as GeometryInstance;
+
+                    if (null != geoInst)
+                    {
+
+                        foreach (Solid geoSolid in geoInst.SymbolGeometry)
+                        {
+                            if (null != geoSolid)
+                            {
+                                faces = 0;
+                                foreach (Face geomFace in geoSolid.Faces)
+                                {
+
+                                    faces++;
+                                    rowData = table.NewRow();
+                                    rowData[header] = faces;
+                                    rowData[header2] = Math.Round(UnitUtils.ConvertFromInternalUnits(geomFace.Area, areaUnit), 2);
+                                    table.Rows.Add(rowData);
+
+                                }
+                                if (geoSolid.SurfaceArea != 0)
+                                {
+                                    result = Math.Round(UnitUtils.ConvertFromInternalUnits(geoSolid.SurfaceArea, areaUnit), 2);
+                                    rowData = table.NewRow();
+                                    rowData[header] = "Total";
+                                    rowData[header2] = result;
+                                    table.Rows.Add(rowData);
+                                }
+
+                            }
+                        }
+                    }
+                }
+                
             }
             return table;
         }
