@@ -1,4 +1,5 @@
 ﻿using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Structure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -157,6 +158,7 @@ namespace Substructure_Area._2_DataFilter
 
         public static List<Element> documentLoopsemellsList(List<Element> Listofelements)
         {
+            
             elementsList = Listofelements;
             foreach (Element element in elementsList)
             {
@@ -164,26 +166,38 @@ namespace Substructure_Area._2_DataFilter
                     && element.LevelId.IntegerValue == -1)
                 {
                     FamilyInstance beaminstance = doc.GetElement(element.Id) as FamilyInstance;
-
-                    if (beaminstance.Host!=null)
+                    try
                     {
-                        beamTopLevel = beaminstance.Host as Level;
+                        if (beaminstance.Host != null && beaminstance.StructuralMaterialType == StructuralMaterialType.Concrete)
+                        {
+                            beamTopLevel = beaminstance.Host as Level;
+
+                        }
+                        else if (beaminstance.Host == null && beaminstance.StructuralMaterialType == StructuralMaterialType.Concrete)
+                        {
+                            beamTopLevel = doc.GetElement(beaminstance.LookupParameter(LabelUtils
+                                .GetLabelFor(BuiltInParameter.INSTANCE_REFERENCE_LEVEL_PARAM)).AsElementId()) as Level;
+
+                        }
+                        else
+                            break;
+                        double elElevation = UnitUtils.ConvertFromInternalUnits(beamTopLevel.Elevation, levelUnit);
+                        if (elElevation < getLevel.Userinput)
+                        {
+                            beamsList.Add(element);
+                        }
+                    }
+                    catch (Exception)
+                    {
+
                         
                     }
-                    else if (beaminstance.Host==null)
-                    {
-                        beamTopLevel=doc.GetElement(beaminstance.LookupParameter(LabelUtils
-                            .GetLabelFor(BuiltInParameter.INSTANCE_REFERENCE_LEVEL_PARAM)).AsElementId()) as Level ;
-
-                    }
-                    double elElevation = UnitUtils.ConvertFromInternalUnits(beamTopLevel.Elevation, levelUnit);
-                    if (elElevation < getLevel.Userinput)
-                    {
-                        beamsList.Add(element);
-                    }
+                    
 
                 }
+                
             }
+            
             return beamsList;
 
         }
