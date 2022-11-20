@@ -52,6 +52,7 @@ namespace Substructure_Area._2_DataFilter
         private static double TopColumnElevation { get; set; }
         
         private static double NewcolumnLength { get; set; }
+        public static Level beamTopLevel { get; set; }
         public FamilyInstanceList(Document docu)
         {
             doc = docu;
@@ -163,18 +164,22 @@ namespace Substructure_Area._2_DataFilter
                     && element.LevelId.IntegerValue == -1)
                 {
                     FamilyInstance beaminstance = doc.GetElement(element.Id) as FamilyInstance;
+
                     if (beaminstance.Host!=null)
                     {
-                        Level beamTopLevel = beaminstance.Host as Level;
-                        double elElevation = UnitUtils.ConvertFromInternalUnits(beamTopLevel.Elevation, levelUnit);
-                        if (elElevation < getLevel.Userinput )
-                        {
-                            beamsList.Add(element);
-                        }
+                        beamTopLevel = beaminstance.Host as Level;
+                        
                     }
-                    else
+                    else if (beaminstance.Host==null)
                     {
-                        beaminstance.LookupParameter(LabelUtils.GetLabelFor(BuiltInParameter.INSTANCE_REFERENCE_LEVEL_PARAM)).AsElementId());
+                        beamTopLevel=doc.GetElement(beaminstance.LookupParameter(LabelUtils
+                            .GetLabelFor(BuiltInParameter.INSTANCE_REFERENCE_LEVEL_PARAM)).AsElementId()) as Level ;
+
+                    }
+                    double elElevation = UnitUtils.ConvertFromInternalUnits(beamTopLevel.Elevation, levelUnit);
+                    if (elElevation < getLevel.Userinput)
+                    {
+                        beamsList.Add(element);
                     }
 
                 }
