@@ -68,7 +68,7 @@ namespace Substructure_Area._3_Calculation
                 bottomElementLevel = doc.GetElement(item) as Level;
                 bottomElementElevation = UnitUtils.ConvertFromInternalUnits(bottomElementLevel.Elevation, levelUnit);
                 
-                if (bottomElementElevation < getLevel.Userinput)
+                if (bottomElementElevation <= getLevel.Userinput)
                 {
 
                     listofLevelsBelowUserInput.Add(bottomElementLevel.Id) ;
