@@ -161,12 +161,22 @@ namespace Substructure_Area._3_Calculation
                             {
                                 using (Transaction tran = new Transaction(doc, "Split Columns"))
                                 {
-                                    tran.Start();
-                                    Column.Split(splitRatio);
-                                    tran.Commit();
+                                    try
+                                    {
+                                        tran.Start();
+                                        Column.Split(splitRatio);
+                                        tran.Commit();
+                                    }
+                                    catch (Exception)
+                                    {
+
+                                        TaskDialog.Show("The Input is invalid", "Columns Can not be split based on your input");
+                                        break;
+                                    }
+ 
                                 }
                             }
-                            count++;
+                            
                         }
                         break;
 

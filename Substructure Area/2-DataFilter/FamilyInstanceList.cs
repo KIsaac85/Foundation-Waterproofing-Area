@@ -108,7 +108,7 @@ namespace Substructure_Area._2_DataFilter
             {
                 Level elementLevel = doc.GetElement(item.LevelId) as Level;
                 double elElevation = UnitUtils.ConvertFromInternalUnits(elementLevel.Elevation, levelUnit);
-                if (elElevation < getLevel.Userinput)
+                if (elElevation <= getLevel.Userinput)
                 {
                     wallList.Add(item);
                 }
@@ -128,7 +128,7 @@ namespace Substructure_Area._2_DataFilter
                 Element stripele = doc.GetElement(stripelement.WallId);
                 Level elementLevel = doc.GetElement(stripele.LevelId) as Level;
                 double elElevation = UnitUtils.ConvertFromInternalUnits(elementLevel.Elevation, levelUnit);
-                if (elElevation < getLevel.Userinput)
+                if (elElevation <= getLevel.Userinput)
                 {
                     stripfootingsList.Add(ele);
                 }
@@ -146,7 +146,7 @@ namespace Substructure_Area._2_DataFilter
                 
                 Level elementLevel = doc.GetElement(ele.LevelId) as Level;
                 double elElevation = UnitUtils.ConvertFromInternalUnits(elementLevel.Elevation, levelUnit);
-                if (elElevation < getLevel.Userinput)
+                if (elElevation <= getLevel.Userinput)
                 {
                     raftList.Add(ele);
                 }
@@ -182,7 +182,7 @@ namespace Substructure_Area._2_DataFilter
                         else
                             break;
                         double elElevation = UnitUtils.ConvertFromInternalUnits(beamTopLevel.Elevation, levelUnit);
-                        if (elElevation < getLevel.Userinput)
+                        if (elElevation <= getLevel.Userinput)
                         {
                             beamsList.Add(element);
                         }
@@ -212,7 +212,7 @@ namespace Substructure_Area._2_DataFilter
 
                     Level elementLevel = doc.GetElement(element.LevelId) as Level;
                     double elElevation = UnitUtils.ConvertFromInternalUnits(elementLevel.Elevation, levelUnit);
-                    if (elElevation < getLevel.Userinput)
+                    if (elElevation <= getLevel.Userinput)
                     {
                         rectangularfootingsList.Add(element);
                     }
