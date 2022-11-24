@@ -5,8 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Substructure_Area"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800" Title="Substructure Area" 
-        WindowStartupLocation="CenterOwner" Topmost="True">
+             d:DesignHeight="200" d:DesignWidth="400" Title="Substructure Area" 
+        WindowStartupLocation="CenterScreen" Topmost="True">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20"/>
@@ -14,13 +14,9 @@
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="auto"/>
 
             <ColumnDefinition Width="20"/>
-            <ColumnDefinition Width="26*"/>
-            <ColumnDefinition Width="27*"/>
+
 
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -30,31 +26,24 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
             <RowDefinition Height="20"/>
-
 
         </Grid.RowDefinitions>
 
         <Button x:Name="Elements_Selection" 
                 Content="Select Element" Grid.Column="1"
-                Grid.Row="2" Margin="1,9.8,23.1,170.2" 
+                Grid.Row="1" 
                 Click="Element_Selection_Click" 
-                Height="20"  >
+                Height="20" MinWidth="80"  >
         </Button>
 
         <DataGrid x:Name="datagrid" 
                   AutoGenerateColumns= "True"
-                  Grid.Row="2" Grid.Column="5" Width="400" Height="100"
-                  Grid.ColumnSpan="5" CanUserAddRows="False"        
-                  Grid.RowSpan="2" ColumnWidth="*"
-                  Margin="1,9.8,23.1,170.2" AllowDrop="True">
-
+                  Grid.Row="2" Grid.Column="4" 
+                   CanUserAddRows="False"        
+                ScrollViewer.CanContentScroll="True"
+                   AllowDrop="True" MinHeight="100" MinWidth="100"
+                  Margin="50,0,0,0">
             <DataGrid.ContextMenu >
                 <ContextMenu>
                     <MenuItem Header="Copy" Command="Copy"/>
@@ -62,48 +51,29 @@
             </DataGrid.ContextMenu>
 
         </DataGrid>
-        
-        <ListBox x:Name="Select_Family" Grid.Column="1"
-                 Grid.Row="3" Margin="1,10.2,23.1,0.2"
-                 SelectionMode="Extended" 
+
+        <ListBox x:Name="Select_Family" Grid.Column="2"
+                 Grid.Row="4" 
+                 SelectionMode="Multiple" 
                  AllowDrop="True" Height="auto" 
-                 Grid.ColumnSpan="2">
+                 Grid.ColumnSpan="2" >
 
             <ListBox.Resources>
                 <Style TargetType="Table" >
-
                 </Style>
             </ListBox.Resources>
 
         </ListBox>
-        <Button x:Name="Cancel" Content="Cancel" Grid.Column="2" 
-                Grid.Row="4" Click="Cancel_Click" 
-                Margin="1,9.8,23.1,170.2"
-                Grid.ColumnSpan="1" HorizontalAlignment="Right" 
-                Grid.RowSpan="1" Width="38"  >
 
-        </Button>
         <Button x:Name="SaveAs" Content="Save As" Grid.Column="4" 
-                Grid.Row="3" Click="Save_As_Click" 
-                Margin="1,9.8,23.1,170.2"
-                Grid.ColumnSpan="4" HorizontalAlignment="Right" 
-                Grid.RowSpan="1" Width="38" 
+                Grid.Row="4" Click="Save_As_Click" 
                 IsEnabled="{Binding ElementName=Select_Family , 
-                    Path =SelectedItems.Count}" >
-            <!--<Button.Style>
-                <Style TargetType="Button">
-                    <Style.Triggers>
-                        <DataTrigger  Binding="{Binding ElementName= Select_Family ,
-                            Path= (TextSelection.IsEmpty)}" Value="False">
-                            <Setter Property="IsEnabled" Value="False"/>
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </Button.Style>-->
-
-
+                    Path =SelectedItems.Count}">
         </Button>
-        
+        <Button x:Name="Cancel" Content="Cancel" Grid.Column="4" 
+                Grid.Row="6" Click="Cancel_Click"  
+                Grid.RowSpan="1"   >
+        </Button>
     </Grid>
 
 </Window>

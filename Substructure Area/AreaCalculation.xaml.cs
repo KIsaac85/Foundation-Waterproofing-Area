@@ -159,7 +159,13 @@ namespace Substructure_Area
 
         private void Save_As_Click(object sender, RoutedEventArgs e)
         {
-
+            switch (Select_Family.SelectedItems.ToString())
+            {
+                case "Rectangular Footings":
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }
