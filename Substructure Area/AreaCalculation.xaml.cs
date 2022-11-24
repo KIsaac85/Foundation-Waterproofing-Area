@@ -162,9 +162,12 @@ namespace Substructure_Area
             switch (Select_Family.SelectedItems.ToString())
             {
                 case "Rectangular Footings":
+                    TaskDialog.Show("Clicked","Rectangular Footings");
                     break;
-                default:
+                case "Columns":
+                    TaskDialog.Show("Clicked", "Rectangular Footings");
                     break;
+
             }
         }
     }
