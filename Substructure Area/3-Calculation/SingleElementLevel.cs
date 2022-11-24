@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
 
 namespace Substructure_Area
@@ -33,8 +34,19 @@ namespace Substructure_Area
 
 			else if (Element.Category.Id.IntegerValue == (int)BuiltInCategory.OST_StructuralFraming && Element.LevelId.IntegerValue == -1)
 			{
+
 				FamilyInstance beam = doc.GetElement(obj.ElementId) as FamilyInstance;
-				levelelement = beam.Host as Level;
+				if (beam.Host!=null && beam.StructuralMaterialType == StructuralMaterialType.Concrete)
+				{
+					levelelement = beam.Host as Level;
+				}
+				else if (beam.Host == null && beam.StructuralMaterialType == StructuralMaterialType.Concrete)
+				{
+					levelelement = doc.GetElement(beam.LookupParameter(LabelUtils
+						.GetLabelFor(BuiltInParameter.INSTANCE_REFERENCE_LEVEL_PARAM)).AsElementId()) as Level;
+
+				}
+
 			}
 
 			else if (Element.Category.Id.IntegerValue == (int)BuiltInCategory.OST_StructuralFoundation && Element.LevelId.IntegerValue == -1)

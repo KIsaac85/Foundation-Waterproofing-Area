@@ -1,4 +1,5 @@
 ﻿using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Structure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -52,6 +53,7 @@ namespace Substructure_Area._2_DataFilter
         private static double TopColumnElevation { get; set; }
         
         private static double NewcolumnLength { get; set; }
+        public static Level beamTopLevel { get; set; }
         public FamilyInstanceList(Document docu)
         {
             doc = docu;
@@ -106,7 +108,7 @@ namespace Substructure_Area._2_DataFilter
             {
                 Level elementLevel = doc.GetElement(item.LevelId) as Level;
                 double elElevation = UnitUtils.ConvertFromInternalUnits(elementLevel.Elevation, levelUnit);
-                if (elElevation < getLevel.Userinput)
+                if (elElevation <= getLevel.Userinput)
                 {
                     wallList.Add(item);
                 }
@@ -126,7 +128,7 @@ namespace Substructure_Area._2_DataFilter
                 Element stripele = doc.GetElement(stripelement.WallId);
                 Level elementLevel = doc.GetElement(stripele.LevelId) as Level;
                 double elElevation = UnitUtils.ConvertFromInternalUnits(elementLevel.Elevation, levelUnit);
-                if (elElevation < getLevel.Userinput)
+                if (elElevation <= getLevel.Userinput)
                 {
                     stripfootingsList.Add(ele);
                 }
@@ -144,7 +146,7 @@ namespace Substructure_Area._2_DataFilter
                 
                 Level elementLevel = doc.GetElement(ele.LevelId) as Level;
                 double elElevation = UnitUtils.ConvertFromInternalUnits(elementLevel.Elevation, levelUnit);
-                if (elElevation < getLevel.Userinput)
+                if (elElevation <= getLevel.Userinput)
                 {
                     raftList.Add(ele);
                 }
@@ -152,60 +154,11 @@ namespace Substructure_Area._2_DataFilter
             return raftList;
         }
 
-        public static List<Element> documentLoopcolumnList(List<Element> Listofelements)
-        {
-            //elementsList = Listofelements;
-            //foreach (var element in elementsList)
-            //{
-            //    if (element.Category.Id.IntegerValue == (int)BuiltInCategory.OST_StructuralColumns)
-            //    {
 
-            //        Level columnBottomLevel = doc.GetElement(element.LevelId) as Level;
-            //        BottomColumnElevation = UnitUtils.ConvertFromInternalUnits(columnBottomLevel.Elevation, levelUnit);
-
-            //        ColumnTopParameterID = element
-            //            .LookupParameter(LabelUtils.GetLabelFor(BuiltInParameter.SCHEDULE_TOP_LEVEL_PARAM)).AsElementId();
-            //        Level columntopLevel = doc.GetElement(ColumnTopParameterID) as Level;
-            //        TopColumnElevation = UnitUtils.ConvertFromInternalUnits(columntopLevel.Elevation, levelUnit);
-
-                    
-
-            //        if (BottomColumnElevation < getLevel.Userinput && TopColumnElevation <= getLevel.Userinput)
-            //        {
-
-            //            columnsList.Add(element);
-            //        }
-            //        else if (BottomColumnElevation < getLevel.Userinput && TopColumnElevation > getLevel.Userinput)
-            //        {
-            //            switch (MessageBox.Show("Top level for some columns are above the entered level. " +
-            //              "Would you Like to split them at the entered level?", "Columns Top Level",
-            //                MessageBoxButton.YesNo, MessageBoxImage.Question))
-
-            //            {
-            //                case MessageBoxResult.No:
-            //                    columnsList.Add(element);
-            //                    break;
-            //                case MessageBoxResult.Yes:
-            //                    FamilyInstance column = element as FamilyInstance;
-            //                    NewcolumnLength = (getLevel.Userinput - BottomColumnElevation)
-            //                                        / (TopColumnElevation - BottomColumnElevation);
-            //                    using (Transaction tran = new Transaction(doc,"Split Columns"))
-            //                    {
-            //                        tran.Start();
-            //                        column.Split(NewcolumnLength);
-            //                        tran.Commit();
-            //                    }
-                                  
-            //                    break;
-            //            }
-            //        }
-            //    }
-            //}
-            return columnsList;
-        }
 
         public static List<Element> documentLoopsemellsList(List<Element> Listofelements)
         {
+            
             elementsList = Listofelements;
             foreach (Element element in elementsList)
             {
@@ -213,18 +166,38 @@ namespace Substructure_Area._2_DataFilter
                     && element.LevelId.IntegerValue == -1)
                 {
                     FamilyInstance beaminstance = doc.GetElement(element.Id) as FamilyInstance;
-                    if (beaminstance.Host!=null)
+                    try
                     {
-                        Level beamTopLevel = beaminstance.Host as Level;
+                        if (beaminstance.Host != null && beaminstance.StructuralMaterialType == StructuralMaterialType.Concrete)
+                        {
+                            beamTopLevel = beaminstance.Host as Level;
+
+                        }
+                        else if (beaminstance.Host == null && beaminstance.StructuralMaterialType == StructuralMaterialType.Concrete)
+                        {
+                            beamTopLevel = doc.GetElement(beaminstance.LookupParameter(LabelUtils
+                                .GetLabelFor(BuiltInParameter.INSTANCE_REFERENCE_LEVEL_PARAM)).AsElementId()) as Level;
+
+                        }
+                        else
+                            break;
                         double elElevation = UnitUtils.ConvertFromInternalUnits(beamTopLevel.Elevation, levelUnit);
-                        if (elElevation < getLevel.Userinput )
+                        if (elElevation <= getLevel.Userinput)
                         {
                             beamsList.Add(element);
                         }
                     }
+                    catch (Exception)
+                    {
+
+                        
+                    }
+                    
 
                 }
+                
             }
+            
             return beamsList;
 
         }
@@ -239,7 +212,7 @@ namespace Substructure_Area._2_DataFilter
 
                     Level elementLevel = doc.GetElement(element.LevelId) as Level;
                     double elElevation = UnitUtils.ConvertFromInternalUnits(elementLevel.Elevation, levelUnit);
-                    if (elElevation < getLevel.Userinput)
+                    if (elElevation <= getLevel.Userinput)
                     {
                         rectangularfootingsList.Add(element);
                     }

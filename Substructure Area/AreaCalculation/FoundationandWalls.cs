@@ -12,7 +12,7 @@ using Autodesk.Revit.UI;
 
 namespace Substructure_Area
 {
-    public class SingleFootingCalculation
+    public class FoundationWall
     {
 
         
@@ -40,7 +40,7 @@ namespace Substructure_Area
             table.Columns.Add(header);
             table.Columns.Add(header2);
             
-            //isolated footing data
+            
             foreach (GeometryObject geomObj in geoElem)
             {
                 
