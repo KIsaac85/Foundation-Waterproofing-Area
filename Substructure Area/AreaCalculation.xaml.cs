@@ -159,16 +159,15 @@ namespace Substructure_Area
 
         private void Save_As_Click(object sender, RoutedEventArgs e)
         {
-            switch (Select_Family.SelectedItems.ToString())
+            List<string > ListOfindices = new List<string>() ;
+            
+            foreach (var item in Select_Family.SelectedItems)
             {
-                case "Rectangular Footings":
-                    TaskDialog.Show("Clicked","Rectangular Footings");
-                    break;
-                case "Columns":
-                    TaskDialog.Show("Clicked", "Rectangular Footings");
-                    break;
+                ListOfindices.Add(item.ToString());
 
             }
+            
+            
         }
     }
 }

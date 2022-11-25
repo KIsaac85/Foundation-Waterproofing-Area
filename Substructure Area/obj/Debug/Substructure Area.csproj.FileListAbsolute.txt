@@ -82,7 +82,6 @@ E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\
 E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\Microsoft.Xaml.Behaviors.pdb
 E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\Microsoft.Xaml.Behaviors.xml
 E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\obj\Debug\GeneratedInternalTypeHelper.g.cs
-E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\obj\Debug\Substructure Area.csproj.AssemblyReference.cache
 E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\obj\Debug\AreaCalculation.g.cs
 E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\obj\Debug\AreaCalculation.baml
 E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\obj\Debug\getLevel.g.cs
@@ -93,3 +92,4 @@ E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\
 E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\Microsoft.IO.RecyclableMemoryStream.dll
 E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\EPPlus.xml
 E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\Microsoft.IO.RecyclableMemoryStream.xml
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\obj\Debug\Substructure Area.csproj.AssemblyReference.cache
