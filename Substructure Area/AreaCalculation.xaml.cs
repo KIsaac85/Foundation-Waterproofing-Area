@@ -18,6 +18,7 @@ using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
 using Substructure_Area._2_DataFilter;
 using Substructure_Area._3_Calculation;
+using Substructure_Area._5__Excel_Export;
 
 namespace Substructure_Area
 {
@@ -164,6 +165,8 @@ namespace Substructure_Area
             foreach (var item in Select_Family.SelectedItems)
             {
                 ListOfindices.Add(item.ToString());
+                ExcelData file = new ExcelData();
+                file.DataTable();
 
             }
             
