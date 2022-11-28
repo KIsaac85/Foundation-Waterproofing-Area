@@ -30,7 +30,7 @@ namespace Substructure_Area._5__Excel_Export
 
                     for (int i = 0; i < WallList.Count; i++)
                     {
-                        RetainingWallSheet.Cells["A{0}" + i].LoadFromDataTable(;
+                        //RetainingWallSheet.Cells["A{0}" + i].LoadFromDataTable(;
                     }
                     
                     SaveFileDialog saveFile = new SaveFileDialog
@@ -39,6 +39,18 @@ namespace Substructure_Area._5__Excel_Export
                         DefaultExt = ".xlsx", // Default file extension
                         Filter = "Excel Sheet (.xlsx)|*" // Filter files by extension
                     };
+                    bool? result = saveFile.ShowDialog();
+                    switch (result)
+                    {
+                        case true:
+                            {
+                                FileInfo filename = new FileInfo(saveFile.FileName);
+                                package.SaveAs(filename);
+                                Process.Start(Path.Combine(filename.Directory.ToString(), filename.ToString()));
+                                break;
+                            }
+
+                    }
                 }
 
 
@@ -50,18 +62,7 @@ namespace Substructure_Area._5__Excel_Export
 
 
 
-                bool? result = saveFile.ShowDialog();
-                switch (result)
-                {
-                    case true:
-                        {
-                            FileInfo filename = new FileInfo(saveFile.FileName);
-                            package.SaveAs(filename);
-                            Process.Start(Path.Combine(filename.Directory.ToString(),filename.ToString()));
-                            break;
-                        }
-
-                }
+                
             }
         }
     }

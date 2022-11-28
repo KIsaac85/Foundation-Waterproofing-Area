@@ -126,9 +126,10 @@ namespace Substructure_Area
 
                 if (UserInputLevel > levelelement)
                 {
+                    Options opt = new Options();
                     GeometryElement geoElem = null;
-                    geoElem = ele.GetGeometryObjectFromReference(obj) as GeometryElement;
-
+                    
+                    geoElem = ele.get_Geometry(opt);
                     if (ele.Category.Id.IntegerValue == (int)BuiltInCategory.OST_StructuralFoundation
                         || ele.Category.Id.IntegerValue == (int)BuiltInCategory.OST_Walls)
                     {
