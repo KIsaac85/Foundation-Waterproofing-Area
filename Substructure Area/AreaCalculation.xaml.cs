@@ -160,13 +160,13 @@ namespace Substructure_Area
 
         private void Save_As_Click(object sender, RoutedEventArgs e)
         {
-            List<string > ListOfindices = new List<string>() ;
+            List<string > ListOfSelectedItemsItems = new List<string>() ;
             
             foreach (var item in Select_Family.SelectedItems)
             {
-                ListOfindices.Add(item.ToString());
+                ListOfSelectedItemsItems.Add(item.ToString());
                 ExcelData file = new ExcelData();
-                file.DataTable();
+                file.DataTable(ListOfSelectedItemsItems,wallsList);
 
             }
             

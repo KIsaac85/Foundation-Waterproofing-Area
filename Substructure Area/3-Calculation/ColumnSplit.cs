@@ -93,16 +93,16 @@ namespace Substructure_Area._3_Calculation
             }
 
             ElementTopParameterID.AddRange(modifiedColumnsList.Select(x =>
-                 x.LookupParameter(LabelUtils.GetLabelFor(BuiltInParameter.SCHEDULE_TOP_LEVEL_PARAM))
+                 x.get_Parameter(BuiltInParameter.SCHEDULE_TOP_LEVEL_PARAM)
                  .AsElementId()));
 
 
             ElementTopOffsetValues.AddRange(modifiedColumnsList.Select(x =>
-            x.LookupParameter(LabelUtils.GetLabelFor(BuiltInParameter.SCHEDULE_TOP_LEVEL_OFFSET_PARAM))
+            x.get_Parameter(BuiltInParameter.SCHEDULE_TOP_LEVEL_OFFSET_PARAM)
             .AsDouble()));
 
             ElementbottomoffsetValues.AddRange(modifiedColumnsList.Select(x =>
-            x.LookupParameter(LabelUtils.GetLabelFor(BuiltInParameter.SCHEDULE_BASE_LEVEL_OFFSET_PARAM))
+            x.get_Parameter(BuiltInParameter.SCHEDULE_BASE_LEVEL_OFFSET_PARAM)
             .AsDouble()));
 
             count = 0;
@@ -135,23 +135,23 @@ namespace Substructure_Area._3_Calculation
                             Column = ele as FamilyInstance;
 
                             ElementTopParameterID.Add(Column
-                                .LookupParameter(LabelUtils.GetLabelFor(BuiltInParameter.SCHEDULE_TOP_LEVEL_PARAM))
+                                .get_Parameter(BuiltInParameter.SCHEDULE_TOP_LEVEL_PARAM)
                                 .AsElementId());
                             topElementLevel = doc.GetElement(ElementTopParameterID.ElementAt(count)) as Level;
                             elementTopElevationValue = UnitUtils.ConvertFromInternalUnits(topElementLevel.Elevation, levelUnit);
                             
                             ElementBottomParameterID.Add(Column
-                            .LookupParameter(LabelUtils.GetLabelFor(BuiltInParameter.SCHEDULE_BASE_LEVEL_PARAM))
+                            .get_Parameter(BuiltInParameter.SCHEDULE_BASE_LEVEL_PARAM)
                             .AsElementId());
                             bottomElementLevel = doc.GetElement(ElementBottomParameterID.ElementAt(count)) as Level;
                             bottomElementElevation = UnitUtils.ConvertFromInternalUnits(bottomElementLevel.Elevation,levelUnit);
 
                             ElementTopOffsetValues.Add(UnitUtils.ConvertFromInternalUnits(Column
-                            .LookupParameter(LabelUtils.GetLabelFor(BuiltInParameter.SCHEDULE_TOP_LEVEL_OFFSET_PARAM))
+                            .get_Parameter(BuiltInParameter.SCHEDULE_TOP_LEVEL_OFFSET_PARAM)
                             .AsDouble(),levelUnit));
 
                             ElementbottomoffsetValues.Add(UnitUtils.ConvertFromInternalUnits(Column
-                            .LookupParameter(LabelUtils.GetLabelFor(BuiltInParameter.SCHEDULE_BASE_LEVEL_OFFSET_PARAM))
+                            .get_Parameter(BuiltInParameter.SCHEDULE_BASE_LEVEL_OFFSET_PARAM)
                             .AsDouble(), levelUnit));
                             splitRatio = (getLevel.Userinput - bottomElementElevation - ElementbottomoffsetValues.ElementAt(count))
                                                     / (elementTopElevationValue - bottomElementElevation 

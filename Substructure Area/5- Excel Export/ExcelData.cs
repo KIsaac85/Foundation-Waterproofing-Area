@@ -1,4 +1,5 @@
-﻿using Autodesk.Revit.UI;
+﻿using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
 using Microsoft.Win32;
 using OfficeOpenXml;
 using System;
@@ -19,18 +20,36 @@ namespace Substructure_Area._5__Excel_Export
         {
             SelectedItems = new List<string>();
         }
-        public void DataTable()
+        public void DataTable(List<String>SelectedItems, IList<Element> WallList)
         {
             using (var package = new ExcelPackage())
             {
-                var sheet = package.Workbook.Worksheets.Add("My Sheet");
-                sheet.Cells["A1"].Value = "Hello World!";
-                SaveFileDialog saveFile = new SaveFileDialog
+                if (SelectedItems.Contains("Retaining Walls"))
                 {
-                    FileName = "NewSheet", // Default file name
-                    DefaultExt = ".xlsx", // Default file extension
-                    Filter = "Excel Sheet (.xlsx)|*" // Filter files by extension
-                };
+                    ExcelWorksheet RetainingWallSheet = package.Workbook.Worksheets.Add("Retaining Walls");
+
+                    for (int i = 0; i < WallList.Count; i++)
+                    {
+                        RetainingWallSheet.Cells["A{0}" + i].LoadFromDataTable(;
+                    }
+                    
+                    SaveFileDialog saveFile = new SaveFileDialog
+                    {
+                        FileName = "NewSheet", // Default file name
+                        DefaultExt = ".xlsx", // Default file extension
+                        Filter = "Excel Sheet (.xlsx)|*" // Filter files by extension
+                    };
+                }
+
+
+
+
+
+
+
+
+
+
                 bool? result = saveFile.ShowDialog();
                 switch (result)
                 {
@@ -39,21 +58,11 @@ namespace Substructure_Area._5__Excel_Export
                             FileInfo filename = new FileInfo(saveFile.FileName);
                             package.SaveAs(filename);
                             Process.Start(Path.Combine(filename.Directory.ToString(),filename.ToString()));
-                           
-                            
                             break;
                         }
 
                 }
-                // Save to file
-                package.Save();
-                
-             
-
             }
-
-
         }
-        
     }
 }
