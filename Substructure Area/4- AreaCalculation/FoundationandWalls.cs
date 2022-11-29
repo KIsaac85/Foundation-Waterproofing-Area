@@ -25,17 +25,20 @@ namespace Substructure_Area
         private List<int> typeID { get; set; }
 
         private GeometryInstance geoInst { get; set; }
+        private Options option { get; set; }
         private double result { get; set; }
         public FoundationWall()
         {
             typeID = new List<int>();
+            option = new Options();
         }
 
-        public DataTable faceinfor(Element ele, GeometryElement geoElem, Document doc)
+        public DataTable faceinfor(Element ele, ForgeTypeId areaUnit)
         {
 
-            FormatOptions areaFormatOptions = doc.GetUnits().GetFormatOptions(SpecTypeId.Area);
-            ForgeTypeId areaUnit = areaFormatOptions.GetUnitTypeId();
+            
+            
+            GeometryElement geoElem = ele.get_Geometry(option);
             table = new DataTable();
 
 

@@ -37,18 +37,21 @@ namespace Substructure_Area
         public List<double> facesdata;
         public FoundationWall foot;
         private ColumnBeamCalculation col { get; set; }
-        public List<Element> FamilyinstanceList { get; set; }
-        public IList<Element> wallsList { get; set; }
-        public IList<Element> columnsList { get; set; }
-        public IList<Element> beamsList { get; set; }
-        public IList<Element> raftList { get; set; }
-        public IList<Element> recFootingsList { get; set; }
-        public IList<Element> stripFootingsList { get; set; }
+        private  List<Element> FamilyinstanceList { get; set; }
+        private IList<Element> wallsList { get; set; }
+        private IList<Element> columnsList { get; set; }
+        private IList<Element> beamsList { get; set; }
+        private IList<Element> raftList { get; set; }
+        private IList<Element> recFootingsList { get; set; }
+        private IList<Element> stripFootingsList { get; set; }
         private static SelectionFilter SingleSelectionFilter;
+        private FormatOptions areaFormatOptions { get; set; }
+        private ForgeTypeId areaUnit { get; set; }
         public areaCalculation(UIDocument uidoc)
         {
             InitializeComponent();
-
+            areaFormatOptions = doc.GetUnits().GetFormatOptions(SpecTypeId.Area);
+            areaUnit = areaFormatOptions.GetUnitTypeId();
             this.UserInputLevel = UserInputLevel;
             SingleSelectionFilter = new SelectionFilter();
             facesdata = new List<double>();
@@ -119,27 +122,21 @@ namespace Substructure_Area
             if (obj!=null)
             {
                 ele = doc.GetElement(obj.ElementId);
-                double levelelement = SingleElementLevel.ElementLevelCalculation(obj, doc);
-
-
-
+                double levelelement = SingleElementLevel.ElementLevelCalculation(obj, areaUnit);
 
                 if (UserInputLevel > levelelement)
                 {
-                    Options opt = new Options();
-                    GeometryElement geoElem = null;
                     
-                    geoElem = ele.get_Geometry(opt);
                     if (ele.Category.Id.IntegerValue == (int)BuiltInCategory.OST_StructuralFoundation
                         || ele.Category.Id.IntegerValue == (int)BuiltInCategory.OST_Walls)
                     {
-                        datagrid.ItemsSource = foot.faceinfor(ele, geoElem, doc).DefaultView;
+                        datagrid.ItemsSource = foot.faceinfor(ele, doc).DefaultView;
                     }
                     else if (ele.Category.Id.IntegerValue == (int)BuiltInCategory.OST_StructuralColumns
                         || ele.Category.Id.IntegerValue == (int)BuiltInCategory.OST_StructuralFraming)
                     {
 
-                        datagrid.ItemsSource = col.Faceinfo(ele, geoElem, doc).DefaultView;
+                        datagrid.ItemsSource = col.Faceinfo(ele, areaUnit).DefaultView;
                     }
                 }
                 else
