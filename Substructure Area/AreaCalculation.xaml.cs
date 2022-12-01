@@ -47,16 +47,21 @@ namespace Substructure_Area
         private static SelectionFilter SingleSelectionFilter;
         private FormatOptions areaFormatOptions { get; set; }
         private ForgeTypeId areaUnit { get; set; }
+        private static FormatOptions levelFormatOptions { get; set; }
+        private static ForgeTypeId levelunit { get; set; }
         public areaCalculation(UIDocument uidoc)
         {
             InitializeComponent();
+            _uidoc = uidoc;
+            doc = uidoc.Document;
             areaFormatOptions = doc.GetUnits().GetFormatOptions(SpecTypeId.Area);
             areaUnit = areaFormatOptions.GetUnitTypeId();
+            levelFormatOptions = doc.GetUnits().GetFormatOptions(SpecTypeId.Length);
+            levelunit = levelFormatOptions.GetUnitTypeId();
             this.UserInputLevel = UserInputLevel;
             SingleSelectionFilter = new SelectionFilter();
             facesdata = new List<double>();
-            _uidoc = uidoc;
-            doc = uidoc.Document;
+
             
             foot = new FoundationWall();
             col = new ColumnBeamCalculation();
@@ -122,7 +127,7 @@ namespace Substructure_Area
             if (obj!=null)
             {
                 ele = doc.GetElement(obj.ElementId);
-                double levelelement = SingleElementLevel.ElementLevelCalculation(obj, areaUnit);
+                double levelelement = SingleElementLevel.ElementLevelCalculation(obj, doc,levelunit);
 
                 if (UserInputLevel > levelelement)
                 {
@@ -130,7 +135,7 @@ namespace Substructure_Area
                     if (ele.Category.Id.IntegerValue == (int)BuiltInCategory.OST_StructuralFoundation
                         || ele.Category.Id.IntegerValue == (int)BuiltInCategory.OST_Walls)
                     {
-                        datagrid.ItemsSource = foot.faceinfor(ele, doc).DefaultView;
+                        datagrid.ItemsSource = foot.faceinfor(ele, areaUnit).DefaultView;
                     }
                     else if (ele.Category.Id.IntegerValue == (int)BuiltInCategory.OST_StructuralColumns
                         || ele.Category.Id.IntegerValue == (int)BuiltInCategory.OST_StructuralFraming)
@@ -164,7 +169,7 @@ namespace Substructure_Area
             {
                 ListOfSelectedItemsItems.Add(item.ToString());
                 ExcelData file = new ExcelData();
-                file.DataTable(ListOfSelectedItemsItems,wallsList);
+                file.DataTable(ListOfSelectedItemsItems,wallsList,areaUnit);
 
             }
             

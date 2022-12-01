@@ -22,15 +22,17 @@ namespace Substructure_Area
         private DataColumn header { get; set; }
         private DataColumn header2 { get; set; }
         private DataRow rowData { get; set; }
-        private List<int> typeID { get; set; }
-
+        private List<int> instanceID { get; set; }
+        
+        private GeometryElement geoElem { get; set; }
         private GeometryInstance geoInst { get; set; }
         private Options option { get; set; }
         private double result { get; set; }
         public FoundationWall()
         {
-            typeID = new List<int>();
+            instanceID = new List<int>();
             option = new Options();
+            
         }
 
         public DataTable faceinfor(Element ele, ForgeTypeId areaUnit)
@@ -38,10 +40,10 @@ namespace Substructure_Area
 
             
             
-            GeometryElement geoElem = ele.get_Geometry(option);
+             
             table = new DataTable();
 
-
+            geoElem = ele.get_Geometry(option);
             header = new DataColumn("Faces");
             header2 = new DataColumn(ele.Name);
             table.Columns.Add(header);
@@ -117,48 +119,42 @@ namespace Substructure_Area
             }
             return table;
         }
-        public DataTable faceinfor(List<Element> ele, GeometryElement geoElem, Document doc)
+        public DataTable faceinfor(IList<Element> ele, ForgeTypeId areaUnit)
         {
 
-            FormatOptions areaFormatOptions = doc.GetUnits().GetFormatOptions(SpecTypeId.Area);
-            ForgeTypeId areaUnit = areaFormatOptions.GetUnitTypeId();
             table = new DataTable();
+            header = new DataColumn("Faces");
+            header2 = new DataColumn(ele.Select(x => x.Name).ToString());
+            table.Columns.Add(header);
+            table.Columns.Add(header2);
             foreach (var item in ele)
             {
-                Options option = new Options();
-                //option.
-                //item.get_Geometry()
-                if (!typeID.Contains(item.GetTypeId().IntegerValue))
-                {
-                    typeID.Add(item.GetTypeId().IntegerValue);
-                    header = new DataColumn("Faces");
-                    header2 = new DataColumn(ele.Select(x => x.Name).ToString());
-                    table.Columns.Add(header);
-                    table.Columns.Add(header2);
 
+                geoElem = item.get_Geometry(option);
+                if (! instanceID.Contains(item.Id.IntegerValue))
+                {
+                    instanceID.Add(item.GetTypeId().IntegerValue);
 
                     foreach (GeometryObject geomObj in geoElem)
                     {
-
                         geoInst = geomObj as GeometryInstance;
-
                         if (null != geoInst)
                         {
-
                             foreach (Solid geoSolid in geoInst.SymbolGeometry)
                             {
                                 if (null != geoSolid)
                                 {
                                     faces = 0;
+                                    rowData = table.NewRow();
+                                    rowData[header] = "face";
+                                    rowData[header2] = item.Name;
                                     foreach (Face geomFace in geoSolid.Faces)
                                     {
-
                                         faces++;
                                         rowData = table.NewRow();
                                         rowData[header] = faces;
                                         rowData[header2] = Math.Round(UnitUtils.ConvertFromInternalUnits(geomFace.Area, areaUnit), 2);
                                         table.Rows.Add(rowData);
-
                                     }
                                     if (geoSolid.SurfaceArea != 0)
                                     {
@@ -168,11 +164,9 @@ namespace Substructure_Area
                                         rowData[header2] = result;
                                         table.Rows.Add(rowData);
                                     }
-
                                 }
                             }
                         }
-
                         //strip footing/raft data
                         else if (null == geoInst)
                         {
@@ -180,6 +174,10 @@ namespace Substructure_Area
                             if (null != geoSolid)
                             {
                                 faces = 0;
+                                rowData = table.NewRow();
+                                rowData[header] = "face";
+                                rowData[header2] = item.Name;
+                                table.Rows.Add(rowData);
                                 foreach (Face geoface in geoSolid.Faces)
                                 {
                                     if (null != geoface && geoface.Id != -1)
@@ -188,6 +186,7 @@ namespace Substructure_Area
                                         rowData = table.NewRow();
                                         rowData[header] = faces;
                                         rowData[header2] = Math.Round(UnitUtils.ConvertFromInternalUnits(geoface.Area, areaUnit), 2);
+                                        
                                         table.Rows.Add(rowData);
                                     }
                                 }
@@ -199,15 +198,11 @@ namespace Substructure_Area
                                     rowData[header2] = result;
                                     table.Rows.Add(rowData);
                                 }
-
                             }
                         }
                     }
                 }
             }
-           
-
-            
             return table;
         }
     }
