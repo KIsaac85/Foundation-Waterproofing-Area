@@ -39,7 +39,6 @@ namespace Substructure_Area._5__Excel_Export
 
                      SaveFileDialog saveFile = new SaveFileDialog
                     {
-                         
                         FileName = "NewSheet", // Default file name
                         DefaultExt = ".xlsx", // Default file extension
                         Filter = "Excel Sheet (.xlsx)|*" // Filter files by extension
@@ -60,19 +59,7 @@ namespace Substructure_Area._5__Excel_Export
                             break;
                         }
                     } while (result!=false && errormessage!=null);
-                    
                 }
-
-
-
-
-
-
-
-
-
-
-                
             }
         }
 
