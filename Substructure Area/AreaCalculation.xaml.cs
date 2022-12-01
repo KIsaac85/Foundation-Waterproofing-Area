@@ -18,6 +18,7 @@ using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
 using Substructure_Area._2_DataFilter;
 using Substructure_Area._3_Calculation;
+using Substructure_Area._5__Excel_Export;
 
 namespace Substructure_Area
 {
@@ -36,23 +37,31 @@ namespace Substructure_Area
         public List<double> facesdata;
         public FoundationWall foot;
         private ColumnBeamCalculation col { get; set; }
-        public List<Element> FamilyinstanceList { get; set; }
-        public IList<Element> wallsList { get; set; }
-        public IList<Element> columnsList { get; set; }
-        public IList<Element> beamsList { get; set; }
-        public IList<Element> raftList { get; set; }
-        public IList<Element> recFootingsList { get; set; }
-        public IList<Element> stripFootingsList { get; set; }
+        private  List<Element> FamilyinstanceList { get; set; }
+        private IList<Element> wallsList { get; set; }
+        private IList<Element> columnsList { get; set; }
+        private IList<Element> beamsList { get; set; }
+        private IList<Element> raftList { get; set; }
+        private IList<Element> recFootingsList { get; set; }
+        private IList<Element> stripFootingsList { get; set; }
         private static SelectionFilter SingleSelectionFilter;
+        private FormatOptions areaFormatOptions { get; set; }
+        private ForgeTypeId areaUnit { get; set; }
+        private static FormatOptions levelFormatOptions { get; set; }
+        private static ForgeTypeId levelunit { get; set; }
         public areaCalculation(UIDocument uidoc)
         {
             InitializeComponent();
-
+            _uidoc = uidoc;
+            doc = uidoc.Document;
+            areaFormatOptions = doc.GetUnits().GetFormatOptions(SpecTypeId.Area);
+            areaUnit = areaFormatOptions.GetUnitTypeId();
+            levelFormatOptions = doc.GetUnits().GetFormatOptions(SpecTypeId.Length);
+            levelunit = levelFormatOptions.GetUnitTypeId();
             this.UserInputLevel = UserInputLevel;
             SingleSelectionFilter = new SelectionFilter();
             facesdata = new List<double>();
-            _uidoc = uidoc;
-            doc = uidoc.Document;
+
             
             foot = new FoundationWall();
             col = new ColumnBeamCalculation();
@@ -118,26 +127,21 @@ namespace Substructure_Area
             if (obj!=null)
             {
                 ele = doc.GetElement(obj.ElementId);
-                double levelelement = SingleElementLevel.ElementLevelCalculation(obj, doc);
-
-
-
+                double levelelement = SingleElementLevel.ElementLevelCalculation(obj, doc,levelunit);
 
                 if (UserInputLevel > levelelement)
                 {
-                    GeometryElement geoElem = null;
-                    geoElem = ele.GetGeometryObjectFromReference(obj) as GeometryElement;
-
+                    
                     if (ele.Category.Id.IntegerValue == (int)BuiltInCategory.OST_StructuralFoundation
                         || ele.Category.Id.IntegerValue == (int)BuiltInCategory.OST_Walls)
                     {
-                        datagrid.ItemsSource = foot.faceinfor(ele, geoElem, doc).DefaultView;
+                        datagrid.ItemsSource = foot.faceinfor(ele, areaUnit).DefaultView;
                     }
                     else if (ele.Category.Id.IntegerValue == (int)BuiltInCategory.OST_StructuralColumns
                         || ele.Category.Id.IntegerValue == (int)BuiltInCategory.OST_StructuralFraming)
                     {
 
-                        datagrid.ItemsSource = col.Faceinfo(ele, geoElem, doc).DefaultView;
+                        datagrid.ItemsSource = col.Faceinfo(ele, areaUnit).DefaultView;
                     }
                 }
                 else
@@ -159,13 +163,17 @@ namespace Substructure_Area
 
         private void Save_As_Click(object sender, RoutedEventArgs e)
         {
-            switch (Select_Family.SelectedItems.ToString())
+            List<string > ListOfSelectedItemsItems = new List<string>() ;
+            
+            foreach (var item in Select_Family.SelectedItems)
             {
-                case "Rectangular Footings":
-                    break;
-                default:
-                    break;
+                ListOfSelectedItemsItems.Add(item.ToString());
+                ExcelData file = new ExcelData();
+                file.DataTable(ListOfSelectedItemsItems,wallsList,areaUnit);
+
             }
+            
+            
         }
     }
 }

@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:Substructure_Area"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" Title="Substructure Area" 
-        WindowStartupLocation="CenterOwner" Topmost="True">
+        WindowStartupLocation="CenterOwner" >
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20"/>
@@ -57,7 +57,9 @@
 
             <DataGrid.ContextMenu >
                 <ContextMenu>
-                    <MenuItem Header="Copy" Command="Copy"/>
+                    <MenuItem Header="Copy" Command="Copy" />
+                    <MenuItem Header="Select All" Command="SelectAll"/>
+                    <MenuItem Header="Print" Command="PrintPreview"/>
                 </ContextMenu>
             </DataGrid.ContextMenu>
 
@@ -81,6 +83,12 @@
             </ListBox.Resources>
 
         </ListBox>
+        <Button x:Name="SaveAs" Content="Save As" Grid.Column="1" 
+                Grid.Row="4" Click="Save_As_Click" 
+                IsEnabled="{Binding ElementName=Select_Family , 
+                    Path =SelectedItems.Count}">
+        </Button>
+        
         <Button x:Name="Cancel" Content="Cancel" Grid.Column="2" 
                 Grid.Row="4" Click="Cancel_Click" 
                 Margin="0,0.6,0.6,0.2" 

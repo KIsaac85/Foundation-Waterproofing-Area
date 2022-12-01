@@ -16,13 +16,11 @@ namespace Substructure_Area
         private static Element Element;
 		private static Level levelelement;
 		private static double ElevationLevel;
-        private static FormatOptions levelFormatOptions;
-        private static ForgeTypeId levelunit;
+
 		
-        public static Double ElementLevelCalculation(Reference obj, Document doc)
+        public static Double ElementLevelCalculation(Reference obj,Document doc, ForgeTypeId levelunit)
         {
-            levelFormatOptions = doc.GetUnits().GetFormatOptions(SpecTypeId.Length);
-            levelunit = levelFormatOptions.GetUnitTypeId();
+;
 			Element = doc.GetElement(obj.ElementId);
 
 			if (Element.LevelId.IntegerValue != -1)

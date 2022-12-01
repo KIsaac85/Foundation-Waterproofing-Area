@@ -13,22 +13,23 @@ namespace Substructure_Area
     {
         
 
-        private FormatOptions areaFormatOptions { get; set; }
-        private ForgeTypeId areaUnit { get; set; }
+
+        private Options option { get; set; }
         private Solid solid { get; set; }
+        private GeometryElement geoElem { get; set; }
         private DataTable table { get; set;  }
         private DataColumn header { get; set; }
         private DataColumn header2 { get; set; }
         private DataRow rowData { get; set; }
         private int faces { get; set; }
         private double result { get; set; }
-        public DataTable Faceinfo(Element ele, GeometryElement geoElem, Document doc)
+        public DataTable Faceinfo(Element ele, ForgeTypeId areaUnit)
         {
             
             table = new DataTable();
-            areaFormatOptions = doc.GetUnits().GetFormatOptions(SpecTypeId.Area);
-            areaUnit = areaFormatOptions.GetUnitTypeId();
-
+            option = new Options();
+            
+            geoElem = ele.get_Geometry(option);
             header = new DataColumn("Faces");
             header2 = new DataColumn(ele.Name);
             table.Columns.Add(header);
@@ -37,6 +38,7 @@ namespace Substructure_Area
             
             foreach (GeometryObject geomObj in geoElem)
             {
+
                 solid = geomObj as Solid;
                 if (null != solid && solid.Id != -1)
                 {
