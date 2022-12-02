@@ -2,6 +2,7 @@
 using Autodesk.Revit.UI;
 using Microsoft.Win32;
 using OfficeOpenXml;
+using OfficeOpenXml.Style;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -35,7 +36,7 @@ namespace Substructure_Area._5__Excel_Export
                     
                     
                     RetainingWallSheet.Cells[1 , 1].LoadFromDataTable(foundationWall.faceinfor(WallList,areaUnit));
-                    
+                    RetainingWallSheet.Cells.Style.Border.Bottom.Style = ExcelBorderStyle.DashDotDot ;
 
                      SaveFileDialog saveFile = new SaveFileDialog
                     {
@@ -51,6 +52,7 @@ namespace Substructure_Area._5__Excel_Export
                         {
                             saveFile.OverwritePrompt = true;
                             savedialogue(package, saveFile);
+
                         }
                         catch (Exception e)
                         {
