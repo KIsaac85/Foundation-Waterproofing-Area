@@ -40,6 +40,9 @@ namespace Substructure_Area._5__Excel_Export
                     RetainingWallSheet.Cells[tableaddress].Style.WrapText = true;
                     RetainingWallSheet.Cells[tableaddress].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
                     RetainingWallSheet.Cells[tableaddress].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                    //RetainingWallSheet.Cells[tableaddress].Value = Convert.ToDouble(RetainingWallSheet.Cells[tableaddress]);
+                    //double x;
+                    //RetainingWallSheet.Cells[tableaddress].Value = double.TryParse(RetainingWallSheet.Cells[tableaddress].ToString(),out x);
                     SaveFileDialog saveFile = new SaveFileDialog
                     {
                         FileName = "NewSheet", // Default file name
