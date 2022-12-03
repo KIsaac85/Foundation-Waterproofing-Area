@@ -35,10 +35,12 @@ namespace Substructure_Area._5__Excel_Export
 
                     
                     
-                    RetainingWallSheet.Cells[1 , 1].LoadFromDataTable(foundationWall.faceinfor(WallList,areaUnit));
-                    RetainingWallSheet.Cells.Style.Border.Bottom.Style = ExcelBorderStyle.DashDotDot ;
-
-                     SaveFileDialog saveFile = new SaveFileDialog
+                    string tableaddress= RetainingWallSheet.Cells[1 , 1].LoadFromDataTable(foundationWall.faceinfor(WallList,areaUnit)).Address;
+                    RetainingWallSheet.Cells[tableaddress].Style.Border.Bottom.Style = ExcelBorderStyle.DashDotDot ;
+                    RetainingWallSheet.Cells[tableaddress].Style.WrapText = true;
+                    RetainingWallSheet.Cells[tableaddress].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+                    RetainingWallSheet.Cells[tableaddress].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                    SaveFileDialog saveFile = new SaveFileDialog
                     {
                         FileName = "NewSheet", // Default file name
                         DefaultExt = ".xlsx", // Default file extension
