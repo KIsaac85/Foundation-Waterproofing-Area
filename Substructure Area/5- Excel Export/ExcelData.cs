@@ -2,9 +2,11 @@
 using Autodesk.Revit.UI;
 using Microsoft.Win32;
 using OfficeOpenXml;
+using OfficeOpenXml.Style;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -34,10 +36,31 @@ namespace Substructure_Area._5__Excel_Export
 
                     
                     
-                    RetainingWallSheet.Cells[1 , 1].LoadFromDataTable(foundationWall.faceinfor(WallList,areaUnit));
+                    string tableaddress= RetainingWallSheet.Cells[1 , 1].LoadFromDataTable(foundationWall.faceinfor(WallList,areaUnit)).Address;
+                    RetainingWallSheet.Cells[tableaddress].Style.Border.Bottom.Style = ExcelBorderStyle.DashDotDot ;
+                    RetainingWallSheet.Cells[tableaddress].Style.WrapText = true;
+                    RetainingWallSheet.Cells[tableaddress].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+                    RetainingWallSheet.Cells[tableaddress].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                    //RetainingWallSheet.Cells[tableaddress].Value = Convert.ToDouble(RetainingWallSheet.Cells[tableaddress]);
+                    double x;
+                    foreach (ExcelRangeBase item in RetainingWallSheet.Cells[tableaddress].Worksheet.Cells)
+                    {
+                        
+                        try
+                        {
+                            //Convert.ToDouble(item.Worksheet.Cells.Style.Numberformat.Format = format) ;
+                            if (double.TryParse((string)item.Value, out x)==true)
+                            {
+                                item.Value = double.Parse((string)item.Value);
+                            }
+                            
+                            //RetainingWallSheet.Cells[tableaddress].Style.Numberformat.Format= double.TryParse(item.Worksheet.Cells.Value.ToString(), out x);
+                        }
+                        catch (Exception) { break; }
+                        
+                    }
                     
-
-                     SaveFileDialog saveFile = new SaveFileDialog
+                    SaveFileDialog saveFile = new SaveFileDialog
                     {
                         FileName = "NewSheet", // Default file name
                         DefaultExt = ".xlsx", // Default file extension
@@ -51,6 +74,7 @@ namespace Substructure_Area._5__Excel_Export
                         {
                             saveFile.OverwritePrompt = true;
                             savedialogue(package, saveFile);
+
                         }
                         catch (Exception e)
                         {
