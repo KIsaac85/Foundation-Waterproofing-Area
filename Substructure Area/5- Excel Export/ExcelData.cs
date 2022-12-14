@@ -6,6 +6,7 @@ using OfficeOpenXml.Style;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -41,8 +42,24 @@ namespace Substructure_Area._5__Excel_Export
                     RetainingWallSheet.Cells[tableaddress].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
                     RetainingWallSheet.Cells[tableaddress].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
                     //RetainingWallSheet.Cells[tableaddress].Value = Convert.ToDouble(RetainingWallSheet.Cells[tableaddress]);
-                    //double x;
-                    //RetainingWallSheet.Cells[tableaddress].Value = double.TryParse(RetainingWallSheet.Cells[tableaddress].ToString(),out x);
+                    double x;
+                    foreach (ExcelRangeBase item in RetainingWallSheet.Cells[tableaddress].Worksheet.Cells)
+                    {
+                        
+                        try
+                        {
+                            //Convert.ToDouble(item.Worksheet.Cells.Style.Numberformat.Format = format) ;
+                            if (double.TryParse((string)item.Value, out x)==true)
+                            {
+                                item.Value = double.Parse((string)item.Value);
+                            }
+                            
+                            //RetainingWallSheet.Cells[tableaddress].Style.Numberformat.Format= double.TryParse(item.Worksheet.Cells.Value.ToString(), out x);
+                        }
+                        catch (Exception) { break; }
+                        
+                    }
+                    
                     SaveFileDialog saveFile = new SaveFileDialog
                     {
                         FileName = "NewSheet", // Default file name
