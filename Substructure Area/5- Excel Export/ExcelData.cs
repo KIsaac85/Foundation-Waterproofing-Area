@@ -42,9 +42,11 @@ namespace Substructure_Area._5__Excel_Export
                     RetainingWallSheet.Cells[tableaddress].Style.WrapText = true;
                     RetainingWallSheet.Cells[tableaddress].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
                     RetainingWallSheet.Cells[tableaddress].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-                    //RetainingWallSheet.Cells[tableaddress].Value = Convert.ToDouble(RetainingWallSheet.Cells[tableaddress]);
+                   
                     double x;
-                    foreach (ExcelRangeBase item in RetainingWallSheet.Cells[tableaddress].Worksheet.Cells)
+                    double totalvalue=0;
+                    StringBuilder sb = new StringBuilder();
+                    foreach (ExcelRangeBase item in RetainingWallSheet.Cells[tableaddress])
                     {
                         try
                         {
@@ -52,16 +54,25 @@ namespace Substructure_Area._5__Excel_Export
                             {
                                 item.Value = double.Parse((string)item.Value);
                                 item.Style.Border.BorderAround(ExcelBorderStyle.Thin);
+                                sb.AppendLine(item.Address);
+                                if (true)
+                                {
+
+                                }
+                                totalvalue ++;
                             }
                             else if (double.TryParse((string)item.Value, out x) == false)
                             {
                                 item.Style.Border.BorderAround(ExcelBorderStyle.Thick);
                             }
                             RetainingWallSheet.Cells[tableaddress].Style.Border.BorderAround(ExcelBorderStyle.Thick);
+
                         }
                         catch (Exception) { break; }
+                        
                     }
-                    
+                    //TaskDialog.Show("tableaddress", tableaddress);
+                    TaskDialog.Show("total", sb.ToString());
                     SaveFileDialog saveFile = new SaveFileDialog
                     {
                         FileName = "NewSheet", // Default file name
@@ -77,11 +88,16 @@ namespace Substructure_Area._5__Excel_Export
                             saveFile.OverwritePrompt = true;
                             savedialogue(package, saveFile);
                         }
+                        
                         catch (Exception e)
                         {
-                            errormessage = e.Message;
-                            TaskDialog.Show(e.Message, "The file can not be saved. Please close the file and try again.");
-                            break;
+                            if (result != false)
+                            {
+                                errormessage = e.Message;
+                                TaskDialog.Show(e.Message, "The file can not be saved. Please close the file and try again.");
+                                break;
+                            }
+
                         }
                     } while (result!=false && errormessage!=null);
                 }
