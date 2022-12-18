@@ -53,13 +53,8 @@ namespace Substructure_Area._5__Excel_Export
                             if (double.TryParse((string)item.Value, out x)==true)
                             {
                                 item.Value = double.Parse((string)item.Value);
-                                item.Style.Border.BorderAround(ExcelBorderStyle.Thin);
-                                sb.AppendLine(item.Address);
-                                if (true)
-                                {
-
-                                }
-                                totalvalue ++;
+                                item.Style.Border.BorderAround(ExcelBorderStyle.Thin);  
+                                
                             }
                             else if (double.TryParse((string)item.Value, out x) == false)
                             {
@@ -68,11 +63,31 @@ namespace Substructure_Area._5__Excel_Export
                             RetainingWallSheet.Cells[tableaddress].Style.Border.BorderAround(ExcelBorderStyle.Thick);
 
                         }
+
                         catch (Exception) { break; }
                         
                     }
+                    try
+                    {
+                        var cel = RetainingWallSheet.Cells[tableaddress].Where(xy => xy.Value.ToString()== "Total").Select(ax=>ax.Address.Replace('A', 'B'));
+                       
+                        foreach (string item in cel)
+                        {
+                           
+                            TaskDialog.Show("Cells total no.", item);
+
+                        }
+
+                        
+                    }
+                    catch (Exception e)
+                    {
+
+                        throw e;
+                    }
+                    
                     //TaskDialog.Show("tableaddress", tableaddress);
-                    TaskDialog.Show("total", sb.ToString());
+                    //TaskDialog.Show("total", .ToString());
                     SaveFileDialog saveFile = new SaveFileDialog
                     {
                         FileName = "NewSheet", // Default file name
