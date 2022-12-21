@@ -34,60 +34,58 @@ namespace Substructure_Area._5__Excel_Export
                     
                     ExcelWorksheet RetainingWallSheet = package.Workbook.Worksheets.Add("Retaining Walls");
 
-                    
-                    
-                    string tableaddress= RetainingWallSheet.Cells[1 , 1].LoadFromDataTable(foundationWall.faceinfor(WallList,areaUnit)).Address;
-                   
-                    
+                    string tableaddress= RetainingWallSheet.Cells[1 , 1]
+                        .LoadFromDataTable(foundationWall.faceinfor(WallList,areaUnit)).Address;
+
                     RetainingWallSheet.Cells[tableaddress].Style.WrapText = true;
                     RetainingWallSheet.Cells[tableaddress].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
                     RetainingWallSheet.Cells[tableaddress].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
                    
                     double x;
-                    double totalvalue=0;
-                    StringBuilder sb = new StringBuilder();
+                    double GrandTotal = 0;
+                    var cel = RetainingWallSheet.Cells[tableaddress]
+                      .Where(xy => xy.Value.ToString() == "Total")
+                          .Select(ax => ax.Address.Replace('A', 'B'));
+                    string lastcelladdress = cel.LastOrDefault().Remove(0, 1);
+                    double celladdres = double.Parse(lastcelladdress) + 1;
+                    lastcelladdress = "B" + celladdres.ToString();
+                    //TaskDialog.Show("total", lastcelladdress);
+                    RetainingWallSheet.Cells[lastcelladdress].Value = GrandTotal;
+                    lastcelladdress = "A" + celladdres.ToString();
+                    RetainingWallSheet.Cells[lastcelladdress].Value = "Grand Total";
+                    
+                    foreach (string add in cel)
+                    {
+                        //TaskDialog.Show("", add);
+                        GrandTotal += double.Parse(RetainingWallSheet.Cells[add].Value.ToString());
+                    }
+                    
                     foreach (ExcelRangeBase item in RetainingWallSheet.Cells[tableaddress])
                     {
                         try
                         {
+
                             if (double.TryParse((string)item.Value, out x)==true)
                             {
                                 item.Value = double.Parse((string)item.Value);
                                 item.Style.Border.BorderAround(ExcelBorderStyle.Thin);  
-                                
                             }
                             else if (double.TryParse((string)item.Value, out x) == false)
                             {
                                 item.Style.Border.BorderAround(ExcelBorderStyle.Thick);
                             }
                             RetainingWallSheet.Cells[tableaddress].Style.Border.BorderAround(ExcelBorderStyle.Thick);
-
+                            
+                            
                         }
 
                         catch (Exception) { break; }
                         
                     }
-                    try
-                    {
-                        var cel = RetainingWallSheet.Cells[tableaddress].Where(xy => xy.Value.ToString()== "Total").Select(ax=>ax.Address.Replace('A', 'B'));
-                       
-                        foreach (string item in cel)
-                        {
-                           
-                            TaskDialog.Show("Cells total no.", item);
-
-                        }
-
-                        
-                    }
-                    catch (Exception e)
-                    {
-
-                        throw e;
-                    }
                     
-                    //TaskDialog.Show("tableaddress", tableaddress);
-                    //TaskDialog.Show("total", .ToString());
+
+
+
                     SaveFileDialog saveFile = new SaveFileDialog
                     {
                         FileName = "NewSheet", // Default file name
