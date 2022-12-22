@@ -6,19 +6,23 @@ using OfficeOpenXml.Style;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 
 namespace Substructure_Area._5__Excel_Export
 {
     public class ExcelData
     {
+        private ExcelPackage package { get; set; }
+        private ExcelWorksheet RetainingWallSheet { get; set; }
         private List<string> SelectedItems { get; set; }
         private FoundationWall foundationWall { get; set; }
+        private string tableaddress { get; set; }
+        private double GrandTotal { get; set; }
+        private string lastcelladdress { get; set; }
+        private double celladdress { get; set; }
+        private IEnumerable<String> totaladdress { get; set; }
+
         public ExcelData()
         {
             SelectedItems = new List<string>();
@@ -27,54 +31,63 @@ namespace Substructure_Area._5__Excel_Export
         public void DataTable(List<String>SelectedItems, IList<Element> WallList, ForgeTypeId areaUnit)
         {
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-            using (ExcelPackage package = new ExcelPackage())
+            using (package = new ExcelPackage())
             {
                 if (SelectedItems.Contains("Retaining Walls"))
                 {
-                    
-                    ExcelWorksheet RetainingWallSheet = package.Workbook.Worksheets.Add("Retaining Walls");
+                    //new sheet creation
+                    RetainingWallSheet = package.Workbook.Worksheets.Add("Retaining Walls");
 
-                    string tableaddress= RetainingWallSheet.Cells[1 , 1]
+                    tableaddress= RetainingWallSheet.Cells[1 , 1]
                         .LoadFromDataTable(foundationWall.faceinfor(WallList,areaUnit)).Address;
 
                     RetainingWallSheet.Cells[tableaddress].Style.WrapText = true;
                     RetainingWallSheet.Cells[tableaddress].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
                     RetainingWallSheet.Cells[tableaddress].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
                    
-                    double x;
-                    double GrandTotal = 0;
-                    var cel = RetainingWallSheet.Cells[tableaddress]
+                    
+                    //getting the address of the total area for each wall
+                     totaladdress = RetainingWallSheet.Cells[tableaddress]
                       .Where(xy => xy.Value.ToString() == "Total")
                           .Select(ax => ax.Address.Replace('A', 'B'));
-                    string lastcelladdress = cel.LastOrDefault().Remove(0, 1);
-                    double celladdres = double.Parse(lastcelladdress) + 1;
-                    lastcelladdress = "B" + celladdres.ToString();
-                    //TaskDialog.Show("total", lastcelladdress);
-                    RetainingWallSheet.Cells[lastcelladdress].Value = GrandTotal;
-                    lastcelladdress = "A" + celladdres.ToString();
-                    RetainingWallSheet.Cells[lastcelladdress].Value = "Grand Total";
-                    
-                    foreach (string add in cel)
+                    //Total area calculation
+                    foreach (string add in totaladdress)
                     {
-                        //TaskDialog.Show("", add);
                         GrandTotal += double.Parse(RetainingWallSheet.Cells[add].Value.ToString());
                     }
-                    
+                    lastcelladdress = totaladdress.LastOrDefault().Remove(0, 1);
+                    celladdress = double.Parse(lastcelladdress) + 1;
+
+                    lastcelladdress = "B" + celladdress.ToString();
+                    RetainingWallSheet.Cells[lastcelladdress].Value = GrandTotal;
+                    RetainingWallSheet.Cells[lastcelladdress].Style.Border.BorderAround(ExcelBorderStyle.Medium);
+                    RetainingWallSheet.Cells[lastcelladdress].Style.WrapText=true;
+                    RetainingWallSheet.Cells[lastcelladdress].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+                    RetainingWallSheet.Cells[lastcelladdress].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+
+                    lastcelladdress = "A" + celladdress.ToString();
+                    RetainingWallSheet.Cells[lastcelladdress].Value = "Grand Total";
+                    RetainingWallSheet.Cells[lastcelladdress].Style.Border.BorderAround(ExcelBorderStyle.Medium);
+                    RetainingWallSheet.Cells[lastcelladdress].Style.WrapText = true;
+                    RetainingWallSheet.Cells[lastcelladdress].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+                    RetainingWallSheet.Cells[lastcelladdress].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+
+                    double DoubleOutputBool;
                     foreach (ExcelRangeBase item in RetainingWallSheet.Cells[tableaddress])
                     {
                         try
                         {
 
-                            if (double.TryParse((string)item.Value, out x)==true)
+                            if (double.TryParse((string)item.Value, out DoubleOutputBool) ==true)
                             {
                                 item.Value = double.Parse((string)item.Value);
                                 item.Style.Border.BorderAround(ExcelBorderStyle.Thin);  
                             }
-                            else if (double.TryParse((string)item.Value, out x) == false)
+                            else if (double.TryParse((string)item.Value, out DoubleOutputBool) == false)
                             {
-                                item.Style.Border.BorderAround(ExcelBorderStyle.Thick);
+                                item.Style.Border.BorderAround(ExcelBorderStyle.Medium);
                             }
-                            RetainingWallSheet.Cells[tableaddress].Style.Border.BorderAround(ExcelBorderStyle.Thick);
+                            RetainingWallSheet.Cells[tableaddress].Style.Border.BorderAround(ExcelBorderStyle.Medium);
                             
                             
                         }
