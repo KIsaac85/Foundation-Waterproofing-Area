@@ -6,85 +6,106 @@ using OfficeOpenXml.Style;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+using Substructure_Area;
+using System.Windows.Controls;
 
 namespace Substructure_Area._5__Excel_Export
 {
     public class ExcelData
     {
-        private List<string> SelectedItems { get; set; }
-        private FoundationWall foundationWall { get; set; }
+        private ExcelPackage package { get; set; }
+        private ExcelWorksheet RetainingWallSheet { get; set; }
+
+        private IList<Element> WallList { get; set; }
         public ExcelData()
         {
-            SelectedItems = new List<string>();
-            foundationWall = new FoundationWall();
+           
         }
-        public void DataTable(List<String>SelectedItems, IList<Element> WallList, ForgeTypeId areaUnit)
+
+        public void DataTable(ListBox x, IList<Element> WallList, IList<Element> IsolatedFootingList, ForgeTypeId areaUnit)
         {
+            
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-            using (ExcelPackage package = new ExcelPackage())
+            using (package = new ExcelPackage())
             {
-                if (SelectedItems.Contains("Retaining Walls"))
+                foreach (var item in x.SelectedItems)
                 {
-                    
-                    ExcelWorksheet RetainingWallSheet = package.Workbook.Worksheets.Add("Retaining Walls");
-
-                    
-                    
-                    string tableaddress= RetainingWallSheet.Cells[1 , 1].LoadFromDataTable(foundationWall.faceinfor(WallList,areaUnit)).Address;
-                    RetainingWallSheet.Cells[tableaddress].Style.Border.Bottom.Style = ExcelBorderStyle.DashDotDot ;
-                    RetainingWallSheet.Cells[tableaddress].Style.WrapText = true;
-                    RetainingWallSheet.Cells[tableaddress].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
-                    RetainingWallSheet.Cells[tableaddress].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-                    //RetainingWallSheet.Cells[tableaddress].Value = Convert.ToDouble(RetainingWallSheet.Cells[tableaddress]);
-                    double x;
-                    foreach (ExcelRangeBase item in RetainingWallSheet.Cells[tableaddress].Worksheet.Cells)
+                    switch (item.ToString())
                     {
-                        
-                        try
-                        {
-                            //Convert.ToDouble(item.Worksheet.Cells.Style.Numberformat.Format = format) ;
-                            if (double.TryParse((string)item.Value, out x)==true)
-                            {
-                                item.Value = double.Parse((string)item.Value);
-                            }
-                            
-                            //RetainingWallSheet.Cells[tableaddress].Style.Numberformat.Format= double.TryParse(item.Worksheet.Cells.Value.ToString(), out x);
-                        }
-                        catch (Exception) { break; }
-                        
+                        case "Retaining Walls":
+                            package = RetainingWallsExcelSheet.retainingwallsheetcreation(package, WallList, areaUnit);
+                            break;
+                        case "Raft Foundation":
+                            package.Workbook.Worksheets.Add("Raft Foundation");
+                            break;
+                        case "Strip Footings":
+                            package.Workbook.Worksheets.Add("Strip Footings");
+                            break;
+                        case "Columns":
+                            package.Workbook.Worksheets.Add("Columns");
+                            break;
+                        case "Semells":
+                            package.Workbook.Worksheets.Add("Semells");
+                            break;
+                        case "Rectangular Footings":
+                            package = FootingsExcelSheet.IsolatedFootingssheetcreation(package,IsolatedFootingList, areaUnit);
+                            break;
+
                     }
-                    
-                    SaveFileDialog saveFile = new SaveFileDialog
-                    {
-                        FileName = "NewSheet", // Default file name
-                        DefaultExt = ".xlsx", // Default file extension
-                        Filter = "Excel Sheet (.xlsx)|*" // Filter files by extension
-                    };
-                    bool? result = saveFile.ShowDialog();
-                    string errormessage = null;
-                    do
-                    {
-                        try
-                        {
-                            saveFile.OverwritePrompt = true;
-                            savedialogue(package, saveFile);
+                }
+                
 
-                        }
-                        catch (Exception e)
+                //if (SelectedItems.Contains("Retaining Walls"))
+                //{
+                //    package = RetainingWallsExcelSheet.retainingwallsheetcreation(package, SelectedItems, WallList, areaUnit);
+                //}
+                //else if (SelectedItems.Contains("Raft Foundation"))
+                //{
+                //    package.Workbook.Worksheets.Add("Raft Foundation");
+                //}
+                //else if (SelectedItems.Contains("Strip Footings"))
+                //{
+                //    package.Workbook.Worksheets.Add("Strip Footings");
+                //}
+                //else if (SelectedItems.Contains("Columns"))
+                //{
+                //    package.Workbook.Worksheets.Add("Columns");
+                //}
+                //else if (SelectedItems.Contains("Semells"))
+                //{
+                //    package.Workbook.Worksheets.Add("Semells");
+                //} 
+                SaveFileDialog saveFile = new SaveFileDialog
+                {
+                    FileName = "NewSheet", // Default file name
+                    DefaultExt = ".xlsx", // Default file extension
+                    Filter = "Excel Sheet (.xlsx)|*" // Filter files by extension
+                };
+                bool? result = saveFile.ShowDialog();
+                string errormessage = null;
+                do
+                {
+                    try
+                    {
+                        saveFile.OverwritePrompt = true;
+                        savedialogue(package, saveFile);
+                    }
+
+                    catch (Exception e)
+                    {
+                        if (result != false)
                         {
                             errormessage = e.Message;
-                            TaskDialog.Show(e.Message, "The file can not be saved. Please close the file and try again");
+                            TaskDialog.Show(e.Message, "Error saving the file!");
                             break;
                         }
-                    } while (result!=false && errormessage!=null);
-                }
-            }
+
+                    }
+                } while (result != false && errormessage != null);
+            
+        }
         }
 
         private void savedialogue(ExcelPackage package, SaveFileDialog saveFile)

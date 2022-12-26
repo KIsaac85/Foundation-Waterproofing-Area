@@ -82,6 +82,8 @@
     <Compile Include="3-Calculation\ColumnSplit.cs" />
     <Compile Include="4- AreaCalculation\ColumnBeam.cs" />
     <Compile Include="5- Excel Export\ExcelData.cs" />
+    <Compile Include="5- Excel Export\FootingsExcelSheet.cs" />
+    <Compile Include="5- Excel Export\RetainingWallsExcelSheet.cs" />
     <Compile Include="ObserveData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="getLevel.xaml.cs">
