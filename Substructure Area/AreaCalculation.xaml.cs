@@ -166,11 +166,9 @@ namespace Substructure_Area
             foreach (var item in Select_Family.SelectedItems)
             {
                 ListOfSelectedItemsItems.Add(item.ToString());
-
-
-            }
+            }   
             ExcelData file = new ExcelData();
-            file.DataTable(Select_Family, wallsList, recFootingsList, areaUnit);
+            file.DataTable(Select_Family, wallsList, recFootingsList, columnsList, beamsList,raftList,stripFootingsList,areaUnit);
 
         }
     }
