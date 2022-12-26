@@ -45,7 +45,7 @@ namespace Substructure_Area._5__Excel_Export
                             package.Workbook.Worksheets.Add("Strip Footings");
                             break;
                         case "Columns":
-                            package.Workbook.Worksheets.Add("Columns");
+                            package = ColumnsExcelSheet.columnssheetcreation(package, ColumnsList, areaUnit);
                             break;
                         case "Semells":
                             package.Workbook.Worksheets.Add("Semells");
