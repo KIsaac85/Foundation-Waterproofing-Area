@@ -123,8 +123,8 @@ namespace Substructure_Area
         {
 
             table = new DataTable();
-            header = new DataColumn("Faces");
-            header2 = new DataColumn(ele.Select(x => x.Name).ToString());
+            header = new DataColumn();
+            header2 = new DataColumn();
             table.Columns.Add(header);
             table.Columns.Add(header2);
             foreach (var item in ele)

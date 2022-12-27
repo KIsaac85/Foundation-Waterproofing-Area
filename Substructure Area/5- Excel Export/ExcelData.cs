@@ -39,16 +39,16 @@ namespace Substructure_Area._5__Excel_Export
                             package = RetainingWallsExcelSheet.retainingwallsheetcreation(package, WallList, areaUnit);
                             break;
                         case "Raft Foundation":
-                            package.Workbook.Worksheets.Add("Raft Foundation");
+                            package = RetainingWallsExcelSheet.retainingwallsheetcreation(package, RaftList, areaUnit);
                             break;
                         case "Strip Footings":
-                            package.Workbook.Worksheets.Add("Strip Footings");
+                            package = RetainingWallsExcelSheet.retainingwallsheetcreation(package, StripFootingsList, areaUnit);
                             break;
                         case "Columns":
                             package = ColumnsExcelSheet.columnssheetcreation(package, ColumnsList, areaUnit);
                             break;
                         case "Semells":
-                            package.Workbook.Worksheets.Add("Semells");
+                            package = SemellsExcelSheet.beamssheetcreation(package, ColumnsList, areaUnit);
                             break;
                         case "Rectangular Footings":
                             package = FootingsExcelSheet.IsolatedFootingssheetcreation(package,isolatedFootingList, areaUnit);

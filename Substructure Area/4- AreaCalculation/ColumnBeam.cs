@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using OfficeOpenXml.FormulaParsing.ExpressionGraph;
 
 namespace Substructure_Area
 {
@@ -96,12 +97,10 @@ namespace Substructure_Area
                                     rowData[header2] = result;
                                     table.Rows.Add(rowData);
                                 }
-
                             }
                         }
                     }
                 }
-                
             }
             return table;
         }
@@ -110,8 +109,10 @@ namespace Substructure_Area
         {
 
             table = new DataTable();
-            header = new DataColumn("Faces");
-            header2 = new DataColumn(ele.Select(x => x.Name).ToString());
+            
+            header = new DataColumn();
+            
+            header2 = new DataColumn();
             table.Columns.Add(header);
             table.Columns.Add(header2);
 
@@ -127,10 +128,15 @@ namespace Substructure_Area
                         if (null != solid && solid.Id != -1)
                         {
                             faces = 0;
+                            rowData = table.NewRow();
+                            rowData[header] = "face";
+                            rowData[header2] = item.Name;
+                            table.Rows.Add(rowData);
                             foreach (Face geomFace in solid.Faces)
                             {
                                 faces++;
                                 rowData = table.NewRow();
+
                                 rowData[header] = faces;
                                 rowData[header2] = Math.Round(UnitUtils.ConvertFromInternalUnits(geomFace.Area, areaUnit), 2);
                                 table.Rows.Add(rowData);
@@ -162,6 +168,8 @@ namespace Substructure_Area
 
                                             faces++;
                                             rowData = table.NewRow();
+                                            rowData[header] = "face";
+                                            rowData[header2] = item.Name;
                                             rowData[header] = faces;
                                             rowData[header2] = Math.Round(UnitUtils.ConvertFromInternalUnits(geomFace.Area, areaUnit), 2);
                                             table.Rows.Add(rowData);
