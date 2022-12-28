@@ -9,38 +9,38 @@ using System.Threading.Tasks;
 
 namespace Substructure_Area._5__Excel_Export
 {
-    class SemellsExcelSheet
+    class StripFootingsExcelSheet
     {
-        private static ExcelWorksheet beamsSheet { get; set; }
+        private static ExcelWorksheet StripFootingsSheet { get; set; }
 
-        private static ColumnBeamCalculation Beams { get; set; }
+        private static FoundationWall StripFootings { get; set; }
         private static string tableaddress { get; set; }
         private static double GrandTotal { get; set; }
         private static string lastcelladdress { get; set; }
         private static double celladdress { get; set; }
         private static IEnumerable<String> totaladdress { get; set; }
 
-        public static ExcelPackage beamssheetcreation(ExcelPackage package, IList<Element> columnsList, ForgeTypeId areaUnit)
+        public static ExcelPackage StripFootingssheetcreation(ExcelPackage package, IList<Element> IsolatedFootingsList, ForgeTypeId areaUnit)
         {
-            beamsSheet = package.Workbook.Worksheets.Add("Semells");
-            Beams = new ColumnBeamCalculation();
+            StripFootingsSheet = package.Workbook.Worksheets.Add("Strip Footings");
+            StripFootings = new FoundationWall();
 
-            tableaddress = beamsSheet.Cells[1, 1]
-                .LoadFromDataTable(Beams.Faceinfo(columnsList, areaUnit)).Address;
+            tableaddress = StripFootingsSheet.Cells[1, 1]
+                .LoadFromDataTable(StripFootings.faceinfor(IsolatedFootingsList, areaUnit)).Address;
 
-            beamsSheet.Cells[tableaddress].Style.WrapText = true;
-            beamsSheet.Cells[tableaddress].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
-            beamsSheet.Cells[tableaddress].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+            StripFootingsSheet.Cells[tableaddress].Style.WrapText = true;
+            StripFootingsSheet.Cells[tableaddress].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+            StripFootingsSheet.Cells[tableaddress].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
 
 
             //getting the address of the total area for each wall
-            totaladdress = beamsSheet.Cells[tableaddress]
+            totaladdress = StripFootingsSheet.Cells[tableaddress]
              .Where(xy => xy.Value.ToString() == "Total")
                  .Select(ax => ax.Address.Replace('A', 'B'));
             //Total area calculation 
             foreach (string add in totaladdress)
             {
-                GrandTotal += double.Parse(beamsSheet.Cells[add].Value.ToString());
+                GrandTotal += double.Parse(StripFootingsSheet.Cells[add].Value.ToString());
             }
             //address of grand total value
             lastcelladdress = totaladdress.LastOrDefault().Remove(0, 1);
@@ -48,24 +48,24 @@ namespace Substructure_Area._5__Excel_Export
             lastcelladdress = "B" + celladdress.ToString();
 
             // setting the value and adjusting cell borders of the grand total value
-            beamsSheet.Cells[lastcelladdress].Value = GrandTotal;
-            beamsSheet.Cells[lastcelladdress].Style.Border.BorderAround(ExcelBorderStyle.Medium);
-            beamsSheet.Cells[lastcelladdress].Style.WrapText = true;
-            beamsSheet.Cells[lastcelladdress].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
-            beamsSheet.Cells[lastcelladdress].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+            StripFootingsSheet.Cells[lastcelladdress].Value = GrandTotal;
+            StripFootingsSheet.Cells[lastcelladdress].Style.Border.BorderAround(ExcelBorderStyle.Medium);
+            StripFootingsSheet.Cells[lastcelladdress].Style.WrapText = true;
+            StripFootingsSheet.Cells[lastcelladdress].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+            StripFootingsSheet.Cells[lastcelladdress].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
 
             //address of grand total string
             lastcelladdress = "A" + celladdress.ToString();
 
             // setting the value and adjusting cell borders of the grand total string
-            beamsSheet.Cells[lastcelladdress].Value = "Grand Total";
-            beamsSheet.Cells[lastcelladdress].Style.Border.BorderAround(ExcelBorderStyle.Medium);
-            beamsSheet.Cells[lastcelladdress].Style.WrapText = true;
-            beamsSheet.Cells[lastcelladdress].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
-            beamsSheet.Cells[lastcelladdress].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+            StripFootingsSheet.Cells[lastcelladdress].Value = "Grand Total";
+            StripFootingsSheet.Cells[lastcelladdress].Style.Border.BorderAround(ExcelBorderStyle.Medium);
+            StripFootingsSheet.Cells[lastcelladdress].Style.WrapText = true;
+            StripFootingsSheet.Cells[lastcelladdress].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+            StripFootingsSheet.Cells[lastcelladdress].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
 
             double DoubleOutputBool;
-            foreach (ExcelRangeBase item in beamsSheet.Cells[tableaddress])
+            foreach (ExcelRangeBase item in StripFootingsSheet.Cells[tableaddress])
             {
                 try
                 {
@@ -81,7 +81,7 @@ namespace Substructure_Area._5__Excel_Export
                     {
                         item.Style.Border.BorderAround(ExcelBorderStyle.Medium);
                     }
-                    beamsSheet.Cells[tableaddress].Style.Border.BorderAround(ExcelBorderStyle.Medium);
+                    StripFootingsSheet.Cells[tableaddress].Style.Border.BorderAround(ExcelBorderStyle.Medium);
 
 
                 }

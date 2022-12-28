@@ -84,8 +84,10 @@
     <Compile Include="5- Excel Export\ColumnsExcelSheet.cs" />
     <Compile Include="5- Excel Export\ExcelData.cs" />
     <Compile Include="5- Excel Export\FootingsExcelSheet.cs" />
+    <Compile Include="5- Excel Export\RaftExcelSheet.cs" />
     <Compile Include="5- Excel Export\RetainingWallsExcelSheet.cs" />
     <Compile Include="5- Excel Export\SemellsExcelSheet.cs" />
+    <Compile Include="5- Excel Export\StripFootingsExcelSheet.cs" />
     <Compile Include="ObserveData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="getLevel.xaml.cs">

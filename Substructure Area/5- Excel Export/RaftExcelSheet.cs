@@ -9,38 +9,38 @@ using System.Threading.Tasks;
 
 namespace Substructure_Area._5__Excel_Export
 {
-    class SemellsExcelSheet
+    class RaftExcelSheet
     {
-        private static ExcelWorksheet beamsSheet { get; set; }
+        private static ExcelWorksheet RaftFootingsSheet { get; set; }
 
-        private static ColumnBeamCalculation Beams { get; set; }
+        private static FoundationWall RaftFootings { get; set; }
         private static string tableaddress { get; set; }
         private static double GrandTotal { get; set; }
         private static string lastcelladdress { get; set; }
         private static double celladdress { get; set; }
         private static IEnumerable<String> totaladdress { get; set; }
 
-        public static ExcelPackage beamssheetcreation(ExcelPackage package, IList<Element> columnsList, ForgeTypeId areaUnit)
+        public static ExcelPackage RaftFootingssheetcreation(ExcelPackage package, IList<Element> RaftFootingsList, ForgeTypeId areaUnit)
         {
-            beamsSheet = package.Workbook.Worksheets.Add("Semells");
-            Beams = new ColumnBeamCalculation();
+            RaftFootingsSheet = package.Workbook.Worksheets.Add("Raft Foundation");
+            RaftFootings = new FoundationWall();
 
-            tableaddress = beamsSheet.Cells[1, 1]
-                .LoadFromDataTable(Beams.Faceinfo(columnsList, areaUnit)).Address;
+            tableaddress = RaftFootingsSheet.Cells[1, 1]
+                .LoadFromDataTable(RaftFootings.faceinfor(RaftFootingsList, areaUnit)).Address;
 
-            beamsSheet.Cells[tableaddress].Style.WrapText = true;
-            beamsSheet.Cells[tableaddress].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
-            beamsSheet.Cells[tableaddress].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+            RaftFootingsSheet.Cells[tableaddress].Style.WrapText = true;
+            RaftFootingsSheet.Cells[tableaddress].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+            RaftFootingsSheet.Cells[tableaddress].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
 
 
             //getting the address of the total area for each wall
-            totaladdress = beamsSheet.Cells[tableaddress]
+            totaladdress = RaftFootingsSheet.Cells[tableaddress]
              .Where(xy => xy.Value.ToString() == "Total")
                  .Select(ax => ax.Address.Replace('A', 'B'));
             //Total area calculation 
             foreach (string add in totaladdress)
             {
-                GrandTotal += double.Parse(beamsSheet.Cells[add].Value.ToString());
+                GrandTotal += double.Parse(RaftFootingsSheet.Cells[add].Value.ToString());
             }
             //address of grand total value
             lastcelladdress = totaladdress.LastOrDefault().Remove(0, 1);
@@ -48,24 +48,24 @@ namespace Substructure_Area._5__Excel_Export
             lastcelladdress = "B" + celladdress.ToString();
 
             // setting the value and adjusting cell borders of the grand total value
-            beamsSheet.Cells[lastcelladdress].Value = GrandTotal;
-            beamsSheet.Cells[lastcelladdress].Style.Border.BorderAround(ExcelBorderStyle.Medium);
-            beamsSheet.Cells[lastcelladdress].Style.WrapText = true;
-            beamsSheet.Cells[lastcelladdress].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
-            beamsSheet.Cells[lastcelladdress].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+            RaftFootingsSheet.Cells[lastcelladdress].Value = GrandTotal;
+            RaftFootingsSheet.Cells[lastcelladdress].Style.Border.BorderAround(ExcelBorderStyle.Medium);
+            RaftFootingsSheet.Cells[lastcelladdress].Style.WrapText = true;
+            RaftFootingsSheet.Cells[lastcelladdress].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+            RaftFootingsSheet.Cells[lastcelladdress].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
 
             //address of grand total string
             lastcelladdress = "A" + celladdress.ToString();
 
             // setting the value and adjusting cell borders of the grand total string
-            beamsSheet.Cells[lastcelladdress].Value = "Grand Total";
-            beamsSheet.Cells[lastcelladdress].Style.Border.BorderAround(ExcelBorderStyle.Medium);
-            beamsSheet.Cells[lastcelladdress].Style.WrapText = true;
-            beamsSheet.Cells[lastcelladdress].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
-            beamsSheet.Cells[lastcelladdress].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+            RaftFootingsSheet.Cells[lastcelladdress].Value = "Grand Total";
+            RaftFootingsSheet.Cells[lastcelladdress].Style.Border.BorderAround(ExcelBorderStyle.Medium);
+            RaftFootingsSheet.Cells[lastcelladdress].Style.WrapText = true;
+            RaftFootingsSheet.Cells[lastcelladdress].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+            RaftFootingsSheet.Cells[lastcelladdress].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
 
             double DoubleOutputBool;
-            foreach (ExcelRangeBase item in beamsSheet.Cells[tableaddress])
+            foreach (ExcelRangeBase item in RaftFootingsSheet.Cells[tableaddress])
             {
                 try
                 {
@@ -81,7 +81,7 @@ namespace Substructure_Area._5__Excel_Export
                     {
                         item.Style.Border.BorderAround(ExcelBorderStyle.Medium);
                     }
-                    beamsSheet.Cells[tableaddress].Style.Border.BorderAround(ExcelBorderStyle.Medium);
+                    RaftFootingsSheet.Cells[tableaddress].Style.Border.BorderAround(ExcelBorderStyle.Medium);
 
 
                 }
