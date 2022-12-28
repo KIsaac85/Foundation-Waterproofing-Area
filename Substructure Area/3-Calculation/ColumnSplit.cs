@@ -176,6 +176,7 @@ namespace Substructure_Area._3_Calculation
  
                                 }
                             }
+                            count++;
                             
                         }
                         break;
