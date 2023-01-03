@@ -60,6 +60,7 @@ namespace Substructure_Area
 
                     foreach (Solid geoSolid in geoInst.SymbolGeometry)
                     {
+                        //isolated
                         if (null != geoSolid)
                         {
                             faces = 0;
@@ -86,7 +87,7 @@ namespace Substructure_Area
                     }
                 }
 
-                //strip footing/raft data
+                //strip footing/raft data/wall
                 else if (null == geoInst)
                 {
                     Solid geoSolid = geomObj as Solid;
@@ -127,14 +128,18 @@ namespace Substructure_Area
             header2 = new DataColumn();
             table.Columns.Add(header);
             table.Columns.Add(header2);
+            instanceID.AddRange(ele.Select(x => x.GetTypeId().IntegerValue).Distinct());
+            
             foreach (var item in ele)
             {
 
                 geoElem = item.get_Geometry(option);
-                if (! instanceID.Contains(item.Id.IntegerValue))
+                
+                
+                if (instanceID.Contains(item.GetTypeId().IntegerValue))
                 {
-                    instanceID.Add(item.GetTypeId().IntegerValue);
 
+                    instanceID.Remove(item.GetTypeId().IntegerValue);
                     foreach (GeometryObject geomObj in geoElem)
                     {
                         geoInst = geomObj as GeometryInstance;
@@ -142,12 +147,14 @@ namespace Substructure_Area
                         {
                             foreach (Solid geoSolid in geoInst.SymbolGeometry)
                             {
-                                if (null != geoSolid)
+                                //isolated
+                                if (-1 != geoSolid.Id)
                                 {
                                     faces = 0;
                                     rowData = table.NewRow();
                                     rowData[header] = "face";
                                     rowData[header2] = item.Name;
+                                    table.Rows.Add(rowData);
                                     foreach (Face geomFace in geoSolid.Faces)
                                     {
                                         faces++;
@@ -167,11 +174,11 @@ namespace Substructure_Area
                                 }
                             }
                         }
-                        //strip footing/raft data
-                        else if (null == geoInst)
+                        //strip footing/raft data/wall
+                        else if (null == geoInst )
                         {
                             Solid geoSolid = geomObj as Solid;
-                            if (null != geoSolid)
+                            if (1 == geoSolid.Id && geoSolid.SurfaceArea != 0)
                             {
                                 faces = 0;
                                 rowData = table.NewRow();
@@ -186,10 +193,10 @@ namespace Substructure_Area
                                         rowData = table.NewRow();
                                         rowData[header] = faces;
                                         rowData[header2] = Math.Round(UnitUtils.ConvertFromInternalUnits(geoface.Area, areaUnit), 2);
-                                        
                                         table.Rows.Add(rowData);
                                     }
                                 }
+                                //Calculate the total per each element
                                 if (geoSolid.SurfaceArea != 0)
                                 {
                                     result = Math.Round(UnitUtils.ConvertFromInternalUnits(geoSolid.SurfaceArea, areaUnit), 2);
@@ -199,6 +206,36 @@ namespace Substructure_Area
                                     table.Rows.Add(rowData);
                                 }
                             }
+                            
+                            else if (-1 == geoSolid.Id && geoSolid.SurfaceArea!=0)
+                            {
+                                faces = 0;
+                                rowData = table.NewRow();
+                                rowData[header] = "face";
+                                rowData[header2] = item.Name;
+                                table.Rows.Add(rowData);
+                                foreach (Face geoface in geoSolid.Faces)
+                                {
+                                    if (null != geoface && geoface.Id != -1)
+                                    {
+                                        faces++;
+                                        rowData = table.NewRow();
+                                        rowData[header] = faces;
+                                        rowData[header2] = Math.Round(UnitUtils.ConvertFromInternalUnits(geoface.Area, areaUnit), 2);
+                                        table.Rows.Add(rowData);
+                                    }
+                                }
+                                //Calculate the total per each element
+                                if (geoSolid.SurfaceArea != 0)
+                                {
+                                    result = Math.Round(UnitUtils.ConvertFromInternalUnits(geoSolid.SurfaceArea, areaUnit), 2);
+                                    rowData = table.NewRow();
+                                    rowData[header] = "Total";
+                                    rowData[header2] = result;
+                                    table.Rows.Add(rowData);
+                                }
+                            }
+                            
                         }
                     }
                 }

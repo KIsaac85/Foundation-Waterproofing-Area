@@ -18,13 +18,14 @@ namespace Substructure_Area._5__Excel_Export
         private static double GrandTotal { get; set; }
         private static string lastcelladdress { get; set; }
         private static double celladdress { get; set; }
+       
         private static IEnumerable<String> totaladdress { get; set; }
 
         public static ExcelPackage StripFootingssheetcreation(ExcelPackage package, IList<Element> IsolatedFootingsList, ForgeTypeId areaUnit)
         {
             StripFootingsSheet = package.Workbook.Worksheets.Add("Strip Footings");
             StripFootings = new FoundationWall();
-
+            
             tableaddress = StripFootingsSheet.Cells[1, 1]
                 .LoadFromDataTable(StripFootings.faceinfor(IsolatedFootingsList, areaUnit)).Address;
 

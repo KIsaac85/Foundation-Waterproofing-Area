@@ -19,12 +19,13 @@ namespace Substructure_Area._5__Excel_Export
         private static string lastcelladdress { get; set; }
         private static double celladdress { get; set; }
         private static IEnumerable<String> totaladdress { get; set; }
+        
 
         public static ExcelPackage IsolatedFootingssheetcreation(ExcelPackage package, IList<Element> IsolatedFootingsList, ForgeTypeId areaUnit)
         {
             IsolatedFootingsSheet = package.Workbook.Worksheets.Add("Isolated Footings");
             IsolatedFootings = new FoundationWall();
-
+            
             tableaddress = IsolatedFootingsSheet.Cells[1, 1]
                 .LoadFromDataTable(IsolatedFootings.faceinfor(IsolatedFootingsList, areaUnit)).Address;
 

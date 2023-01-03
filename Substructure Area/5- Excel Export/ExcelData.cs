@@ -16,13 +16,8 @@ namespace Substructure_Area._5__Excel_Export
     public class ExcelData
     {
         private ExcelPackage package { get; set; }
-        private ExcelWorksheet RetainingWallSheet { get; set; }
 
-        private IList<Element> WallList { get; set; }
-        public ExcelData()
-        {
-           
-        }
+        
 
         public void DataTable(ListBox x, IList<Element> WallList, IList<Element> isolatedFootingList, 
             IList<Element> ColumnsList, IList<Element> BeamsList, IList<Element> RaftList, IList<Element> StripFootingsList, ForgeTypeId areaUnit)

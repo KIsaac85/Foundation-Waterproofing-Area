@@ -23,7 +23,7 @@ namespace Substructure_Area._5__Excel_Export
         private static string lastcelladdress { get; set; }
         private static double celladdress { get; set; }
         private static IEnumerable<String> totaladdress { get; set; }
-
+        
         public static ExcelPackage retainingwallsheetcreation(ExcelPackage package, IList<Element> WallList, ForgeTypeId areaUnit)
         {
             RetainingWallSheet = package.Workbook.Worksheets.Add("Retaining Walls");
