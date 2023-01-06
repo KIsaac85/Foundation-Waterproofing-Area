@@ -166,32 +166,33 @@ namespace Substructure_Area._2_DataFilter
                     && element.LevelId.IntegerValue == -1)
                 {
                     FamilyInstance beaminstance = doc.GetElement(element.Id) as FamilyInstance;
-                    try
+                    if (beaminstance.SuperComponent==null)
                     {
-                        if (beaminstance.Host != null && beaminstance.StructuralMaterialType == StructuralMaterialType.Concrete)
+                        try
                         {
-                            beamTopLevel = beaminstance.Host as Level;
+                            if (beaminstance.Host != null && beaminstance.StructuralMaterialType == StructuralMaterialType.Concrete)
+                            {
+                                beamTopLevel = beaminstance.Host as Level;
 
-                        }
-                        else if (beaminstance.Host == null && beaminstance.StructuralMaterialType == StructuralMaterialType.Concrete)
-                        {
-                            beamTopLevel = doc.GetElement(beaminstance.LookupParameter(LabelUtils
-                                .GetLabelFor(BuiltInParameter.INSTANCE_REFERENCE_LEVEL_PARAM)).AsElementId()) as Level;
+                            }
+                            else if (beaminstance.Host == null && beaminstance.StructuralMaterialType == StructuralMaterialType.Concrete)
+                            {
+                                beamTopLevel = doc.GetElement(beaminstance.LookupParameter(LabelUtils
+                                    .GetLabelFor(BuiltInParameter.INSTANCE_REFERENCE_LEVEL_PARAM)).AsElementId()) as Level;
 
+                            }
+                            else
+                                break;
+                            double elElevation = UnitUtils.ConvertFromInternalUnits(beamTopLevel.Elevation, levelUnit);
+                            if (elElevation <= getLevel.Userinput)
+                            {
+
+                                beamsList.Add(element);
+                            }
                         }
-                        else
-                            break;
-                        double elElevation = UnitUtils.ConvertFromInternalUnits(beamTopLevel.Elevation, levelUnit);
-                        if (elElevation <= getLevel.Userinput)
-                        {
-                            beamsList.Add(element);
-                        }
+                        catch (Exception) {}
                     }
-                    catch (Exception)
-                    {
 
-                        
-                    }
                     
 
                 }
@@ -207,14 +208,20 @@ namespace Substructure_Area._2_DataFilter
             foreach (var element in elementsList)
             {
                 
-                if (element.Category.Id.IntegerValue == (int)BuiltInCategory.OST_StructuralFoundation)
+                if (element.Category.Id.IntegerValue == (int)BuiltInCategory.OST_StructuralFoundation )
                 {
-
+                    
                     Level elementLevel = doc.GetElement(element.LevelId) as Level;
                     double elElevation = UnitUtils.ConvertFromInternalUnits(elementLevel.Elevation, levelUnit);
                     if (elElevation <= getLevel.Userinput)
                     {
+                        FamilyInstance elementfamilyinstance = element as FamilyInstance;
+                        if (elementfamilyinstance.SuperComponent==null)
+                        {
                         rectangularfootingsList.Add(element);
+                        }
+                        
+
                     }
                     
                     

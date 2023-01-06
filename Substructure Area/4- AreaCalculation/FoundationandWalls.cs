@@ -129,20 +129,28 @@ namespace Substructure_Area
             table.Columns.Add(header);
             table.Columns.Add(header2);
             instanceID.AddRange(ele.Select(x => x.GetTypeId().IntegerValue).Distinct());
+
+            var q = ele.GroupBy(x => x.GetTypeId().IntegerValue)
+                .Select(x => new
+                {
+                     Count = x.Count(),
+                     Name = x.Key
+                }).OrderByDescending(x => x.Count);
+
             
             foreach (var item in ele)
             {
-
+                
                 geoElem = item.get_Geometry(option);
-                
-                
+
                 if (instanceID.Contains(item.GetTypeId().IntegerValue))
                 {
 
-                    instanceID.Remove(item.GetTypeId().IntegerValue);
+                   instanceID.Remove(item.GetTypeId().IntegerValue);
                     foreach (GeometryObject geomObj in geoElem)
                     {
                         geoInst = geomObj as GeometryInstance;
+                        
                         if (null != geoInst)
                         {
                             foreach (Solid geoSolid in geoInst.SymbolGeometry)
@@ -153,7 +161,9 @@ namespace Substructure_Area
                                     faces = 0;
                                     rowData = table.NewRow();
                                     rowData[header] = "face";
-                                    rowData[header2] = item.Name;
+                                    //rowData[header2] = item.Name;
+                                    string numberofinstances = q.Where(x => x.Name == item.GetTypeId().IntegerValue).Select(x => x.Count).Single().ToString();
+                                    rowData[header2] = numberofinstances;
                                     table.Rows.Add(rowData);
                                     foreach (Face geomFace in geoSolid.Faces)
                                     {
@@ -183,7 +193,8 @@ namespace Substructure_Area
                                 faces = 0;
                                 rowData = table.NewRow();
                                 rowData[header] = "face";
-                                rowData[header2] = item.Name;
+                                string numberofinstances = q.Where(x => x.Name == item.GetTypeId().IntegerValue).Select(x => x.Count).Single().ToString();
+                                rowData[header2] = numberofinstances;
                                 table.Rows.Add(rowData);
                                 foreach (Face geoface in geoSolid.Faces)
                                 {
@@ -212,7 +223,8 @@ namespace Substructure_Area
                                 faces = 0;
                                 rowData = table.NewRow();
                                 rowData[header] = "face";
-                                rowData[header2] = item.Name;
+                                string numberofinstances = q.Where(x => x.Name == item.GetTypeId().IntegerValue).Select(x => x.Count).Single().ToString();
+                                rowData[header2] = numberofinstances;
                                 table.Rows.Add(rowData);
                                 foreach (Face geoface in geoSolid.Faces)
                                 {

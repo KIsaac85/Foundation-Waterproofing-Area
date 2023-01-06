@@ -19,7 +19,7 @@ namespace Substructure_Area._5__Excel_Export
         private static string lastcelladdress { get; set; }
         private static double celladdress { get; set; }
         private static IEnumerable<String> totaladdress { get; set; }
-        
+
 
         public static ExcelPackage IsolatedFootingssheetcreation(ExcelPackage package, IList<Element> IsolatedFootingsList, ForgeTypeId areaUnit)
         {
@@ -65,14 +65,14 @@ namespace Substructure_Area._5__Excel_Export
             IsolatedFootingsSheet.Cells[lastcelladdress].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
             IsolatedFootingsSheet.Cells[lastcelladdress].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
 
-            double DoubleOutputBool;
+            
             foreach (ExcelRangeBase item in IsolatedFootingsSheet.Cells[tableaddress])
             {
                 try
                 {
                     //converting text in cells to doubles
                     //first check if it was possible and adjusting the borders
-                    if (double.TryParse((string)item.Value, out DoubleOutputBool) == true)
+                    if (double.TryParse((string)item.Value, out double DoubleOutputBool) == true)
                     {
                         item.Value = double.Parse((string)item.Value);
                         item.Style.Border.BorderAround(ExcelBorderStyle.Thin);
