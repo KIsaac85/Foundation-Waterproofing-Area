@@ -140,7 +140,7 @@ namespace Substructure_Area
             
             foreach (var item in ele)
             {
-                
+                string numberofinstances = q.Where(x => x.Name == item.GetTypeId().IntegerValue).Select(x => x.Count).Single().ToString();
                 geoElem = item.get_Geometry(option);
 
                 if (instanceID.Contains(item.GetTypeId().IntegerValue))
@@ -153,17 +153,17 @@ namespace Substructure_Area
                         
                         if (null != geoInst)
                         {
+                            
                             foreach (Solid geoSolid in geoInst.SymbolGeometry)
                             {
                                 //isolated
                                 if (-1 != geoSolid.Id)
                                 {
+                                    (string, string) t1 = (item.Name, '('+numberofinstances+')');
                                     faces = 0;
                                     rowData = table.NewRow();
-                                    rowData[header] = "face";
-                                    //rowData[header2] = item.Name;
-                                    string numberofinstances = q.Where(x => x.Name == item.GetTypeId().IntegerValue).Select(x => x.Count).Single().ToString();
-                                    rowData[header2] = numberofinstances;
+                                    rowData[header] = "Face";
+                                    rowData[header2] = t1;
                                     table.Rows.Add(rowData);
                                     foreach (Face geomFace in geoSolid.Faces)
                                     {
@@ -177,8 +177,12 @@ namespace Substructure_Area
                                     {
                                         result = Math.Round(UnitUtils.ConvertFromInternalUnits(geoSolid.SurfaceArea, areaUnit), 2);
                                         rowData = table.NewRow();
-                                        rowData[header] = "Total";
+                                        rowData[header] = "Total Per Instance";
                                         rowData[header2] = result;
+                                        table.Rows.Add(rowData);
+                                        rowData = table.NewRow();
+                                        rowData[header] = "Total Per Type";
+                                        rowData[header2] = result * double.Parse(numberofinstances);
                                         table.Rows.Add(rowData);
                                     }
                                 }
@@ -187,14 +191,16 @@ namespace Substructure_Area
                         //strip footing/raft data/wall
                         else if (null == geoInst )
                         {
+                            
                             Solid geoSolid = geomObj as Solid;
                             if (1 == geoSolid.Id && geoSolid.SurfaceArea != 0)
                             {
+                                (string, string) t1 = (item.Name, '(' + numberofinstances + ')');
                                 faces = 0;
                                 rowData = table.NewRow();
-                                rowData[header] = "face";
-                                string numberofinstances = q.Where(x => x.Name == item.GetTypeId().IntegerValue).Select(x => x.Count).Single().ToString();
-                                rowData[header2] = numberofinstances;
+                                rowData[header] = "Face";
+                                numberofinstances = q.Where(x => x.Name == item.GetTypeId().IntegerValue).Select(x => x.Count).Single().ToString();
+                                rowData[header2] = t1;
                                 table.Rows.Add(rowData);
                                 foreach (Face geoface in geoSolid.Faces)
                                 {
@@ -212,19 +218,25 @@ namespace Substructure_Area
                                 {
                                     result = Math.Round(UnitUtils.ConvertFromInternalUnits(geoSolid.SurfaceArea, areaUnit), 2);
                                     rowData = table.NewRow();
-                                    rowData[header] = "Total";
+                                    rowData[header] = "Total Per Instance";
                                     rowData[header2] = result;
                                     table.Rows.Add(rowData);
+                                    rowData = table.NewRow();
+                                    rowData[header] = "Total Per Type";
+                                    rowData[header2] = result*double.Parse(numberofinstances);
+                                    table.Rows.Add(rowData);
+
                                 }
                             }
                             
                             else if (-1 == geoSolid.Id && geoSolid.SurfaceArea!=0)
                             {
+                                (string, string) t1 = (item.Name, '(' + numberofinstances + ')');
                                 faces = 0;
                                 rowData = table.NewRow();
-                                rowData[header] = "face";
-                                string numberofinstances = q.Where(x => x.Name == item.GetTypeId().IntegerValue).Select(x => x.Count).Single().ToString();
-                                rowData[header2] = numberofinstances;
+                                rowData[header] = "Face";
+                                numberofinstances = q.Where(x => x.Name == item.GetTypeId().IntegerValue).Select(x => x.Count).Single().ToString();
+                                rowData[header2] = t1;
                                 table.Rows.Add(rowData);
                                 foreach (Face geoface in geoSolid.Faces)
                                 {
@@ -242,9 +254,14 @@ namespace Substructure_Area
                                 {
                                     result = Math.Round(UnitUtils.ConvertFromInternalUnits(geoSolid.SurfaceArea, areaUnit), 2);
                                     rowData = table.NewRow();
-                                    rowData[header] = "Total";
+                                    rowData[header] = "Total Per Instance";
                                     rowData[header2] = result;
                                     table.Rows.Add(rowData);
+                                    rowData = table.NewRow();
+                                    rowData[header] = "Total Per Type";
+                                    rowData[header2] = result * double.Parse(numberofinstances);
+                                    table.Rows.Add(rowData);
+
                                 }
                             }
                             

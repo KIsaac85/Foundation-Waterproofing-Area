@@ -36,7 +36,7 @@ namespace Substructure_Area._5__Excel_Export
 
             //getting the address of the total area for each wall
             totaladdress = IsolatedFootingsSheet.Cells[tableaddress]
-             .Where(xy => xy.Value.ToString() == "Total")
+             .Where(xy => xy.Value.ToString() == "Total Per Type")
                  .Select(ax => ax.Address.Replace('A', 'B'));
             //Total area calculation 
             foreach (string add in totaladdress)
@@ -60,7 +60,7 @@ namespace Substructure_Area._5__Excel_Export
 
             // setting the value and adjusting cell borders of the grand total string
             IsolatedFootingsSheet.Cells[lastcelladdress].Value = "Grand Total";
-            IsolatedFootingsSheet.Cells[lastcelladdress].Style.Border.BorderAround(ExcelBorderStyle.Medium);
+            IsolatedFootingsSheet.Cells[lastcelladdress].Style.Border.BorderAround(ExcelBorderStyle.Thick);
             IsolatedFootingsSheet.Cells[lastcelladdress].Style.WrapText = true;
             IsolatedFootingsSheet.Cells[lastcelladdress].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
             IsolatedFootingsSheet.Cells[lastcelladdress].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
