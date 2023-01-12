@@ -5,72 +5,54 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Substructure_Area"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800" Title="Substructure Area" 
-        WindowStartupLocation="CenterOwner" >
-    <Grid>
+             d:DesignHeight="320" d:DesignWidth="300" Title="Substructure Area" 
+       MaxWidth="350" MaxHeight="350" WindowStartupLocation="CenterScreen" >
+    <StackPanel Margin="10">
+        
+    
+    <Grid ShowGridLines="True">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="20"/>
-            <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="auto"/>
-
-            <ColumnDefinition Width="20"/>
-            <ColumnDefinition Width="26*"/>
-            <ColumnDefinition Width="27*"/>
-
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="20"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="20"/>
-
-
-        </Grid.RowDefinitions>
+            <ColumnDefinition Width="*"/>
+             <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+        
 
         <Button x:Name="Elements_Selection" 
-                Content="Select Element" Grid.Column="1"
-                Grid.Row="2" Margin="1,9.8,23.1,170.2" 
+                Content="Select Element" Grid.Column="0"
+               Margin="10 0 10 0"
                 Click="Element_Selection_Click" 
-                Height="20"  >
+                Height="20" VerticalAlignment="Top" >
         </Button>
 
         <DataGrid x:Name="datagrid" 
                   AutoGenerateColumns= "True"
-                  Grid.Row="2" Grid.Column="5" 
-                  Grid.ColumnSpan="5" CanUserAddRows="False"        
-                  Grid.RowSpan="2" ColumnWidth="*"
-                  Margin="3.9,9.8,44,170.2" >
-
+                 Grid.Column="1" 
+                  CanUserAddRows="False" MaxHeight="200" MaxWidth="200" Cursor="Hand" 
+                  CanUserSortColumns="False" MinHeight="150" MinWidth="150"
+                  ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.ColumnSpan="2"
+                  ScrollViewer.HorizontalScrollBarVisibility="Auto" >
+            
             <DataGrid.ContextMenu >
                 <ContextMenu>
                     <MenuItem Header="Copy" Command="Copy" />
                     <MenuItem Header="Select All" Command="SelectAll"/>
-                    <MenuItem Header="Print" Command="PrintPreview"/>
                 </ContextMenu>
             </DataGrid.ContextMenu>
 
         </DataGrid>
-        
-        <ListBox x:Name="Select_Family" Grid.Column="1"
-                 Grid.Row="3" Margin="1,10.2,23.1,0.2"
-                 SelectionMode="Extended" 
-                 AllowDrop="True" Height="auto" 
-                 Grid.ColumnSpan="2">
 
+        
+        
+    </Grid>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            
+            <ListBox x:Name="Select_Family" Grid.Column="0"
+                 SelectionMode="Extended" Margin="0 10"
+                 AllowDrop="True" Height="auto" >
             <ListBox.Resources>
                 <Style TargetType="ListBox">
                     <!--<Style.Triggers>
@@ -83,21 +65,15 @@
             </ListBox.Resources>
 
         </ListBox>
-        <Button x:Name="SaveAs" Content="Save As" Grid.Column="1" 
-                Grid.Row="4" Click="Save_As_Click" 
+        <Button x:Name="SaveAs" Content="Save As" Grid.Column="1" Margin="0 10"
+                Click="Save_As_Click" VerticalAlignment="Top" HorizontalAlignment="Left" Width="80"
                 IsEnabled="{Binding ElementName=Select_Family , 
                     Path =SelectedItems.Count}">
         </Button>
-        
-        <Button x:Name="Cancel" Content="Cancel" Grid.Column="2" 
-                Grid.Row="4" Click="Cancel_Click" 
-                Margin="0,0.6,0.6,0.2" 
-                Grid.ColumnSpan="4" HorizontalAlignment="Right" 
-                Grid.RowSpan="2" Width="38"  >
-
+        </Grid>
+        <Button x:Name="Cancel" Content="Cancel" Grid.Column="4" Width="80" Margin="0 10"
+                Click="Cancel_Click" VerticalAlignment="Top" HorizontalAlignment="Left">
         </Button>
 
-        
-    </Grid>
-
+    </StackPanel>
 </Window>

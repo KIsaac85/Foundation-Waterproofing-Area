@@ -39,7 +39,7 @@ namespace Substructure_Area._5__Excel_Export
 
             //getting the address of the total area for each wall
             totaladdress = RetainingWallSheet.Cells[tableaddress]
-             .Where(xy => xy.Value.ToString() == "Total")
+             .Where(xy => xy.Value.ToString() == "Total Per Type")
                  .Select(ax => ax.Address.Replace('A', 'B'));
             //Total area calculation 
             foreach (string add in totaladdress)
