@@ -5,45 +5,45 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Substructure_Area"
              mc:Ignorable="d" 
-             d:DesignHeight="320" d:DesignWidth="300" Title="Substructure Area" 
-       MaxWidth="350" MaxHeight="350" WindowStartupLocation="CenterScreen" >
+             MinHeight="350" Width="350"  MaxHeight="500" Title="Substructure Area" 
+         WindowStartupLocation="CenterScreen">
+
     <StackPanel Margin="10">
-        
-    
-    <Grid ShowGridLines="True">
+  <Border Margin="10" BorderBrush="LightGray"   BorderThickness="1" CornerRadius="10">
+    <Grid >
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
              <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-        
 
-        <Button x:Name="Elements_Selection" 
+            
+            <Button x:Name="Elements_Selection" 
                 Content="Select Element" Grid.Column="0"
-               Margin="10 0 10 0"
+               Width="80"
                 Click="Element_Selection_Click" 
-                Height="20" VerticalAlignment="Top" >
-        </Button>
+                VerticalAlignment="Center" HorizontalAlignment="Center">
+            </Button>
 
-        <DataGrid x:Name="datagrid" 
+                <DataGrid x:Name="datagrid" 
                   AutoGenerateColumns= "True"
                  Grid.Column="1" 
-                  CanUserAddRows="False" MaxHeight="200" MaxWidth="200" Cursor="Hand" 
+                  CanUserAddRows="False" MaxHeight="200" MaxWidth="200" Cursor="Hand"
                   CanUserSortColumns="False" MinHeight="150" MinWidth="150"
                   ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.ColumnSpan="2"
-                  ScrollViewer.HorizontalScrollBarVisibility="Auto" >
-            
-            <DataGrid.ContextMenu >
-                <ContextMenu>
-                    <MenuItem Header="Copy" Command="Copy" />
-                    <MenuItem Header="Select All" Command="SelectAll"/>
-                </ContextMenu>
-            </DataGrid.ContextMenu>
+                  ScrollViewer.HorizontalScrollBarVisibility="Auto" Margin="0 0 10 0">
 
-        </DataGrid>
+                    <DataGrid.ContextMenu >
+                        <ContextMenu>
+                            <MenuItem Header="Copy" Command="Copy" />
+                            <MenuItem Header="Select All" Command="SelectAll"/>
+                        </ContextMenu>
+                    </DataGrid.ContextMenu>
 
-        
-        
-    </Grid>
+                </DataGrid>
+            </Grid>
+        </Border>
+        <Border BorderBrush="LightGray"   
+                BorderThickness="1" CornerRadius="10">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
@@ -66,14 +66,17 @@
 
         </ListBox>
         <Button x:Name="SaveAs" Content="Save As" Grid.Column="1" Margin="0 10"
-                Click="Save_As_Click" VerticalAlignment="Top" HorizontalAlignment="Left" Width="80"
-                IsEnabled="{Binding ElementName=Select_Family , 
-                    Path =SelectedItems.Count}">
+                Click="Save_As_Click" VerticalAlignment="Center" HorizontalAlignment="Center" Width="80"
+              IsEnabled="{Binding ElementName=Select_Family, Path=SelectedItems.Count}">
         </Button>
         </Grid>
-        <Button x:Name="Cancel" Content="Cancel" Grid.Column="4" Width="80" Margin="0 10"
-                Click="Cancel_Click" VerticalAlignment="Top" HorizontalAlignment="Left">
+        </Border>
+        
+        <Button x:Name="Back" Content="Back" Grid.Column="1" Width="80" Margin="0 10"
+                Click="Back_Click" VerticalAlignment="Top" HorizontalAlignment="Center">
         </Button>
-
+        <Button x:Name="Cancel" Content="Cancel" Grid.Column="0" Width="80" Margin="0 10"
+                Click="Cancel_Click" VerticalAlignment="Top" HorizontalAlignment="Center" IsCancel="True">
+        </Button>
     </StackPanel>
 </Window>

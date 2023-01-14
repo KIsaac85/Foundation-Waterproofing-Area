@@ -1,18 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.Windows;
+
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
@@ -27,13 +18,13 @@ namespace Substructure_Area
     /// </summary>
     public partial class areaCalculation : Window
     {
-        public double UserInputLevel { get; set; }
+
         private UIDocument _uidoc;
         private Document doc;
         
         private Element ele;
         private Reference obj;
-        public static double Userinput;
+
         public List<double> facesdata;
         public FoundationWall foot;
         private ColumnBeamCalculation col { get; set; }
@@ -49,6 +40,7 @@ namespace Substructure_Area
         private ForgeTypeId areaUnit { get; set; }
         private static FormatOptions levelFormatOptions { get; set; }
         private static ForgeTypeId levelunit { get; set; }
+
         public areaCalculation(UIDocument uidoc)
         {
             InitializeComponent();
@@ -58,11 +50,12 @@ namespace Substructure_Area
             areaUnit = areaFormatOptions.GetUnitTypeId();
             levelFormatOptions = doc.GetUnits().GetFormatOptions(SpecTypeId.Length);
             levelunit = levelFormatOptions.GetUnitTypeId();
-            this.UserInputLevel = UserInputLevel;
+
             SingleSelectionFilter = new SelectionFilter();
             facesdata = new List<double>();
-
             
+
+
             foot = new FoundationWall();
             col = new ColumnBeamCalculation();
 
@@ -129,7 +122,7 @@ namespace Substructure_Area
                 ele = doc.GetElement(obj.ElementId);
                 double levelelement = SingleElementLevel.ElementLevelCalculation(obj, doc,levelunit);
 
-                if (UserInputLevel > levelelement)
+                if (getLevel.Userinput > levelelement)
                 {
                     
                     if (ele.Category.Id.IntegerValue == (int)BuiltInCategory.OST_StructuralFoundation
@@ -154,10 +147,7 @@ namespace Substructure_Area
 
         }
 
-        private void Cancel_Click(object sender, RoutedEventArgs e)
-        {
-            Close();
-        }
+        
 
         private void Save_As_Click(object sender, RoutedEventArgs e)
         {
@@ -170,6 +160,16 @@ namespace Substructure_Area
             ExcelData file = new ExcelData();
             file.DataTable(Select_Family, wallsList, recFootingsList, columnsList, beamsList,raftList,stripFootingsList,areaUnit);
 
+        }
+        private void Cancel_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+        private void Back_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+            getLevel getLevel = new getLevel(_uidoc);
+            getLevel.ShowDialog();
         }
     }
 }

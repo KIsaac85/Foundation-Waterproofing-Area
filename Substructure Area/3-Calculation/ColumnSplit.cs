@@ -182,8 +182,9 @@ namespace Substructure_Area._3_Calculation
                         break;
 
                     case MessageBoxResult.No:
-                        TaskDialog.Show("Split Columns",
-                            "Calculated areas may not be accurate based on the entered levels");
+                        MessageBox.Show(
+                            "Calculated areas may not be accurate based on the entered levels", "Split Columns", MessageBoxButton.YesNo);
+
                         break;
                 }
             }
@@ -194,7 +195,7 @@ namespace Substructure_Area._3_Calculation
      
             return modifiedColumnsList;
         }
-   
+
     }
 }    
 
