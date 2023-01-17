@@ -18,7 +18,7 @@ namespace Substructure_Area
         private Options option { get; set; }
         private Solid solid { get; set; }
         private GeometryElement geoElem { get; set; }
-        private DataTable table { get; set;  }
+        private DataTable table { get; set; }
         private DataColumn header { get; set; }
         private DataColumn header2 { get; set; }
         private DataRow rowData { get; set; }
@@ -31,17 +31,17 @@ namespace Substructure_Area
         }
         public DataTable Faceinfo(Element ele, ForgeTypeId areaUnit)
         {
-            
+
             table = new DataTable();
-            
-            
+
+
             geoElem = ele.get_Geometry(option);
             header = new DataColumn("Faces");
             header2 = new DataColumn(ele.Name);
             table.Columns.Add(header);
             table.Columns.Add(header2);
 
-            
+
             foreach (GeometryObject geomObj in geoElem)
             {
 
@@ -54,7 +54,7 @@ namespace Substructure_Area
                         faces++;
                         rowData = table.NewRow();
                         rowData[header] = faces;
-                        rowData[header2] = Math.Round(UnitUtils.ConvertFromInternalUnits(geomFace.Area, areaUnit),2);
+                        rowData[header2] = Math.Round(UnitUtils.ConvertFromInternalUnits(geomFace.Area, areaUnit), 2);
                         table.Rows.Add(rowData);
                     }
                     if (solid.SurfaceArea != 0)
@@ -65,7 +65,7 @@ namespace Substructure_Area
                         rowData[header2] = result;
                         table.Rows.Add(rowData);
                     }
-                    
+
                 }
                 else if (null == solid)
                 {
@@ -105,13 +105,107 @@ namespace Substructure_Area
             return table;
         }
 
-        public DataTable Faceinfo(IList<Element> ele, ForgeTypeId areaUnit)
+        public DataTable FaceinfoTypes(IList<Element> ele, ForgeTypeId areaUnit)
         {
 
             table = new DataTable();
-            
+
             header = new DataColumn();
+
+            header2 = new DataColumn();
+            table.Columns.Add(header);
+            table.Columns.Add(header2);
             
+            
+            foreach (var item in ele)
+            {
+             
+
+                geoElem = item.get_Geometry(option);
+
+                    foreach (GeometryObject geomObj in geoElem)
+                    {
+
+                        solid = geomObj as Solid;
+                        if (null != solid && solid.Id != -1)
+                        {
+                            
+                            faces = 0;
+                            rowData = table.NewRow();
+                            rowData[header] = "Face";
+                            rowData[header2] = item.Name;
+                            table.Rows.Add(rowData);
+                            foreach (Face geomFace in solid.Faces)
+                            {
+                                faces++;
+                                rowData = table.NewRow();
+
+                                rowData[header] = faces;
+                                rowData[header2] = Math.Round(UnitUtils.ConvertFromInternalUnits(geomFace.Area, areaUnit), 2);
+                                table.Rows.Add(rowData);
+                            }
+                            if (solid.SurfaceArea != 0)
+                            {
+                                result = Math.Round(UnitUtils.ConvertFromInternalUnits(solid.SurfaceArea, areaUnit), 2);
+                                rowData = table.NewRow();
+                                rowData[header] = "Total Per Type";
+                                rowData[header2] = result;
+                                table.Rows.Add(rowData);
+
+                            }
+
+                        }
+                        else if (null == solid)
+                        {
+                            GeometryInstance geoInst = geomObj as GeometryInstance;
+
+                            if (null != geoInst)
+                            {
+
+                                foreach (Solid geoSolid in geoInst.SymbolGeometry)
+                                {
+                                    if (null != geoSolid && geoSolid.Id != -1)
+                                    {
+                                        faces = 0;
+                                       
+                                        rowData = table.NewRow();
+                                        rowData[header] = "Face";
+                                        rowData[header2] = item.Name;
+                                        table.Rows.Add(rowData);
+                                        foreach (Face geomFace in geoSolid.Faces)
+                                        {
+                                            faces++;
+                                            rowData = table.NewRow();
+                                            rowData[header] = faces;
+                                            rowData[header2] = Math.Round(UnitUtils.ConvertFromInternalUnits(geomFace.Area, areaUnit), 2);
+                                            table.Rows.Add(rowData);
+
+                                        }
+                                        if (geoSolid.SurfaceArea != 0)
+                                        {
+                                            result = Math.Round(UnitUtils.ConvertFromInternalUnits(geoSolid.SurfaceArea, areaUnit), 2);
+                                            rowData = table.NewRow();
+                                            rowData[header] = "Total Per Type";
+                                            rowData[header2] = result;
+                                            table.Rows.Add(rowData);
+
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                
+            }
+            return table;
+        }
+        public DataTable Faceinfoinstances(IList<Element> ele, ForgeTypeId areaUnit)
+        {
+
+            table = new DataTable();
+
+            header = new DataColumn();
+
             header2 = new DataColumn();
             table.Columns.Add(header);
             table.Columns.Add(header2);
@@ -125,7 +219,7 @@ namespace Substructure_Area
             foreach (var item in ele)
             {
                 string numberofinstances = q.Where(x => x.Name == item.GetTypeId().IntegerValue).Select(x => x.Count).Single().ToString();
-                
+
 
                 geoElem = item.get_Geometry(option);
                 if (instanceID.Contains(item.GetTypeId().IntegerValue))
@@ -169,13 +263,13 @@ namespace Substructure_Area
                         else if (null == solid)
                         {
                             GeometryInstance geoInst = geomObj as GeometryInstance;
-                            
+
                             if (null != geoInst)
                             {
 
                                 foreach (Solid geoSolid in geoInst.SymbolGeometry)
                                 {
-                                    if (null != geoSolid && geoSolid.Id!=-1)
+                                    if (null != geoSolid && geoSolid.Id != -1)
                                     {
                                         faces = 0;
                                         (string, string) t1 = (item.Name, '(' + numberofinstances + ')');

@@ -18,16 +18,16 @@ namespace Substructure_Area._5__Excel_Export
         private static double GrandTotal { get; set; }
         private static string lastcelladdress { get; set; }
         private static double celladdress { get; set; }
-       
+
         private static IEnumerable<String> totaladdress { get; set; }
 
         public static ExcelPackage RaftFootingssheetcreation(ExcelPackage package, IList<Element> RaftFootingsList, ForgeTypeId areaUnit)
         {
             RaftFootingsSheet = package.Workbook.Worksheets.Add("Raft Foundation");
             RaftFootings = new FoundationWall();
-            
+
             tableaddress = RaftFootingsSheet.Cells[1, 1]
-                .LoadFromDataTable(RaftFootings.faceinfor(RaftFootingsList, areaUnit)).Address;
+                .LoadFromDataTable(RaftFootings.faceinfotype(RaftFootingsList, areaUnit)).Address;
 
             RaftFootingsSheet.Cells[tableaddress].Style.WrapText = true;
             RaftFootingsSheet.Cells[tableaddress].Style.VerticalAlignment = ExcelVerticalAlignment.Center;

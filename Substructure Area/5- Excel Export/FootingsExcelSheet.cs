@@ -25,9 +25,9 @@ namespace Substructure_Area._5__Excel_Export
         {
             IsolatedFootingsSheet = package.Workbook.Worksheets.Add("Isolated Footings");
             IsolatedFootings = new FoundationWall();
-            
+
             tableaddress = IsolatedFootingsSheet.Cells[1, 1]
-                .LoadFromDataTable(IsolatedFootings.faceinfor(IsolatedFootingsList, areaUnit)).Address;
+                .LoadFromDataTable(IsolatedFootings.faceinfoinstances(IsolatedFootingsList, areaUnit)).Address;
 
             IsolatedFootingsSheet.Cells[tableaddress].Style.WrapText = true;
             IsolatedFootingsSheet.Cells[tableaddress].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
@@ -65,7 +65,7 @@ namespace Substructure_Area._5__Excel_Export
             IsolatedFootingsSheet.Cells[lastcelladdress].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
             IsolatedFootingsSheet.Cells[lastcelladdress].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
 
-            
+
             foreach (ExcelRangeBase item in IsolatedFootingsSheet.Cells[tableaddress])
             {
                 try

@@ -49,9 +49,9 @@ namespace Substructure_Area._2_DataFilter
 
         private static double BottomColumnElevation { get; set; }
         private static ElementId ColumnTopParameterID { get; set; }
-        
+
         private static double TopColumnElevation { get; set; }
-        
+
         private static double NewcolumnLength { get; set; }
         public static Level beamTopLevel { get; set; }
         public FamilyInstanceList(Document docu)
@@ -93,7 +93,7 @@ namespace Substructure_Area._2_DataFilter
 
             elementsList.AddRange(collector.WherePasses(categoryFilter)
                 .OfClass(typeof(FamilyInstance)).WhereElementIsNotElementType().ToElements());
-            
+
             return elementsList;
         }
         public static IList<Element> documentLoopWall()
@@ -118,7 +118,7 @@ namespace Substructure_Area._2_DataFilter
 
         public static IList<Element> documentLoopWallFoundation()
         {
-            
+
 
             AllstripfootingsList = wallFoundationCollector.OfCategory(BuiltInCategory.OST_StructuralFoundation)
                 .OfClass(typeof(WallFoundation)).WhereElementIsNotElementType().ToElements();
@@ -137,13 +137,13 @@ namespace Substructure_Area._2_DataFilter
         }
         public static List<Element> documentLoopRaftFoundation()
         {
-            
+
 
             AllraftList.AddRange(raftCollector.OfCategory(BuiltInCategory.OST_StructuralFoundation)
                 .OfClass(typeof(Floor)).WhereElementIsNotElementType().ToElements());
             foreach (Element ele in AllraftList)
             {
-                
+
                 Level elementLevel = doc.GetElement(ele.LevelId) as Level;
                 double elElevation = UnitUtils.ConvertFromInternalUnits(elementLevel.Elevation, levelUnit);
                 if (elElevation <= getLevel.Userinput)
@@ -158,7 +158,7 @@ namespace Substructure_Area._2_DataFilter
 
         public static List<Element> documentLoopsemellsList(List<Element> Listofelements)
         {
-            
+
             elementsList = Listofelements;
             foreach (Element element in elementsList)
             {
@@ -166,7 +166,7 @@ namespace Substructure_Area._2_DataFilter
                     && element.LevelId.IntegerValue == -1)
                 {
                     FamilyInstance beaminstance = doc.GetElement(element.Id) as FamilyInstance;
-                    if (beaminstance.SuperComponent==null)
+                    if (beaminstance.SuperComponent == null)
                     {
                         try
                         {
@@ -190,15 +190,15 @@ namespace Substructure_Area._2_DataFilter
                                 beamsList.Add(element);
                             }
                         }
-                        catch (Exception) {}
+                        catch (Exception) { }
                     }
 
-                    
+
 
                 }
-                
+
             }
-            
+
             return beamsList;
 
         }
@@ -207,24 +207,24 @@ namespace Substructure_Area._2_DataFilter
             elementsList = Listofelements;
             foreach (var element in elementsList)
             {
-                
-                if (element.Category.Id.IntegerValue == (int)BuiltInCategory.OST_StructuralFoundation )
+
+                if (element.Category.Id.IntegerValue == (int)BuiltInCategory.OST_StructuralFoundation)
                 {
-                    
+
                     Level elementLevel = doc.GetElement(element.LevelId) as Level;
                     double elElevation = UnitUtils.ConvertFromInternalUnits(elementLevel.Elevation, levelUnit);
                     if (elElevation <= getLevel.Userinput)
                     {
                         FamilyInstance elementfamilyinstance = element as FamilyInstance;
-                        if (elementfamilyinstance.SuperComponent==null)
+                        if (elementfamilyinstance.SuperComponent == null)
                         {
-                        rectangularfootingsList.Add(element);
+                            rectangularfootingsList.Add(element);
                         }
-                        
+
 
                     }
-                    
-                    
+
+
                 }
             }
             return rectangularfootingsList;

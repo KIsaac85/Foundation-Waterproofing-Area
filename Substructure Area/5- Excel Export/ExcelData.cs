@@ -17,12 +17,12 @@ namespace Substructure_Area._5__Excel_Export
     {
         private ExcelPackage package { get; set; }
 
-        
 
-        public void DataTable(ListBox x, IList<Element> WallList, IList<Element> isolatedFootingList, 
+
+        public void DataTable(ListBox x, IList<Element> WallList, IList<Element> isolatedFootingList,
             IList<Element> ColumnsList, IList<Element> BeamsList, IList<Element> RaftList, IList<Element> StripFootingsList, ForgeTypeId areaUnit)
         {
-            
+
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             using (package = new ExcelPackage())
             {
@@ -46,12 +46,12 @@ namespace Substructure_Area._5__Excel_Export
                             package = SemellsExcelSheet.beamssheetcreation(package, BeamsList, areaUnit);
                             break;
                         case "Rectangular Footings":
-                            package = FootingsExcelSheet.IsolatedFootingssheetcreation(package,isolatedFootingList, areaUnit);
+                            package = FootingsExcelSheet.IsolatedFootingssheetcreation(package, isolatedFootingList, areaUnit);
                             break;
 
                     }
                 }
-                
+
                 SaveFileDialog saveFile = new SaveFileDialog
                 {
                     FileName = "NewSheet", // Default file name
@@ -79,8 +79,8 @@ namespace Substructure_Area._5__Excel_Export
 
                     }
                 } while (result != false && errormessage != null);
-            
-        }
+
+            }
         }
 
         private void savedialogue(ExcelPackage package, SaveFileDialog saveFile)

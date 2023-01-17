@@ -36,7 +36,7 @@ namespace Substructure_Area
 
         {
             InitializeComponent();
-            
+
             facesdata = new List<double>();
             _uidoc = uidoc;
             doc = uidoc.Document;
@@ -48,7 +48,7 @@ namespace Substructure_Area
             Userinput = double.Parse(Receive_Level.Text);
             Close();
             areaCalculation are = new areaCalculation(_uidoc);
-            
+
             are.Show();
 
         }

@@ -26,7 +26,7 @@ namespace Substructure_Area._5__Excel_Export
             Columns = new ColumnBeamCalculation();
 
             tableaddress = columnsSheet.Cells[1, 1]
-                .LoadFromDataTable(Columns.Faceinfo(columnsList, areaUnit)).Address;
+                .LoadFromDataTable(Columns.Faceinfoinstances(columnsList, areaUnit)).Address;
 
             columnsSheet.Cells[tableaddress].Style.WrapText = true;
             columnsSheet.Cells[tableaddress].Style.VerticalAlignment = ExcelVerticalAlignment.Center;

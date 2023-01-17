@@ -20,13 +20,13 @@ namespace Substructure_Area._5__Excel_Export
         private static double celladdress { get; set; }
         private static IEnumerable<String> totaladdress { get; set; }
 
-        public static ExcelPackage beamssheetcreation(ExcelPackage package, IList<Element> columnsList, ForgeTypeId areaUnit)
+        public static ExcelPackage beamssheetcreation(ExcelPackage package, IList<Element> beamsList, ForgeTypeId areaUnit)
         {
             beamsSheet = package.Workbook.Worksheets.Add("Semells");
             Beams = new ColumnBeamCalculation();
 
             tableaddress = beamsSheet.Cells[1, 1]
-                .LoadFromDataTable(Beams.Faceinfo(columnsList, areaUnit)).Address;
+                .LoadFromDataTable(Beams.FaceinfoTypes(beamsList, areaUnit)).Address;
 
             beamsSheet.Cells[tableaddress].Style.WrapText = true;
             beamsSheet.Cells[tableaddress].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
