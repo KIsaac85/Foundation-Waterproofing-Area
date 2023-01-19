@@ -67,10 +67,13 @@
             </ListBox.Resources>
 
         </ListBox>
-        <Button x:Name="SaveAs" Content="Save As" Grid.Column="1" Margin="0 10" 
-                Click="Save_As_Click" VerticalAlignment="Center" HorizontalAlignment="Center" Width="80">
-        </Button>
-        </Grid>
+                    <Button x:Name="SaveAs" Content="Save As" Grid.Column="1" Margin="0 10" 
+                Click="Save_As_Click" VerticalAlignment="Center" 
+                HorizontalAlignment="Center" Width="80" 
+                IsEnabled="{Binding ElementName=Select_Family , 
+                    Path =SelectedItems.Count}"/>
+
+                </Grid>
                 
         </Border>
             <Border Margin="10">
