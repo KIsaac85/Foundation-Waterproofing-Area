@@ -36,7 +36,7 @@ namespace Substructure_Area
 
         {
             InitializeComponent();
-
+            
             facesdata = new List<double>();
             _uidoc = uidoc;
             doc = uidoc.Document;
