@@ -4,51 +4,47 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Substructure_Area" Background="LightGray"
-             mc:Ignorable="d" ResizeMode="NoResize" Topmost="True"
+             mc:Ignorable="d" ResizeMode="NoResize" Topmost="True" 
              Height="450" Width="350"   Title="Substructure Area" 
-         WindowStartupLocation="CenterScreen">
-    <Border Background="#FFEDEDED" Margin="10" BorderBrush="#FFD0D0D0" 
+         WindowStartupLocation="CenterScreen" >
+    <Border Background="#FFEDEDED" Margin="10"
             BorderThickness="1" CornerRadius="10">
-    <StackPanel>
+        <StackPanel>
+        
         <Border Padding="10">
-    <Grid >
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="7*"/>
-             <ColumnDefinition Width="6*"/>
-        </Grid.ColumnDefinitions>
+
+                <Grid >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="7*"/>
+                        <ColumnDefinition Width="6*"/>
+                    </Grid.ColumnDefinitions>
                     <Button x:Name="Elements_Selection" 
                 Content="Select Element" Grid.Column="1"
-               Width="80"
+               Width="80" 
                 Click="Element_Selection_Click" 
                 VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                    <DataGrid BorderThickness="1" x:Name="datagrid" 
-                  AutoGenerateColumns= "True"
-                 Grid.Column="0" 
+                    <DataGrid  x:Name="datagrid" 
+                  AutoGenerateColumns= "True" Cursor="Hand"
+                 Grid.Column="0"
                   CanUserAddRows="False" MaxHeight="150" MaxWidth="200" 
                   CanUserSortColumns="False" MinHeight="150" MinWidth="150"
                   ScrollViewer.VerticalScrollBarVisibility="Auto"
-                  ScrollViewer.HorizontalScrollBarVisibility="Auto" Margin="10 0 0 0" >
+                  ScrollViewer.HorizontalScrollBarVisibility="Auto">
                         <DataGrid.ColumnHeaderStyle >
-                        <Style TargetType="DataGridColumnHeader">
+                            <Style TargetType="DataGridColumnHeader">
                                 <Setter Property="Background" Value="#FFEDEDED"/>
-                        </Style>
+                            </Style>
                         </DataGrid.ColumnHeaderStyle>
-
-
-
-
                         <DataGrid.ContextMenu >
                             <ContextMenu>
-                            <MenuItem Header="Copy" Command="Copy" />
-                            <MenuItem Header="Select All" Command="SelectAll"/>
-                        </ContextMenu>
-                    </DataGrid.ContextMenu>
-                        
-
-
-                </DataGrid>
-            </Grid>
-        </Border>
+                                <MenuItem Header="Copy" Command="Copy" />
+                                <MenuItem Header="Select All" Command="SelectAll"/>
+                            </ContextMenu>
+                        </DataGrid.ContextMenu>
+                    </DataGrid>
+                </Grid>
+            </Border>
+        
         <Border BorderBrush="LightGray"   Margin="10"
                 BorderThickness="1" CornerRadius="10">
         <Grid>
