@@ -3,101 +3,89 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Substructure_Area"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800" Title="Substructure Area" 
-        WindowStartupLocation="CenterOwner" >
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="20"/>
-            <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="auto"/>
-
-            <ColumnDefinition Width="20"/>
-            <ColumnDefinition Width="26*"/>
-            <ColumnDefinition Width="27*"/>
-
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="20"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="20"/>
-
-
-        </Grid.RowDefinitions>
-
-        <Button x:Name="Elements_Selection" 
-                Content="Select Element" Grid.Column="1"
-                Grid.Row="2" Margin="1,9.8,23.1,170.2" 
-                Click="Element_Selection_Click" 
-                Height="20"  >
-        </Button>
-
-        <DataGrid x:Name="datagrid" 
-                  AutoGenerateColumns= "True"
-                  Grid.Row="2" Grid.Column="5" 
-                  Grid.ColumnSpan="5" CanUserAddRows="False"        
-                  Grid.RowSpan="2" ColumnWidth="*"
-                  Margin="3.9,9.8,44,170.2" >
-
-            <DataGrid.ContextMenu >
-                <ContextMenu>
-                    <MenuItem Header="Copy" Command="Copy" />
-                    <MenuItem Header="Select All" Command="SelectAll"/>
-                    <MenuItem Header="Print" Command="PrintPreview"/>
-                </ContextMenu>
-            </DataGrid.ContextMenu>
-
-        </DataGrid>
+             xmlns:local="clr-namespace:Substructure_Area" Background="LightGray"
+             mc:Ignorable="d" ResizeMode="NoResize" Topmost="True" 
+             Height="450" Width="350"   Title="Substructure Area" 
+         WindowStartupLocation="CenterScreen" >
+    <Border Background="#FFEDEDED" Margin="10"
+            BorderThickness="1" CornerRadius="10">
+        <StackPanel>
         
-        <ListBox x:Name="Select_Family" Grid.Column="1"
-                 Grid.Row="3" Margin="1,10.2,23.1,0.2"
-                 SelectionMode="Extended" 
-                 AllowDrop="True" Height="auto" 
-                 Grid.ColumnSpan="2">
+        <Border Padding="10">
 
+                <Grid >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="7*"/>
+                        <ColumnDefinition Width="6*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="Elements_Selection" 
+                Content="Select Element" Grid.Column="1"
+               Width="80" 
+                Click="Element_Selection_Click" 
+                VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <DataGrid  x:Name="datagrid" 
+                  AutoGenerateColumns= "True" Cursor="Hand"
+                 Grid.Column="0"
+                  CanUserAddRows="False" MaxHeight="150" MaxWidth="200" 
+                  CanUserSortColumns="False" MinHeight="150" MinWidth="150"
+                  ScrollViewer.VerticalScrollBarVisibility="Auto"
+                  ScrollViewer.HorizontalScrollBarVisibility="Auto">
+                        <DataGrid.ColumnHeaderStyle >
+                            <Style TargetType="DataGridColumnHeader">
+                                <Setter Property="Background" Value="#FFEDEDED"/>
+                            </Style>
+                        </DataGrid.ColumnHeaderStyle>
+                        <DataGrid.ContextMenu >
+                            <ContextMenu>
+                                <MenuItem Header="Copy" Command="Copy" />
+                                <MenuItem Header="Select All" Command="SelectAll"/>
+                            </ContextMenu>
+                        </DataGrid.ContextMenu>
+                    </DataGrid>
+                </Grid>
+            </Border>
+        
+        <Border BorderBrush="LightGray"   Margin="10"
+                BorderThickness="1" CornerRadius="10">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            
+            <ListBox x:Name="Select_Family" Grid.Column="0"
+                 SelectionMode="Extended" Margin="10 10 0 10 "
+                 AllowDrop="True" Height="auto" Background="#FFEDEDED">
             <ListBox.Resources>
                 <Style TargetType="ListBox">
-                    <!--<Style.Triggers>
-                        <DataTrigger Binding="{Binding ElementName = Receive_Level,
-                            Path= (Validation.HasError)}" Value="True">
-                            <Setter Property="IsEnabled" Value="False"/>
-                        </DataTrigger>
-                    </Style.Triggers>-->
+                 
                 </Style>
             </ListBox.Resources>
 
         </ListBox>
-        <Button x:Name="SaveAs" Content="Save As" Grid.Column="1" 
-                Grid.Row="4" Click="Save_As_Click" 
+                    <Button x:Name="SaveAs" Content="Save As" Grid.Column="1" Margin="0 10" 
+                Click="Save_As_Click" VerticalAlignment="Center" 
+                HorizontalAlignment="Center" Width="80" 
                 IsEnabled="{Binding ElementName=Select_Family , 
-                    Path =SelectedItems.Count}">
+                    Path =SelectedItems.Count}"/>
+
+                </Grid>
+                
+        </Border>
+            <Border Margin="10">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+        <Button x:Name="Back" Content="Back" Grid.Column="0" Width="80" Margin="0 10"
+                Click="Back_Click" VerticalAlignment="Center" HorizontalAlignment="Center">
         </Button>
-        
-        <Button x:Name="Cancel" Content="Cancel" Grid.Column="2" 
-                Grid.Row="4" Click="Cancel_Click" 
-                Margin="0,0.6,0.6,0.2" 
-                Grid.ColumnSpan="4" HorizontalAlignment="Right" 
-                Grid.RowSpan="2" Width="38"  >
-
+        <Button x:Name="Cancel" Content="Cancel" Grid.Column="1" Width="80" Margin="0 10"
+                Click="Cancel_Click" VerticalAlignment="Center" HorizontalAlignment="Center" IsCancel="True">
         </Button>
-
-        
-    </Grid>
-
+            </Grid>
+            </Border>
+        </StackPanel>
+    </Border>
 </Window>

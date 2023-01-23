@@ -20,13 +20,14 @@ namespace Substructure_Area._5__Excel_Export
         private static double celladdress { get; set; }
         private static IEnumerable<String> totaladdress { get; set; }
 
+
         public static ExcelPackage IsolatedFootingssheetcreation(ExcelPackage package, IList<Element> IsolatedFootingsList, ForgeTypeId areaUnit)
         {
             IsolatedFootingsSheet = package.Workbook.Worksheets.Add("Isolated Footings");
             IsolatedFootings = new FoundationWall();
 
             tableaddress = IsolatedFootingsSheet.Cells[1, 1]
-                .LoadFromDataTable(IsolatedFootings.faceinfor(IsolatedFootingsList, areaUnit)).Address;
+                .LoadFromDataTable(IsolatedFootings.faceinfoinstances(IsolatedFootingsList, areaUnit)).Address;
 
             IsolatedFootingsSheet.Cells[tableaddress].Style.WrapText = true;
             IsolatedFootingsSheet.Cells[tableaddress].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
@@ -35,7 +36,7 @@ namespace Substructure_Area._5__Excel_Export
 
             //getting the address of the total area for each wall
             totaladdress = IsolatedFootingsSheet.Cells[tableaddress]
-             .Where(xy => xy.Value.ToString() == "Total")
+             .Where(xy => xy.Value.ToString() == "Total Per Type")
                  .Select(ax => ax.Address.Replace('A', 'B'));
             //Total area calculation 
             foreach (string add in totaladdress)
@@ -59,19 +60,19 @@ namespace Substructure_Area._5__Excel_Export
 
             // setting the value and adjusting cell borders of the grand total string
             IsolatedFootingsSheet.Cells[lastcelladdress].Value = "Grand Total";
-            IsolatedFootingsSheet.Cells[lastcelladdress].Style.Border.BorderAround(ExcelBorderStyle.Medium);
+            IsolatedFootingsSheet.Cells[lastcelladdress].Style.Border.BorderAround(ExcelBorderStyle.Thick);
             IsolatedFootingsSheet.Cells[lastcelladdress].Style.WrapText = true;
             IsolatedFootingsSheet.Cells[lastcelladdress].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
             IsolatedFootingsSheet.Cells[lastcelladdress].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
 
-            double DoubleOutputBool;
+
             foreach (ExcelRangeBase item in IsolatedFootingsSheet.Cells[tableaddress])
             {
                 try
                 {
                     //converting text in cells to doubles
                     //first check if it was possible and adjusting the borders
-                    if (double.TryParse((string)item.Value, out DoubleOutputBool) == true)
+                    if (double.TryParse((string)item.Value, out double DoubleOutputBool) == true)
                     {
                         item.Value = double.Parse((string)item.Value);
                         item.Style.Border.BorderAround(ExcelBorderStyle.Thin);

@@ -14,9 +14,9 @@ namespace Substructure_Area._5__Excel_Export
 {
     class RetainingWallsExcelSheet
     {
-        
+
         private static ExcelWorksheet RetainingWallSheet { get; set; }
-        
+
         private static FoundationWall foundationWall { get; set; }
         private static string tableaddress { get; set; }
         private static double GrandTotal { get; set; }
@@ -28,9 +28,9 @@ namespace Substructure_Area._5__Excel_Export
         {
             RetainingWallSheet = package.Workbook.Worksheets.Add("Retaining Walls");
             foundationWall = new FoundationWall();
-            
+
             tableaddress = RetainingWallSheet.Cells[1, 1]
-                .LoadFromDataTable(foundationWall.faceinfor(WallList, areaUnit)).Address;
+                .LoadFromDataTable(foundationWall.faceinfotype(WallList, areaUnit)).Address;
 
             RetainingWallSheet.Cells[tableaddress].Style.WrapText = true;
             RetainingWallSheet.Cells[tableaddress].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
@@ -39,7 +39,7 @@ namespace Substructure_Area._5__Excel_Export
 
             //getting the address of the total area for each wall
             totaladdress = RetainingWallSheet.Cells[tableaddress]
-             .Where(xy => xy.Value.ToString() == "Total")
+             .Where(xy => xy.Value.ToString() == "Total Per Type")
                  .Select(ax => ax.Address.Replace('A', 'B'));
             //Total area calculation 
             foreach (string add in totaladdress)
@@ -91,7 +91,7 @@ namespace Substructure_Area._5__Excel_Export
                 }
 
                 catch (Exception) { break; }
-                
+
             }
             return package;
         }

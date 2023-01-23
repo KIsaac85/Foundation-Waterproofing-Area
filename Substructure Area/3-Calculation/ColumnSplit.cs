@@ -40,13 +40,13 @@ namespace Substructure_Area._3_Calculation
         public ColumnSplit(Document doc)
         {
             this.doc = doc;
-            
+
             elevationformatoptions = doc.GetUnits().GetFormatOptions(SpecTypeId.Length);
             TopelementElevationList = new List<double>();
             modifiedColumnsList = new List<Element>();
             levelUnit = elevationformatoptions.GetUnitTypeId();
             ColumnsElementCollector = new FilteredElementCollector(doc);
-            columnsList = new List<Element>() ;
+            columnsList = new List<Element>();
             ElementTopParameterID = new List<ElementId>();
             ElementBottomParameterID = new List<ElementId>();
             listofAlllevelsID = new List<ElementId>();
@@ -55,31 +55,31 @@ namespace Substructure_Area._3_Calculation
             ElementbottomoffsetValues = new List<double>();
         }
         public List<Element> columnsListChecked()
-        {   
+        {
             //Collector for all levels
             FilteredElementCollector collector = new FilteredElementCollector(doc);
             listofAlllevelsID = collector.OfCategory(BuiltInCategory.OST_Levels)
                 .OfClass(typeof(Level)).ToElementIds();
 
-            //Level ID for the levels below User Input
-            //List<ElementId> listoflevels = new List<ElementId>();
+            //List of Level ID for the levels below User Input
+
             foreach (var item in listofAlllevelsID)
             {
                 bottomElementLevel = doc.GetElement(item) as Level;
                 bottomElementElevation = UnitUtils.ConvertFromInternalUnits(bottomElementLevel.Elevation, levelUnit);
-                
+
                 if (bottomElementElevation <= getLevel.Userinput)
                 {
 
-                    listofLevelsBelowUserInput.Add(bottomElementLevel.Id) ;
+                    listofLevelsBelowUserInput.Add(bottomElementLevel.Id);
                 }
             }
-
+            //list of all columns in the project
             columnsList = ColumnsElementCollector.OfCategory(BuiltInCategory.OST_StructuralColumns)
                 .OfClass(typeof(FamilyInstance)).WhereElementIsNotElementType().ToElements();
 
 
-
+            //add columns which their lower level is below the user input
             foreach (var item in columnsList)
             {
                 foreach (var lev in listofLevelsBelowUserInput)
@@ -88,19 +88,19 @@ namespace Substructure_Area._3_Calculation
                     {
                         modifiedColumnsList.Add(item);
                     }
-                   
+
                 }
             }
-
+            //getting the top levelid for modified columns which are supposed to be split
             ElementTopParameterID.AddRange(modifiedColumnsList.Select(x =>
                  x.get_Parameter(BuiltInParameter.SCHEDULE_TOP_LEVEL_PARAM)
                  .AsElementId()));
 
-
+            //getting the top offset value for modified columns which are supposed to be split
             ElementTopOffsetValues.AddRange(modifiedColumnsList.Select(x =>
             x.get_Parameter(BuiltInParameter.SCHEDULE_TOP_LEVEL_OFFSET_PARAM)
             .AsDouble()));
-
+            //getting the bottom offset value for modified columns which are supposed to be split
             ElementbottomoffsetValues.AddRange(modifiedColumnsList.Select(x =>
             x.get_Parameter(BuiltInParameter.SCHEDULE_BASE_LEVEL_OFFSET_PARAM)
             .AsDouble()));
@@ -108,10 +108,11 @@ namespace Substructure_Area._3_Calculation
             count = 0;
             foreach (var item in ElementTopParameterID)
             {
-
+                //calculating the elevation of element top
                 topElementLevel = doc.GetElement(item) as Level;
                 topElementElevation = UnitUtils
                     .ConvertFromInternalUnits(topElementLevel.Elevation, levelUnit);
+
                 TopelementElevationList.Add(topElementElevation + ElementTopOffsetValues.ElementAt(count));
                 count++;
             }
@@ -128,10 +129,10 @@ namespace Substructure_Area._3_Calculation
 
                 {
                     case MessageBoxResult.Yes:
-                        
+
                         foreach (var ele in modifiedColumnsList)
                         {
-                            
+
                             Column = ele as FamilyInstance;
 
                             ElementTopParameterID.Add(Column
@@ -139,25 +140,25 @@ namespace Substructure_Area._3_Calculation
                                 .AsElementId());
                             topElementLevel = doc.GetElement(ElementTopParameterID.ElementAt(count)) as Level;
                             elementTopElevationValue = UnitUtils.ConvertFromInternalUnits(topElementLevel.Elevation, levelUnit);
-                            
+
                             ElementBottomParameterID.Add(Column
                             .get_Parameter(BuiltInParameter.SCHEDULE_BASE_LEVEL_PARAM)
                             .AsElementId());
                             bottomElementLevel = doc.GetElement(ElementBottomParameterID.ElementAt(count)) as Level;
-                            bottomElementElevation = UnitUtils.ConvertFromInternalUnits(bottomElementLevel.Elevation,levelUnit);
+                            bottomElementElevation = UnitUtils.ConvertFromInternalUnits(bottomElementLevel.Elevation, levelUnit);
 
                             ElementTopOffsetValues.Add(UnitUtils.ConvertFromInternalUnits(Column
                             .get_Parameter(BuiltInParameter.SCHEDULE_TOP_LEVEL_OFFSET_PARAM)
-                            .AsDouble(),levelUnit));
+                            .AsDouble(), levelUnit));
 
                             ElementbottomoffsetValues.Add(UnitUtils.ConvertFromInternalUnits(Column
                             .get_Parameter(BuiltInParameter.SCHEDULE_BASE_LEVEL_OFFSET_PARAM)
                             .AsDouble(), levelUnit));
-                            splitRatio = (getLevel.Userinput - bottomElementElevation - ElementbottomoffsetValues.ElementAt(count))
-                                                    / (elementTopElevationValue - bottomElementElevation 
+                            splitRatio = ( getLevel.Userinput -bottomElementElevation - ElementbottomoffsetValues.ElementAt(count))
+                                                    / (elementTopElevationValue - bottomElementElevation
                                                     + ElementTopOffsetValues.ElementAt(count) - ElementbottomoffsetValues.ElementAt(count));
-                            
-                            if (Math.Round(elementTopElevationValue,2) + Math.Round( ElementTopOffsetValues.ElementAt(count),2) > getLevel.Userinput)
+
+                            if (Math.Round(elementTopElevationValue, 2) + Math.Round(ElementTopOffsetValues.ElementAt(count), 2) > getLevel.Userinput&&splitRatio!=0)
                             {
                                 using (Transaction tran = new Transaction(doc, "Split Columns"))
                                 {
@@ -173,16 +174,18 @@ namespace Substructure_Area._3_Calculation
                                         TaskDialog.Show("The Input is invalid", "Columns Can not be split based on your input");
                                         break;
                                     }
- 
+
                                 }
                             }
-                            
+                            count++;
+
                         }
                         break;
 
                     case MessageBoxResult.No:
-                        TaskDialog.Show("Split Columns",
-                            "Calculated areas may not be accurate based on the entered levels");
+                        MessageBox.Show(
+                            "Calculated areas may not be accurate based on the entered levels", "Split Columns", MessageBoxButton.YesNo);
+
                         break;
                 }
             }
@@ -190,11 +193,11 @@ namespace Substructure_Area._3_Calculation
             //{
             //    TaskDialog.Show("Split Columns", "Columns top level is equal to the top elevation level");
             //}
-     
+
             return modifiedColumnsList;
         }
-   
+
     }
-}    
+}
 
 

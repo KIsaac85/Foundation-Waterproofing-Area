@@ -1,7 +1,10 @@
-E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\obj\Debug\Substructure Area_MarkupCompile.cache
-E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\obj\Debug\Substructure Area_MarkupCompile.lref
 E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\Substructure Area.dll
 E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\Substructure Area.pdb
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\EPPlus.dll
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\EPPlus.Interfaces.dll
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\EPPlus.System.Drawing.dll
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\Microsoft.IO.RecyclableMemoryStream.dll
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\Microsoft.Xaml.Behaviors.dll
 E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\RevitAPI.dll
 E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\RevitAPIUI.dll
 E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\AdpSDKCSharpWrapper.dll
@@ -56,6 +59,10 @@ E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\
 E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\Autodesk.UI.Windows.dll
 E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\Autodesk.UI.Themes.dll
 E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\Xceed.Wpf.AvalonDock.dll
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\EPPlus.xml
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\Microsoft.IO.RecyclableMemoryStream.xml
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\Microsoft.Xaml.Behaviors.pdb
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\Microsoft.Xaml.Behaviors.xml
 E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\RevitAPI.xml
 E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\RevitAPIUI.xml
 E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\RevitAddInUtility.xml
@@ -73,23 +80,16 @@ E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\
 E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\ru-RU\AdWindows.resources.dll
 E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\zh-CN\AdWindows.resources.dll
 E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\zh-TW\AdWindows.resources.dll
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\obj\Debug\getLevel.g.cs
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\obj\Debug\AreaCalculation.g.cs
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\obj\Debug\GeneratedInternalTypeHelper.g.cs
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\obj\Debug\Substructure Area_MarkupCompile.cache
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\obj\Debug\Substructure Area_MarkupCompile.lref
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\obj\Debug\getLevel.baml
+E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\obj\Debug\AreaCalculation.baml
 E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\obj\Debug\Substructure Area.g.resources
 E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\obj\Debug\Substructure Area.csproj.CoreCompileInputs.cache
 E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\obj\Debug\Substructure Area.csproj.CopyComplete
 E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\obj\Debug\Substructure Area.dll
 E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\obj\Debug\Substructure Area.pdb
-E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\Microsoft.Xaml.Behaviors.dll
-E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\Microsoft.Xaml.Behaviors.pdb
-E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\Microsoft.Xaml.Behaviors.xml
-E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\obj\Debug\GeneratedInternalTypeHelper.g.cs
-E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\obj\Debug\AreaCalculation.g.cs
-E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\obj\Debug\AreaCalculation.baml
-E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\obj\Debug\getLevel.g.cs
-E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\obj\Debug\getLevel.baml
-E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\EPPlus.dll
-E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\EPPlus.Interfaces.dll
-E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\EPPlus.System.Drawing.dll
-E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\Microsoft.IO.RecyclableMemoryStream.dll
-E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\EPPlus.xml
-E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\bin\Debug\Microsoft.IO.RecyclableMemoryStream.xml
 E:\BIM App Dev\Area of foundation\Substructure Area\Substructure Area\obj\Debug\Substructure Area.csproj.AssemblyReference.cache

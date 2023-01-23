@@ -46,15 +46,16 @@ namespace Substructure_Area
         private void OK_Click(object sender, RoutedEventArgs e)
         {
             Userinput = double.Parse(Receive_Level.Text);
-            Hide();
+            Close();
             areaCalculation are = new areaCalculation(_uidoc);
-            
+
             are.Show();
 
         }
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
             Close();
+
         }
     }
 }

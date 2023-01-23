@@ -13,7 +13,7 @@ namespace Substructure_Area
         public string Error { get { return null; } }
         private string _elevation;
         private List<string> _datafaces = new List<string>();
-       
+
 
         public Dictionary<string, string> ErrorCollection { get; private set; } = new Dictionary<string, string>();
 
@@ -31,7 +31,7 @@ namespace Substructure_Area
                         else if (!double.TryParse(_elevation, out double x))
                             result = "Elevation must be a valid number";
                         break;
-                    
+
                 }
 
                 if (ErrorCollection.ContainsKey(elev))
@@ -53,7 +53,7 @@ namespace Substructure_Area
             }
         }
 
-        
+
 
     }
 

@@ -19,9 +19,9 @@ namespace Substructure_Area
             get { return _doc; }
             set { _doc = value; }
         }
-   
 
- 
+
+
 
         public bool AllowElement(Element elem)
         {
@@ -30,7 +30,7 @@ namespace Substructure_Area
                 || elem.Category.Id.IntegerValue == (int)BuiltInCategory.OST_StructuralFraming
                 || elem.Category.Id.IntegerValue == (int)BuiltInCategory.OST_Walls)
             {
-                return true & null!=elem;
+                return true & null != elem;
             }
             return false;
         }
@@ -42,8 +42,8 @@ namespace Substructure_Area
             Document docLink = revitlinkinstance.GetLinkDocument();
             Element eFootingLink = docLink.GetElement(reference.LinkedElementId);
             if (eFootingLink.Category.Id.IntegerValue == (int)BuiltInCategory.OST_StructuralFoundation
-                || eFootingLink.Category.Id.IntegerValue == (int)BuiltInCategory.OST_StructuralColumns 
-                || eFootingLink.Category.Id.IntegerValue == (int)BuiltInCategory.OST_StructuralFraming 
+                || eFootingLink.Category.Id.IntegerValue == (int)BuiltInCategory.OST_StructuralColumns
+                || eFootingLink.Category.Id.IntegerValue == (int)BuiltInCategory.OST_StructuralFraming
                 || eFootingLink.Category.Id.IntegerValue == (int)BuiltInCategory.OST_Walls)
             {
                 return true && null != eFootingLink;
