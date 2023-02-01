@@ -106,11 +106,17 @@ namespace Substructure_Area._2_DataFilter
 
             foreach (Element item in AllwallList)
             {
-                Level elementLevel = doc.GetElement(item.LevelId) as Level;
-                double elElevation = UnitUtils.ConvertFromInternalUnits(elementLevel.Elevation, levelUnit);
-                if (elElevation <= getLevel.Userinput)
+                Wall wall = item as Wall;
+                
+
+                if (wall.StructuralUsage == StructuralWallUsage.Bearing && wall.CurtainGrid == null)
                 {
-                    wallList.Add(item);
+                    Level elementLevel = doc.GetElement(item.LevelId) as Level;
+                    double elElevation = UnitUtils.ConvertFromInternalUnits(elementLevel.Elevation, levelUnit);
+                    if (elElevation <= getLevel.Userinput)
+                    {
+                        wallList.Add(item);
+                    } 
                 }
             }
             return wallList;
@@ -166,7 +172,7 @@ namespace Substructure_Area._2_DataFilter
                     && element.LevelId.IntegerValue == -1)
                 {
                     FamilyInstance beaminstance = doc.GetElement(element.Id) as FamilyInstance;
-                    if (beaminstance.SuperComponent == null)
+                    if (beaminstance.SuperComponent == null&& beaminstance.StructuralMaterialType==StructuralMaterialType.Concrete)
                     {
                         try
                         {

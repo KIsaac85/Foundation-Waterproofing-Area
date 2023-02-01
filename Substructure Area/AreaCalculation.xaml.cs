@@ -87,7 +87,7 @@ namespace Substructure_Area
             ColumnSplit columnSplit = new ColumnSplit(doc);
 
             FamilyinstanceList = FamilyInstanceList.documentLoopFamilyInstance();
-            //columnsList = FamilyInstanceList.documentLoopcolumnList(FamilyinstanceList);
+            
             columnsList = columnSplit.columnsListChecked();
             if (columnsList.Any())
             {
@@ -114,7 +114,7 @@ namespace Substructure_Area
             {
                 obj = _uidoc.Selection.PickObject(ObjectType.Element, SingleSelectionFilter);
             }
-            catch (Exception) { }
+            catch (Exception) {  }
 
 
             if (obj != null)
@@ -128,6 +128,7 @@ namespace Substructure_Area
                     if (ele.Category.Id.IntegerValue == (int)BuiltInCategory.OST_StructuralFoundation
                         || ele.Category.Id.IntegerValue == (int)BuiltInCategory.OST_Walls)
                     {
+
                         datagrid.ItemsSource = foot.faceinfor(ele, areaUnit).DefaultView;
                     }
                     else if (ele.Category.Id.IntegerValue == (int)BuiltInCategory.OST_StructuralColumns

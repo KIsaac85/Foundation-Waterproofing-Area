@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
 
 namespace Substructure_Area._3_Calculation
@@ -82,11 +83,16 @@ namespace Substructure_Area._3_Calculation
             //add columns which their lower level is below the user input
             foreach (var item in columnsList)
             {
-                foreach (var lev in listofLevelsBelowUserInput)
+                foreach (ElementId lev in listofLevelsBelowUserInput)
                 {
                     if (item.LevelId.IntegerValue == lev.IntegerValue)
                     {
-                        modifiedColumnsList.Add(item);
+                        FamilyInstance column = item as FamilyInstance;
+                        if (column.StructuralMaterialType== StructuralMaterialType.Concrete)
+                        {
+                            modifiedColumnsList.Add(item);
+                        }
+                        
                     }
 
                 }
@@ -129,74 +135,82 @@ namespace Substructure_Area._3_Calculation
 
                 {
                     case MessageBoxResult.Yes:
-
-                        foreach (var ele in modifiedColumnsList)
-                        {
-
-                            Column = ele as FamilyInstance;
-
-                            ElementTopParameterID.Add(Column
-                                .get_Parameter(BuiltInParameter.SCHEDULE_TOP_LEVEL_PARAM)
-                                .AsElementId());
-                            topElementLevel = doc.GetElement(ElementTopParameterID.ElementAt(count)) as Level;
-                            elementTopElevationValue = UnitUtils.ConvertFromInternalUnits(topElementLevel.Elevation, levelUnit);
-
-                            ElementBottomParameterID.Add(Column
-                            .get_Parameter(BuiltInParameter.SCHEDULE_BASE_LEVEL_PARAM)
-                            .AsElementId());
-                            bottomElementLevel = doc.GetElement(ElementBottomParameterID.ElementAt(count)) as Level;
-                            bottomElementElevation = UnitUtils.ConvertFromInternalUnits(bottomElementLevel.Elevation, levelUnit);
-
-                            ElementTopOffsetValues.Add(UnitUtils.ConvertFromInternalUnits(Column
-                            .get_Parameter(BuiltInParameter.SCHEDULE_TOP_LEVEL_OFFSET_PARAM)
-                            .AsDouble(), levelUnit));
-
-                            ElementbottomoffsetValues.Add(UnitUtils.ConvertFromInternalUnits(Column
-                            .get_Parameter(BuiltInParameter.SCHEDULE_BASE_LEVEL_OFFSET_PARAM)
-                            .AsDouble(), levelUnit));
-                            splitRatio = ( getLevel.Userinput -bottomElementElevation - ElementbottomoffsetValues.ElementAt(count))
-                                                    / (elementTopElevationValue - bottomElementElevation
-                                                    + ElementTopOffsetValues.ElementAt(count) - ElementbottomoffsetValues.ElementAt(count));
-
-                            if (Math.Round(elementTopElevationValue, 2) + Math.Round(ElementTopOffsetValues.ElementAt(count), 2) > getLevel.Userinput&&splitRatio!=0)
-                            {
-                                using (Transaction tran = new Transaction(doc, "Split Columns"))
-                                {
-                                    try
-                                    {
-                                        tran.Start();
-                                        Column.Split(splitRatio);
-                                        tran.Commit();
-                                    }
-                                    catch (Exception)
-                                    {
-
-                                        TaskDialog.Show("The Input is invalid", "Columns Can not be split based on your input");
-                                        break;
-                                    }
-
-                                }
-                            }
-                            count++;
-
-                        }
+                        splittingcolumns(modifiedColumnsList);
                         break;
 
                     case MessageBoxResult.No:
-                        MessageBox.Show(
-                            "Calculated areas may not be accurate based on the entered levels", "Split Columns", MessageBoxButton.YesNo);
-
+                        
+                        switch (MessageBox.Show(
+                            "Calculated areas may not be accurate based on the entered elevation. Are you sure you want to continue? " +
+                            "Press yes to continue without split or no to split columns and continue" , "Split Columns", MessageBoxButton.YesNo,MessageBoxImage.Warning))
+                        {
+                            case MessageBoxResult.Yes:
+                                break;
+                            case MessageBoxResult.No:
+                                splittingcolumns(modifiedColumnsList);
+                                break;
+                        }
                         break;
                 }
             }
-            //else if (TopelementElevationList.Where(x => x < getLevel.Userinput).Any())
-            //{
-            //    TaskDialog.Show("Split Columns", "Columns top level is equal to the top elevation level");
-            //}
-
             return modifiedColumnsList;
         }
+        public List<Element> splittingcolumns(List<Element> ColumnslistSplit)
+        {
+            foreach (var ele in modifiedColumnsList)
+            {
 
+                Column = ele as FamilyInstance;
+
+                ElementTopParameterID.Add(Column
+                    .get_Parameter(BuiltInParameter.SCHEDULE_TOP_LEVEL_PARAM)
+                    .AsElementId());
+                topElementLevel = doc.GetElement(ElementTopParameterID.ElementAt(count)) as Level;
+                elementTopElevationValue = UnitUtils.ConvertFromInternalUnits(topElementLevel.Elevation, levelUnit);
+
+                ElementBottomParameterID.Add(Column
+                .get_Parameter(BuiltInParameter.SCHEDULE_BASE_LEVEL_PARAM)
+                .AsElementId());
+                bottomElementLevel = doc.GetElement(ElementBottomParameterID.ElementAt(count)) as Level;
+                bottomElementElevation = UnitUtils.ConvertFromInternalUnits(bottomElementLevel.Elevation, levelUnit);
+
+                ElementTopOffsetValues.Add(UnitUtils.ConvertFromInternalUnits(Column
+                .get_Parameter(BuiltInParameter.SCHEDULE_TOP_LEVEL_OFFSET_PARAM)
+                .AsDouble(), levelUnit));
+
+                ElementbottomoffsetValues.Add(UnitUtils.ConvertFromInternalUnits(Column
+                .get_Parameter(BuiltInParameter.SCHEDULE_BASE_LEVEL_OFFSET_PARAM)
+                .AsDouble(), levelUnit));
+                splitRatio = (getLevel.Userinput - bottomElementElevation - ElementbottomoffsetValues.ElementAt(count))
+                                        / (elementTopElevationValue - bottomElementElevation
+                                        + ElementTopOffsetValues.ElementAt(count) - ElementbottomoffsetValues.ElementAt(count));
+
+                if (Math.Round(elementTopElevationValue, 2) + Math.Round(ElementTopOffsetValues.ElementAt(count), 2) > getLevel.Userinput && splitRatio != 0)
+                {
+                    using (Transaction tran = new Transaction(doc, "Split Columns"))
+                    {
+                        try
+                        {
+                            tran.Start();
+                            Column.Split(splitRatio);
+                            tran.Commit();
+                        }
+                        catch (Exception)
+                        {
+
+                            TaskDialog.Show("The Input is invalid", "Columns Can not be split based on your input");
+                            break;
+                        }
+
+                    }
+                }
+                count++;
+
+            }
+
+
+            return ColumnslistSplit;
+        }
     }
 }
 
