@@ -10,9 +10,8 @@
     <Border Background="#FFEDEDED" Margin="10"
             BorderThickness="1" CornerRadius="10">
         <StackPanel>
-        
-        <Border Padding="10">
-
+            <Border Padding="10">
+                <!--First Row -->
                 <Grid >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="7*"/>
@@ -44,35 +43,30 @@
                     </DataGrid>
                 </Grid>
             </Border>
-        
-        <Border BorderBrush="LightGray"   Margin="10"
+            <!--Second Row -->
+            <Border BorderBrush="LightGray"   Margin="10"
                 BorderThickness="1" CornerRadius="10">
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            
-            <ListBox x:Name="Select_Family" Grid.Column="0"
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <ListBox x:Name="Select_Family" Grid.Column="0"
                  SelectionMode="Extended" Margin="10 10 0 10 "
                  AllowDrop="True" Height="auto" Background="#FFEDEDED">
-            <ListBox.Resources>
-                <Style TargetType="ListBox">
-                 
-                </Style>
-            </ListBox.Resources>
-
-        </ListBox>
+                        <ListBox.Resources>
+                            <Style TargetType="ListBox"/>
+                        </ListBox.Resources>
+                    </ListBox>
                     <Button x:Name="SaveAs" Content="Save As" Grid.Column="1" Margin="0 10" 
                 Click="Save_As_Click" VerticalAlignment="Center" 
                 HorizontalAlignment="Center" Width="80" 
                 IsEnabled="{Binding ElementName=Select_Family , 
                     Path =SelectedItems.Count}"/>
-
                 </Grid>
-                
-        </Border>
+            </Border>
             <Border Margin="10">
+                <!--Third Row -->
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>

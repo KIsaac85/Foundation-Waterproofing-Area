@@ -49,7 +49,7 @@ namespace Substructure_Area {
         #line hidden
         
         
-        #line 27 "..\..\getLevel.xaml"
+        #line 26 "..\..\getLevel.xaml"
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         internal System.Windows.Controls.TextBox Receive_Level;
         
@@ -57,7 +57,7 @@ namespace Substructure_Area {
         #line hidden
         
         
-        #line 47 "..\..\getLevel.xaml"
+        #line 40 "..\..\getLevel.xaml"
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         internal System.Windows.Controls.Button OK;
         
@@ -65,7 +65,7 @@ namespace Substructure_Area {
         #line hidden
         
         
-        #line 61 "..\..\getLevel.xaml"
+        #line 53 "..\..\getLevel.xaml"
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         internal System.Windows.Controls.Button Cancel;
         
@@ -111,7 +111,7 @@ namespace Substructure_Area {
             case 3:
             this.OK = ((System.Windows.Controls.Button)(target));
             
-            #line 48 "..\..\getLevel.xaml"
+            #line 41 "..\..\getLevel.xaml"
             this.OK.Click += new System.Windows.RoutedEventHandler(this.OK_Click);
             
             #line default
@@ -120,7 +120,7 @@ namespace Substructure_Area {
             case 4:
             this.Cancel = ((System.Windows.Controls.Button)(target));
             
-            #line 62 "..\..\getLevel.xaml"
+            #line 54 "..\..\getLevel.xaml"
             this.Cancel.Click += new System.Windows.RoutedEventHandler(this.Cancel_Click);
             
             #line default

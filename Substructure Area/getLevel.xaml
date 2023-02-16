@@ -10,60 +10,49 @@
     <Window.DataContext>
         <local:RegistrationVM/>
     </Window.DataContext>
-    <Border Background="#FFEDEDED" Margin="10" BorderBrush="#FFD0D0D0" BorderThickness="1" CornerRadius="10">
-   
+    <Border Background="#FFEDEDED" Margin="10" BorderBrush="#FFD0D0D0" 
+            BorderThickness="1" CornerRadius="10">
         <StackPanel>
             <!--First Row-->
             <Grid >
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="3*"/>
-                <ColumnDefinition Width="2*"/>
-            </Grid.ColumnDefinitions>
- 
-            <TextBlock x:Name="Waterproofing_Top_Level" 
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+                
+                <TextBlock x:Name="Waterproofing_Top_Level" 
                    Text="Waterproofing Top Level" Grid.Column="0" HorizontalAlignment="Center"
                        VerticalAlignment="Center" Margin="0 20"/>
-
-            <TextBox x:Name="Receive_Level"
+                <TextBox x:Name="Receive_Level"
              HorizontalAlignment="Center"
                        VerticalAlignment="Center" Margin="0 20" Text="{Binding Elevation,
             ValidatesOnDataErrors=True,
             UpdateSourceTrigger=PropertyChanged}"
                  ToolTip="{Binding ErrorCollection[Elevation]}"
                 Grid.Column="1"  Width="40" />
-
-        </Grid>
+            </Grid>
             <!--Second Row-->
-        <Grid>
-
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-
-
-
-
-            <Button x:Name="OK" Content="OK" Grid.Column="0" IsDefault="True"
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Button x:Name="OK" Content="OK" Grid.Column="0" IsDefault="True"
                    Click="OK_Click" Width="80" Margin="0 20" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Button.Style>
-                    <Style TargetType="Button">
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding ElementName = Receive_Level ,
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ElementName = Receive_Level ,
                             Path= (Validation.HasError)}" Value="True">
-                                <Setter Property="IsEnabled" Value="False"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Button.Style>
-            </Button>
-
-            <Button x:Name="Cancel" Content="Cancel" Width="80" Margin="0 20"
+                                    <Setter Property="IsEnabled" Value="False"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+                <Button x:Name="Cancel" Content="Cancel" Width="80" Margin="0 20"
                     Grid.Column="1" Click="Cancel_Click" IsCancel="True"/>
-
-
-        </Grid>
-        
-    </StackPanel>
+            </Grid>
+        </StackPanel>
     </Border>
 </Window>
