@@ -12,13 +12,15 @@ using Autodesk.Revit.UI;
 
 namespace Substructure_Area
 {
+    /// <summary>
+    /// a class is created to get the surface of all elements of foundation (strip/isolated/raft) footings and walls
+    /// the return is used in either the datagrid in WPF or excelsheet
+    /// </summary>
     public class FoundationSurfaceAreas
     {
 
-        /// <summary>
-        /// a class is created to get the surface of all elements of foundation (strip/isolated/raft) footings and walls
-        /// the return is used in either the datagrid in WPF or excelsheet
-        /// </summary>
+
+        #region Members
         private int faces { get; set; }
 
         private DataTable table { get; set; }
@@ -30,8 +32,12 @@ namespace Substructure_Area
         private GeometryElement geoElem { get; set; }
         private GeometryInstance geoInst { get; set; }
         private Options option { get; set; }
-        private double result { get; set; }
+        private double result { get; set; } 
+        #endregion
 
+        /// <summary>
+        /// Constructor to initialize objects
+        /// </summary>
         public FoundationSurfaceAreas()
         {
             instanceID = new List<int>();
@@ -46,10 +52,6 @@ namespace Substructure_Area
         /// <returns> a data table used in the datagrid </returns>
         public DataTable faceinfor(Element ele, ForgeTypeId areaUnit)
         {
-
-
-
-
             table = new DataTable();
 
             geoElem = ele.get_Geometry(option);
@@ -57,8 +59,6 @@ namespace Substructure_Area
             header2 = new DataColumn(ele.Name);
             table.Columns.Add(header);
             table.Columns.Add(header2);
-
-
             foreach (GeometryObject geomObj in geoElem)
             {
 

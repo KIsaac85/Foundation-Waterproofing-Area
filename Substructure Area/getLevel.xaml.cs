@@ -23,33 +23,34 @@ namespace Substructure_Area
     /// </summary>
     public partial class getLevel : Window
     {
-        private UIDocument _uidoc;
-        private Document doc;
-
-        public static double Userinput;
-        public List<double> facesdata;
-        public FoundationSurfaceAreas foot;
+        #region Document Members
+        private UIDocument _uidoc { get; set; }
+        private Document doc { get; set; }
+        #endregion
 
 
+        #region Members
+        public static double Userinput { get; set; }
+        public areaCalculation areaCalculationWindow { get; set; } 
+        #endregion
+
+        /// <summary>
+        /// Constructor to initialize objects
+        /// </summary>
+        /// <param name="uidoc"></param>
         public getLevel(UIDocument uidoc)
-
-
         {
             InitializeComponent();
-            
-            facesdata = new List<double>();
             _uidoc = uidoc;
             doc = uidoc.Document;
-
         }
 
         private void OK_Click(object sender, RoutedEventArgs e)
         {
             Userinput = double.Parse(Receive_Level.Text);
             Close();
-            areaCalculation are = new areaCalculation(_uidoc);
-
-            are.Show();
+            areaCalculationWindow = new areaCalculation(_uidoc);
+            areaCalculationWindow.Show();
 
         }
         private void Cancel_Click(object sender, RoutedEventArgs e)
