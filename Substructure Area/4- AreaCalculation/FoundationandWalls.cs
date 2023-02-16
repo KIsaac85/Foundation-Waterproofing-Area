@@ -15,7 +15,10 @@ namespace Substructure_Area
     public class FoundationWall
     {
 
-
+        /// <summary>
+        /// a class is created to get the surface of all elements of foundation (strip/isolated/raft) footings and walls
+        /// the return is used in either the datagrid in WPF or excelsheet
+        /// </summary>
         private int faces { get; set; }
 
         private DataTable table { get; set; }
@@ -28,13 +31,19 @@ namespace Substructure_Area
         private GeometryInstance geoInst { get; set; }
         private Options option { get; set; }
         private double result { get; set; }
+
         public FoundationWall()
         {
             instanceID = new List<int>();
             option = new Options();
 
         }
-
+        /// <summary>
+        /// a function is created for single element selection
+        /// </summary>
+        /// <param name="ele">selected element from pick object</param>
+        /// <param name="areaUnit">units used in the project</param>
+        /// <returns> a data table used in the datagrid </returns>
         public DataTable faceinfor(Element ele, ForgeTypeId areaUnit)
         {
 
@@ -120,6 +129,12 @@ namespace Substructure_Area
             }
             return table;
         }
+        /// <summary>
+        /// A function searches in a list of isolatedfootings to find the surface area 
+        /// </summary>
+        /// <param name="ele"></param>
+        /// <param name="areaUnit"></param>
+        /// <returns>data table contains surface area per for each element and it used to fill the excel sheet</returns>
         public DataTable faceinfoinstances(IList<Element> ele, ForgeTypeId areaUnit)
         {
 
@@ -271,6 +286,12 @@ namespace Substructure_Area
             }
             return table;
         }
+        /// <summary>
+        /// this function is created for elements where instance is not applicable eg. strip footings walls, walls and raft
+        /// </summary>
+        /// <param name="ele">list of elements</param>
+        /// <param name="areaUnit"> units of the projects</param>
+        /// <returns>returns a data table which is loaded in the excel sheet</returns>
         public DataTable faceinfotype(IList<Element> ele, ForgeTypeId areaUnit)
         {
 

@@ -15,6 +15,7 @@ namespace Substructure_Area._5__Excel_Export
     class RetainingWallsExcelSheet
     {
 
+        #region Members
         private static ExcelWorksheet RetainingWallSheet { get; set; }
 
         private static FoundationWall foundationWall { get; set; }
@@ -22,8 +23,24 @@ namespace Substructure_Area._5__Excel_Export
         private static double GrandTotal { get; set; }
         private static string lastcelladdress { get; set; }
         private static double celladdress { get; set; }
-        private static IEnumerable<String> totaladdress { get; set; }
+        private static IEnumerable<String> totaladdress { get; set; } 
+        #endregion
+        /// <summary>
+        /// A function is created to add wall sheet 
+        /// </summary>
+        /// <param name="package"></param>
+        /// <param name="WallList"></param>
+        /// <param name="areaUnit"></param>
+        /// <returns excel package including sheet></returns>
+        /// 
 
+        /// <summary>
+        /// A function is created to add columns sheet 
+        /// </summary>
+        /// <param name="package"></param>
+        /// <param name="RaftFootingsList"></param>
+        /// <param name="areaUnit"></param>
+        /// <returns package inculding the added sheet></returns>
         public static ExcelPackage retainingwallsheetcreation(ExcelPackage package, IList<Element> WallList, ForgeTypeId areaUnit)
         {
             RetainingWallSheet = package.Workbook.Worksheets.Add("Retaining Walls");

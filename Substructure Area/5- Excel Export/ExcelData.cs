@@ -13,20 +13,38 @@ using System.Windows.Controls;
 
 namespace Substructure_Area._5__Excel_Export
 {
+    /// <summary>
+    /// This class is created to gather data(sheets)
+    /// if the element was chosen by user
+    /// and then save the file
+    /// </summary>
     public class ExcelData
     {
         private ExcelPackage package { get; set; }
 
 
-
-        public void DataTable(ListBox x, IList<Element> WallList, IList<Element> isolatedFootingList,
+        /// <summary>
+        /// All lists are sent to this class
+        /// A sheet is created using each list
+        /// Sheet shall be added to the package if the user choses it
+        /// Then save as dialogue shows up
+        /// </summary>
+        /// <param name="listBox"></param>
+        /// <param name="WallList"></param>
+        /// <param name="isolatedFootingList"></param>
+        /// <param name="ColumnsList"></param>
+        /// <param name="BeamsList"></param>
+        /// <param name="RaftList"></param>
+        /// <param name="StripFootingsList"></param>
+        /// <param name="areaUnit"></param>
+        public void DataTable(ListBox listBox, IList<Element> WallList, IList<Element> isolatedFootingList,
             IList<Element> ColumnsList, IList<Element> BeamsList, IList<Element> RaftList, IList<Element> StripFootingsList, ForgeTypeId areaUnit)
         {
 
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             using (package = new ExcelPackage())
             {
-                foreach (var item in x.SelectedItems)
+                foreach (var item in listBox.SelectedItems)
                 {
                     switch (item.ToString())
                     {

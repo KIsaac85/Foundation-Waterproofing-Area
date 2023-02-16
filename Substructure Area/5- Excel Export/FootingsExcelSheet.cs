@@ -12,17 +12,24 @@ namespace Substructure_Area._5__Excel_Export
 {
     class FootingsExcelSheet
     {
+        #region Members
         private static ExcelWorksheet IsolatedFootingsSheet { get; set; }
-
         private static FoundationWall IsolatedFootings { get; set; }
         private static DataTable datatable { get; set; }
         private static string tableaddress { get; set; }
         private static double GrandTotal { get; set; }
         private static string lastcelladdress { get; set; }
         private static double celladdress { get; set; }
-        private static IEnumerable<String> totaladdress { get; set; }
+        private static IEnumerable<String> totaladdress { get; set; } 
+        #endregion
 
-
+        /// <summary>
+        /// A function is created to add footings sheet
+        /// </summary>
+        /// <param name="package">the same package to save the sheet in the same file</param>
+        /// <param name="IsolatedFootingsList">the list of footings to be published in the sheet</param>
+        /// <param name="areaUnit">units used in the project, wheter metric or us</param>
+        /// <returns>the output is the excel package inculding the added sheet</returns>
         public static ExcelPackage IsolatedFootingssheetcreation(ExcelPackage package, IList<Element> IsolatedFootingsList, ForgeTypeId areaUnit)
         {
             IsolatedFootingsSheet = package.Workbook.Worksheets.Add("Isolated Footings");

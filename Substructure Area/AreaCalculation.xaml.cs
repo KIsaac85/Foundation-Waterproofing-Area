@@ -68,7 +68,7 @@ namespace Substructure_Area
             columnsList = new List<Element>();
             FamilyInstanceList famlist = new FamilyInstanceList(doc);
 
-            wallsList = FamilyInstanceList.documentLoopWall();
+            wallsList = FamilyInstanceList.DocumentLoopWall();
             if (wallsList.Any())
             {
                 Select_Family.Items.Add("Retaining Walls");

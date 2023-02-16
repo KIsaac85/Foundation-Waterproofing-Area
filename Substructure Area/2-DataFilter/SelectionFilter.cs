@@ -11,8 +11,15 @@ using Autodesk.Revit.UI.Selection;
 
 namespace Substructure_Area
 {
+    /// <summary>
+    /// this class is created to restrict the single selection to user
+    /// only specific elements are allowed to be selected
+    /// the elements which may receive waterproofing 
+    /// e.g. columns/walls/foundation
+    /// </summary>
     class SelectionFilter : ISelectionFilter
     {
+
         private Document _doc;
 
         public Document Doc

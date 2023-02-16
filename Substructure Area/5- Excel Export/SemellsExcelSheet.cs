@@ -11,6 +11,7 @@ namespace Substructure_Area._5__Excel_Export
 {
     class SemellsExcelSheet
     {
+        #region Members
         private static ExcelWorksheet beamsSheet { get; set; }
 
         private static ColumnBeamCalculation Beams { get; set; }
@@ -19,7 +20,14 @@ namespace Substructure_Area._5__Excel_Export
         private static string lastcelladdress { get; set; }
         private static double celladdress { get; set; }
         private static IEnumerable<String> totaladdress { get; set; }
-
+        #endregion
+        /// <summary>
+        /// A function is created to add beams sheet
+        /// </summary>
+        /// <param name="package"></param>
+        /// <param name="beamsList"></param>
+        /// <param name="areaUnit"></param>
+        /// <returns package inculding the added sheet></returns>        
         public static ExcelPackage beamssheetcreation(ExcelPackage package, IList<Element> beamsList, ForgeTypeId areaUnit)
         {
             beamsSheet = package.Workbook.Worksheets.Add("Semells");

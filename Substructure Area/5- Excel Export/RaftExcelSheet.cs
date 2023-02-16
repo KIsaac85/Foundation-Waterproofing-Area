@@ -11,16 +11,23 @@ namespace Substructure_Area._5__Excel_Export
 {
     class RaftExcelSheet
     {
+        #region Members
         private static ExcelWorksheet RaftFootingsSheet { get; set; }
-
         private static FoundationWall RaftFootings { get; set; }
         private static string tableaddress { get; set; }
         private static double GrandTotal { get; set; }
         private static string lastcelladdress { get; set; }
         private static double celladdress { get; set; }
-
         private static IEnumerable<String> totaladdress { get; set; }
+        #endregion
 
+        /// <summary>
+        /// A function is created to add raft sheet 
+        /// </summary>
+        /// <param name="package"></param>
+        /// <param name="RaftFootingsList"></param>
+        /// <param name="areaUnit"></param>
+        /// <returns package inculding the added sheet></returns>
         public static ExcelPackage RaftFootingssheetcreation(ExcelPackage package, IList<Element> RaftFootingsList, ForgeTypeId areaUnit)
         {
             RaftFootingsSheet = package.Workbook.Worksheets.Add("Raft Foundation");

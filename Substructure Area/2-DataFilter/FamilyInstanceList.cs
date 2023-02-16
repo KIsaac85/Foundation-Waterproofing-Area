@@ -2,80 +2,112 @@
 using Autodesk.Revit.DB.Structure;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+
 
 namespace Substructure_Area._2_DataFilter
 {
+    /// <summary>
+    /// This class is created to loop through the document
+    /// and filters the required document
+    /// which are below the user input
+    /// </summary>
     class FamilyInstanceList
     {
         private static Document doc { get; set; }
-        private static IList<BuiltInCategory> categoryList { get; set; }
-        private static List<Element> elementsList { get; set; }
 
-        private static List<Element> columnsList { get; set; }
 
-        private static List<Element> beamsList { get; set; }
-
-        private static List<Element> rectangularfootingsList { get; set; }
-
-        private static List<Element> raftList { get; set; }
-        private static List<Element> AllraftList { get; set; }
-        private static IList<Element> wallList { get; set; }
-        private static IList<Element> AllwallList { get; set; }
-
-        private static IList<Element> stripfootingsList { get; set; }
-        private static IList<Element> AllstripfootingsList { get; set; }
-        private static FilteredElementCollector collector { get; set; }
-
+        #region Collectors
+        /// <summary>
+        /// Family instance collector for columns beams and isolated footings
+        /// A different collector is created for the rest because they are 
+        /// different types
+        /// </summary>
+        private static FilteredElementCollector FamilyInstanceCollector { get; set; }
+        private static FilteredElementCollector raftCollector { get; set; }
         private static FilteredElementCollector wallCollector { get; set; }
 
-        private static FilteredElementCollector wallFoundationCollector { get; set; }
-        private static FilteredElementCollector raftCollector { get; set; }
+        private static FilteredElementCollector StripFootingCollector { get; set; }
+        #endregion
 
-        private static ElementMulticategoryFilter categoryFilter { get; set; }
-
-
-
-
-
-
-
+        #region Units Calculation
         private FormatOptions elevationformatoptions { get; set; }
 
         private static ForgeTypeId levelUnit { get; set; }
+        #endregion
 
-        private static double BottomColumnElevation { get; set; }
-        private static ElementId ColumnTopParameterID { get; set; }
+        #region Element Level Calculation
+        private static Level elementlevel { get; set; }
 
-        private static double TopColumnElevation { get; set; }
+        private static double elementelevation { get; set; }
+        #endregion
 
-        private static double NewcolumnLength { get; set; }
-        public static Level beamTopLevel { get; set; }
-        public FamilyInstanceList(Document docu)
+
+        /// <summary>
+        /// Lists of elements which their levels are below the entered level from user
+        /// Raft, walls and strip footings are collected in two lists first for all elements in the document
+        /// then casting to get their levels first and then gather them in the second list
+        /// </summary>
+        /// 
+
+        #region familyInstanceFilter
+        private static IList<BuiltInCategory> FamilyInstanceCategoryList { get; set; }
+        private static ElementMulticategoryFilter categoryFilter { get; set; } 
+        #endregion
+
+        #region Family instance lists Beams/Isolated Footings Lists Property
+        private static FamilyInstance elementFamilyInstance { get; set; }
+        private static List<Element> elementsList { get; set; }
+        private static List<Element> beamsList { get; set; }
+
+        private static List<Element> rectangularfootingsList { get; set; }
+        #endregion
+
+        #region Raft List Property
+        private static List<Element> raftList { get; set; }
+        private static List<Element> AllraftList { get; set; }
+        #endregion
+
+        #region Walls List Property
+        private static IList<Element> wallList { get; set; }
+        private static IList<Element> AllwallList { get; set; }
+        private static Wall wall { get; set; }
+        
+        #endregion
+
+        #region Strip Footing List Property
+        private static IList<Element> wallFoundationList { get; set; }
+        private static IList<Element> AllwallFoundationList { get; set; }
+        private static WallFoundation wallFoundation { get; set; }
+        private static Element wallFoundationElement { get; set; }
+        #endregion
+
+
+        /// <summary>
+        /// Constructor to initialize objects for lists
+        /// </summary>
+        /// <param name="_doc"></param>
+        public FamilyInstanceList(Document _doc)
         {
-            doc = docu;
+            doc = _doc;
             //Raft is different class (Floor)
             raftCollector = new FilteredElementCollector(doc);
             //wall strip is different class (Wall Foundation)
-            wallFoundationCollector = new FilteredElementCollector(doc);
+            StripFootingCollector = new FilteredElementCollector(doc);
             // wall is different class (Wall)
             wallCollector = new FilteredElementCollector(doc);
-            collector = new FilteredElementCollector(doc);
+            FamilyInstanceCollector = new FilteredElementCollector(doc);
 
-            //for the rectangular footings, columns, beams (Family Instance)
-            categoryList = new List<BuiltInCategory>();
+            //for the rectangular footings, beams (Family Instance)
+            FamilyInstanceCategoryList = new List<BuiltInCategory>();
 
             elementsList = new List<Element>();
 
             raftList = new List<Element>();
             AllraftList = new List<Element>();
-            stripfootingsList = new List<Element>();
-            AllstripfootingsList = new List<Element>();
+            wallFoundationList = new List<Element>();
+            AllwallFoundationList = new List<Element>();
             rectangularfootingsList = new List<Element>();
-            columnsList = new List<Element>();
+            
             AllwallList = new List<Element>();
             wallList = new List<Element>();
             beamsList = new List<Element>();
@@ -84,36 +116,44 @@ namespace Substructure_Area._2_DataFilter
             levelUnit = elevationformatoptions.GetUnitTypeId();
 
         }
+
+
+        /// <summary>
+        /// A function to filter the elements of type family instance
+        /// e.g. beams and footings
+        /// </summary>
+        /// <returns>list of elements that contains beams and footings</returns>
         public static List<Element> documentLoopFamilyInstance()
         {
-            categoryList.Add(BuiltInCategory.OST_StructuralFoundation);
-            categoryList.Add(BuiltInCategory.OST_StructuralColumns);
-            categoryList.Add(BuiltInCategory.OST_StructuralFraming);
-            categoryFilter = new ElementMulticategoryFilter(categoryList);
+            FamilyInstanceCategoryList.Add(BuiltInCategory.OST_StructuralFoundation);
+            FamilyInstanceCategoryList.Add(BuiltInCategory.OST_StructuralFraming);
+            categoryFilter = new ElementMulticategoryFilter(FamilyInstanceCategoryList);
 
-            elementsList.AddRange(collector.WherePasses(categoryFilter)
+            elementsList.AddRange(FamilyInstanceCollector.WherePasses(categoryFilter)
                 .OfClass(typeof(FamilyInstance)).WhereElementIsNotElementType().ToElements());
 
             return elementsList;
         }
-        public static IList<Element> documentLoopWall()
+
+
+        /// <summary>
+        /// A function to filter the elements of type Wall
+        /// e.g. Walls
+        /// </summary>
+        /// <returns>List of walls</returns>
+        public static IList<Element> DocumentLoopWall()
         {
-
-
-
             AllwallList = wallCollector.OfCategory(BuiltInCategory.OST_Walls)
                 .OfClass(typeof(Wall)).WhereElementIsNotElementType().ToElements();
 
             foreach (Element item in AllwallList)
             {
-                Wall wall = item as Wall;
-                
-
+                wall = item as Wall;
                 if (wall.StructuralUsage == StructuralWallUsage.Bearing && wall.CurtainGrid == null)
                 {
-                    Level elementLevel = doc.GetElement(item.LevelId) as Level;
-                    double elElevation = UnitUtils.ConvertFromInternalUnits(elementLevel.Elevation, levelUnit);
-                    if (elElevation <= getLevel.Userinput)
+                    elementlevel = doc.GetElement(item.LevelId) as Level;
+                    elementelevation = UnitUtils.ConvertFromInternalUnits(elementlevel.Elevation, levelUnit);
+                    if (elementelevation <= getLevel.Userinput)
                     {
                         wallList.Add(item);
                     } 
@@ -122,25 +162,36 @@ namespace Substructure_Area._2_DataFilter
             return wallList;
         }
 
+        /// <summary>
+        /// A function to filter the elements of type WallFoundation
+        /// e.g. Strip Footings
+        /// </summary>
+        /// <returns> Strip Footings List</returns>
         public static IList<Element> documentLoopWallFoundation()
         {
 
 
-            AllstripfootingsList = wallFoundationCollector.OfCategory(BuiltInCategory.OST_StructuralFoundation)
+            AllwallFoundationList = StripFootingCollector.OfCategory(BuiltInCategory.OST_StructuralFoundation)
                 .OfClass(typeof(WallFoundation)).WhereElementIsNotElementType().ToElements();
-            foreach (Element ele in AllstripfootingsList)
+            foreach (Element ele in AllwallFoundationList)
             {
-                WallFoundation stripelement = doc.GetElement(ele.Id) as WallFoundation;
-                Element stripele = doc.GetElement(stripelement.WallId);
-                Level elementLevel = doc.GetElement(stripele.LevelId) as Level;
-                double elElevation = UnitUtils.ConvertFromInternalUnits(elementLevel.Elevation, levelUnit);
-                if (elElevation <= getLevel.Userinput)
+                wallFoundation = doc.GetElement(ele.Id) as WallFoundation;
+                wallFoundationElement = doc.GetElement(wallFoundation.WallId);
+                elementlevel = doc.GetElement(wallFoundationElement.LevelId) as Level;
+                elementelevation = UnitUtils.ConvertFromInternalUnits(elementlevel.Elevation, levelUnit);
+                if (elementelevation <= getLevel.Userinput)
                 {
-                    stripfootingsList.Add(ele);
+                    wallFoundationList.Add(ele);
                 }
             }
-            return stripfootingsList;
+            return wallFoundationList;
         }
+
+        /// <summary>
+        /// A function to filter the elements of type Floor
+        /// e.g. Raft
+        /// </summary>
+        /// <returns> list of raft elements</returns>
         public static List<Element> documentLoopRaftFoundation()
         {
 
@@ -150,9 +201,9 @@ namespace Substructure_Area._2_DataFilter
             foreach (Element ele in AllraftList)
             {
 
-                Level elementLevel = doc.GetElement(ele.LevelId) as Level;
-                double elElevation = UnitUtils.ConvertFromInternalUnits(elementLevel.Elevation, levelUnit);
-                if (elElevation <= getLevel.Userinput)
+                elementlevel = doc.GetElement(ele.LevelId) as Level;
+                elementelevation = UnitUtils.ConvertFromInternalUnits(elementlevel.Elevation, levelUnit);
+                if (elementelevation <= getLevel.Userinput)
                 {
                     raftList.Add(ele);
                 }
@@ -161,7 +212,12 @@ namespace Substructure_Area._2_DataFilter
         }
 
 
-
+        /// <summary>
+        /// The list of family instance contains beams/semells and footings
+        /// this functions filters the concrete beams/semells
+        /// </summary>
+        /// <param name="Listofelements"></param>
+        /// <returns>beams list</returns>
         public static List<Element> documentLoopsemellsList(List<Element> Listofelements)
         {
 
@@ -171,26 +227,26 @@ namespace Substructure_Area._2_DataFilter
                 if (element.Category.Id.IntegerValue == (int)BuiltInCategory.OST_StructuralFraming
                     && element.LevelId.IntegerValue == -1)
                 {
-                    FamilyInstance beaminstance = doc.GetElement(element.Id) as FamilyInstance;
-                    if (beaminstance.SuperComponent == null&& beaminstance.StructuralMaterialType==StructuralMaterialType.Concrete)
+                    elementFamilyInstance = doc.GetElement(element.Id) as FamilyInstance;
+                    if (elementFamilyInstance.SuperComponent == null&& elementFamilyInstance.StructuralMaterialType==StructuralMaterialType.Concrete)
                     {
                         try
                         {
-                            if (beaminstance.Host != null && beaminstance.StructuralMaterialType == StructuralMaterialType.Concrete)
+                            if (elementFamilyInstance.Host != null && elementFamilyInstance.StructuralMaterialType == StructuralMaterialType.Concrete)
                             {
-                                beamTopLevel = beaminstance.Host as Level;
+                                elementlevel = elementFamilyInstance.Host as Level;
 
                             }
-                            else if (beaminstance.Host == null && beaminstance.StructuralMaterialType == StructuralMaterialType.Concrete)
+                            else if (elementFamilyInstance.Host == null && elementFamilyInstance.StructuralMaterialType == StructuralMaterialType.Concrete)
                             {
-                                beamTopLevel = doc.GetElement(beaminstance.LookupParameter(LabelUtils
+                                elementlevel = doc.GetElement(elementFamilyInstance.LookupParameter(LabelUtils
                                     .GetLabelFor(BuiltInParameter.INSTANCE_REFERENCE_LEVEL_PARAM)).AsElementId()) as Level;
 
                             }
                             else
                                 break;
-                            double elElevation = UnitUtils.ConvertFromInternalUnits(beamTopLevel.Elevation, levelUnit);
-                            if (elElevation <= getLevel.Userinput)
+                            elementelevation = UnitUtils.ConvertFromInternalUnits(elementlevel.Elevation, levelUnit);
+                            if (elementelevation <= getLevel.Userinput)
                             {
 
                                 beamsList.Add(element);
@@ -208,6 +264,13 @@ namespace Substructure_Area._2_DataFilter
             return beamsList;
 
         }
+
+        /// <summary>
+        /// The list of family instance contains beams/semells and footings
+        /// this functions filters the concrete footings
+        /// </summary>
+        /// <param name="Listofelements"></param>
+        /// <returns>Footings List</returns>
         public static List<Element> documentLooprectangularFootings(List<Element> Listofelements)
         {
             elementsList = Listofelements;
@@ -217,12 +280,12 @@ namespace Substructure_Area._2_DataFilter
                 if (element.Category.Id.IntegerValue == (int)BuiltInCategory.OST_StructuralFoundation)
                 {
 
-                    Level elementLevel = doc.GetElement(element.LevelId) as Level;
-                    double elElevation = UnitUtils.ConvertFromInternalUnits(elementLevel.Elevation, levelUnit);
-                    if (elElevation <= getLevel.Userinput)
+                    elementlevel = doc.GetElement(element.LevelId) as Level;
+                    elementelevation = UnitUtils.ConvertFromInternalUnits(elementlevel.Elevation, levelUnit);
+                    if (elementelevation <= getLevel.Userinput)
                     {
-                        FamilyInstance elementfamilyinstance = element as FamilyInstance;
-                        if (elementfamilyinstance.SuperComponent == null)
+                        elementFamilyInstance = element as FamilyInstance;
+                        if (elementFamilyInstance.SuperComponent == null)
                         {
                             rectangularfootingsList.Add(element);
                         }

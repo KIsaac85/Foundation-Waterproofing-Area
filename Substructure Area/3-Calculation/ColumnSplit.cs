@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
@@ -10,34 +8,64 @@ using Autodesk.Revit.UI;
 
 namespace Substructure_Area._3_Calculation
 {
+    /// <summary>
+    /// this class is created to split columns
+    /// only columns where their bottom level below user 
+    /// input are selected and cut if user chooses to split them
+    /// </summary>
     class ColumnSplit
     {
+
         private Document doc { get; set; }
-        private IList<Element> columnsList { get; set; }
-        private List<Element> modifiedColumnsList { get; set; }
+
+
+        #region Collectors
+        private static FilteredElementCollector ColumnsElementCollector { get; set; }
+        #endregion
+
+        #region Units Calculations
         private FormatOptions elevationformatoptions { get; set; }
         private ForgeTypeId levelUnit { get; set; }
+        #endregion
 
 
-        private static FilteredElementCollector ColumnsElementCollector { get; set; }
-
-        private FamilyInstance Column { get; set; }
-
+        #region Elements Level Calculation 
+        private List<double> ElementTopOffsetValues { get; set; }
+        private List<double> ElementbottomoffsetValues { get; set; }
+        private List<double> TopelementElevationList { get; set; }
         private List<ElementId> ElementTopParameterID { get; set; }
         private List<ElementId> ElementBottomParameterID { get; set; }
         private ICollection<ElementId> listofAlllevelsID { get; set; }
         private List<ElementId> listofLevelsBelowUserInput { get; set; }
-        private List<double> ElementTopOffsetValues { get; set; }
-        private List<double> ElementbottomoffsetValues { get; set; }
-        private List<double> TopelementElevationList { get; set; }
+
         private Level bottomElementLevel { get; set; }
         private Level topElementLevel { get; set; }
         private double bottomElementElevation { get; set; }
         private double topElementElevation { get; set; }
         private double elementTopElevationValue { get; set; }
+        #endregion
+
+        #region Columns Lists
+        /// <summary>
+        /// All Columns in the document 
+        /// and columns where their bottom level 
+        /// is below user input
+        /// </summary>
+        private IList<Element> columnsList { get; set; }
+        private List<Element> modifiedColumnsList { get; set; } ///
+        #endregion
+
+
+        private FamilyInstance Column { get; set; }
+
+
         private double splitRatio { get; set; }
         private int count { get; set; }
 
+        /// <summary>
+        /// Constructore to initialize objects
+        /// </summary>
+        /// <param name="doc"></param>
         public ColumnSplit(Document doc)
         {
             this.doc = doc;
@@ -55,6 +83,13 @@ namespace Substructure_Area._3_Calculation
             ElementTopOffsetValues = new List<double>();
             ElementbottomoffsetValues = new List<double>();
         }
+
+        /// <summary>
+        /// This function filters the columns which their
+        /// lower level is below user input
+        /// and getting the elevation for top/bottom offset and level
+        /// </summary>
+        /// <returns></returns>
         public List<Element> columnsListChecked()
         {
             //Collector for all levels
@@ -63,22 +98,18 @@ namespace Substructure_Area._3_Calculation
                 .OfClass(typeof(Level)).ToElementIds();
 
             //List of Level ID for the levels below User Input
-
             foreach (var item in listofAlllevelsID)
             {
                 bottomElementLevel = doc.GetElement(item) as Level;
                 bottomElementElevation = UnitUtils.ConvertFromInternalUnits(bottomElementLevel.Elevation, levelUnit);
-
                 if (bottomElementElevation <= getLevel.Userinput)
                 {
-
                     listofLevelsBelowUserInput.Add(bottomElementLevel.Id);
                 }
             }
             //list of all columns in the project
             columnsList = ColumnsElementCollector.OfCategory(BuiltInCategory.OST_StructuralColumns)
                 .OfClass(typeof(FamilyInstance)).WhereElementIsNotElementType().ToElements();
-
 
             //add columns which their lower level is below the user input
             foreach (var item in columnsList)
@@ -155,6 +186,12 @@ namespace Substructure_Area._3_Calculation
             }
             return modifiedColumnsList;
         }
+
+        /// <summary>
+        /// This Function is for columns split 
+        /// </summary>
+        /// <param name="ColumnslistSplit"></param>
+        /// <returns>list of splitted columns </returns>
         public List<Element> splittingcolumns(List<Element> ColumnslistSplit)
         {
             foreach (var ele in modifiedColumnsList)

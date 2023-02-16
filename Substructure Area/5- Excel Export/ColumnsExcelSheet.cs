@@ -12,18 +12,29 @@ namespace Substructure_Area._5__Excel_Export
 {
     class ColumnsExcelSheet
     {
-        private static ExcelWorksheet columnsSheet { get; set; }
 
+        #region Members
+        private static ExcelWorksheet columnsSheet { get; set; }
         private static ColumnBeamCalculation Columns { get; set; }
         private static DataTable datatable { get; set; }
         private static string tableaddress { get; set; }
         private static double GrandTotal { get; set; }
         private static string lastcelladdress { get; set; }
         private static double celladdress { get; set; }
-        private static IEnumerable<String> totaladdress { get; set; }
+        private static IEnumerable<string> totaladdress { get; set; } 
+        #endregion
+
+        /// <summary>
+        /// A function is created to add columns sheet
+        /// </summary>
+        /// <param name="package">the same package to save the sheet in the same file</param>
+        /// <param name="columnsList">the list of columns to be published in the sheet</param>
+        /// <param name="areaUnit">units used in the project, wheter metric or us</param>
+        /// <returns  package inculding the added sheet</returns>
 
         public static ExcelPackage columnssheetcreation(ExcelPackage package, IList<Element> columnsList, ForgeTypeId areaUnit)
         {
+            // Sheet is created using table that was used for data grid
             columnsSheet = package.Workbook.Worksheets.Add("Columns");
             Columns = new ColumnBeamCalculation();
             datatable = Columns.Faceinfoinstances(columnsList, areaUnit);
@@ -38,7 +49,7 @@ namespace Substructure_Area._5__Excel_Export
                 columnsSheet.Cells[tableaddress].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
                 columnsSheet.Cells[tableaddress].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
 
-
+                
                 //getting the address of the total area for each wall
                 totaladdress = columnsSheet.Cells[tableaddress]
                  .Where(xy => xy.Value.ToString() == "Total Per Type")
