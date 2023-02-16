@@ -2,15 +2,12 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
-using OfficeOpenXml.FormulaParsing.ExpressionGraph;
+
 
 namespace Substructure_Area
 {
-    public class ColumnBeamCalculation
+    public class ColumnBeamSurfaceArea
     {
 
 
@@ -24,7 +21,7 @@ namespace Substructure_Area
         private DataRow rowData { get; set; }
         private int faces { get; set; }
         private double result { get; set; }
-        public ColumnBeamCalculation()
+        public ColumnBeamSurfaceArea()
         {
             instanceID = new List<int>();
             option = new Options();

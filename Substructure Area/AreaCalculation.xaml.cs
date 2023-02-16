@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-using System.Windows;
-
-using Autodesk.Revit.DB;
+﻿using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
 using Substructure_Area._2_DataFilter;
 using Substructure_Area._3_Calculation;
 using Substructure_Area._5__Excel_Export;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows;
 
 namespace Substructure_Area
 {
@@ -19,28 +17,44 @@ namespace Substructure_Area
     public partial class areaCalculation : Window
     {
 
-        private UIDocument _uidoc;
-        private Document doc;
+        #region Document
+        private UIDocument _uidoc { get; set; }
+        private Document doc { get; set; } 
+        #endregion
 
-        private Element ele;
-        private Reference obj;
+        #region Single Element Selection Members
+        private Element singleElement { get; set; }
+        private Reference objectReference { get; set; }
+        private static SelectionFilter SingleSelectionFilter { get; set; }
+        private static double levelelement { get; set; }
+        #endregion
 
-        public List<double> facesdata;
-        public FoundationWall foot;
-        private ColumnBeamCalculation col { get; set; }
+        #region Elements Surface Area Calculation Members
+        private FoundationSurfaceAreas footings { get; set; }
+        private ColumnBeamSurfaceArea columnbeam { get; set; } 
+        #endregion
+
+        #region List of elements 
         private List<Element> FamilyinstanceList { get; set; }
         private IList<Element> wallsList { get; set; }
         private IList<Element> columnsList { get; set; }
         private IList<Element> beamsList { get; set; }
         private IList<Element> raftList { get; set; }
         private IList<Element> recFootingsList { get; set; }
-        private IList<Element> stripFootingsList { get; set; }
-        private static SelectionFilter SingleSelectionFilter;
+        private IList<Element> stripFootingsList { get; set; } 
+        #endregion
+
+        #region Units Calculation Members
         private FormatOptions areaFormatOptions { get; set; }
         private ForgeTypeId areaUnit { get; set; }
         private static FormatOptions levelFormatOptions { get; set; }
-        private static ForgeTypeId levelunit { get; set; }
+        private static ForgeTypeId levelunit { get; set; } 
+        #endregion
 
+        /// <summary>
+        /// Constructor to initialize component
+        /// </summary>
+        /// <param name="uidoc"></param>
         public areaCalculation(UIDocument uidoc)
         {
             InitializeComponent();
@@ -52,12 +66,12 @@ namespace Substructure_Area
             levelunit = levelFormatOptions.GetUnitTypeId();
 
             SingleSelectionFilter = new SelectionFilter();
-            facesdata = new List<double>();
+            
 
 
 
-            foot = new FoundationWall();
-            col = new ColumnBeamCalculation();
+            footings = new FoundationSurfaceAreas();
+            columnbeam = new ColumnBeamSurfaceArea();
 
             FamilyinstanceList = new List<Element>();
             wallsList = new List<Element>();
@@ -106,36 +120,45 @@ namespace Substructure_Area
 
         }
 
+        /// <summary>
+        /// Select Element Button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Element_Selection_Click(object sender, RoutedEventArgs e)
         {
             Hide();
-
+            /*
+             * Element shall be below the user input level
+             * if it was the data shall be published 
+             * in the datagrid
+            */
             try
             {
-                obj = _uidoc.Selection.PickObject(ObjectType.Element, SingleSelectionFilter);
+                objectReference = _uidoc.Selection.PickObject(ObjectType.Element, SingleSelectionFilter);
             }
             catch (Exception) {  }
 
 
-            if (obj != null)
+            if (objectReference != null)
             {
-                ele = doc.GetElement(obj.ElementId);
-                double levelelement = SingleElementLevel.ElementLevelCalculation(obj, doc, levelunit);
+                singleElement = doc.GetElement(objectReference.ElementId);
+                levelelement = SingleElementLevel.ElementLevelCalculation(objectReference, doc, levelunit);
 
                 if (getLevel.Userinput > levelelement)
                 {
 
-                    if (ele.Category.Id.IntegerValue == (int)BuiltInCategory.OST_StructuralFoundation
-                        || ele.Category.Id.IntegerValue == (int)BuiltInCategory.OST_Walls)
+                    if (singleElement.Category.Id.IntegerValue == (int)BuiltInCategory.OST_StructuralFoundation
+                        || singleElement.Category.Id.IntegerValue == (int)BuiltInCategory.OST_Walls)
                     {
 
-                        datagrid.ItemsSource = foot.faceinfor(ele, areaUnit).DefaultView;
+                        datagrid.ItemsSource = footings.faceinfor(singleElement, areaUnit).DefaultView;
                     }
-                    else if (ele.Category.Id.IntegerValue == (int)BuiltInCategory.OST_StructuralColumns
-                        || ele.Category.Id.IntegerValue == (int)BuiltInCategory.OST_StructuralFraming)
+                    else if (singleElement.Category.Id.IntegerValue == (int)BuiltInCategory.OST_StructuralColumns
+                        || singleElement.Category.Id.IntegerValue == (int)BuiltInCategory.OST_StructuralFraming)
                     {
 
-                        datagrid.ItemsSource = col.Faceinfo(ele, areaUnit).DefaultView;
+                        datagrid.ItemsSource = columnbeam.Faceinfo(singleElement, areaUnit).DefaultView;
                     }
                 }
                 else
@@ -149,7 +172,11 @@ namespace Substructure_Area
         }
 
 
-
+        /// <summary>
+        /// Save As Button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Save_As_Click(object sender, RoutedEventArgs e)
         {
             List<string> ListOfSelectedItemsItems = new List<string>();
@@ -166,6 +193,13 @@ namespace Substructure_Area
         {
             Close();
         }
+
+        /// <summary>
+        /// A button to go back to previous WPF 
+        /// "Get level"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Back_Click(object sender, RoutedEventArgs e)
         {
             Close();

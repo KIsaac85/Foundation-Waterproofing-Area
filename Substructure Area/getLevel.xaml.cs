@@ -28,7 +28,7 @@ namespace Substructure_Area
 
         public static double Userinput;
         public List<double> facesdata;
-        public FoundationWall foot;
+        public FoundationSurfaceAreas foot;
 
 
         public getLevel(UIDocument uidoc)

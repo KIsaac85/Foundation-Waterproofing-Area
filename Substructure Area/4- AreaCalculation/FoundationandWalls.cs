@@ -12,7 +12,7 @@ using Autodesk.Revit.UI;
 
 namespace Substructure_Area
 {
-    public class FoundationWall
+    public class FoundationSurfaceAreas
     {
 
         /// <summary>
@@ -32,7 +32,7 @@ namespace Substructure_Area
         private Options option { get; set; }
         private double result { get; set; }
 
-        public FoundationWall()
+        public FoundationSurfaceAreas()
         {
             instanceID = new List<int>();
             option = new Options();

@@ -4,27 +4,35 @@ using OfficeOpenXml.Style;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Substructure_Area._5__Excel_Export
 {
     class StripFootingsExcelSheet
     {
-        private static ExcelWorksheet StripFootingsSheet { get; set; }
 
-        private static FoundationWall StripFootings { get; set; }
+        #region Members
+        private static ExcelWorksheet StripFootingsSheet { get; set; }
+        private static IEnumerable<String> totaladdress { get; set; }
+        private static FoundationSurfaceAreas StripFootings { get; set; }
         private static string tableaddress { get; set; }
         private static double GrandTotal { get; set; }
         private static string lastcelladdress { get; set; }
         private static double celladdress { get; set; }
+        #endregion
 
-        private static IEnumerable<String> totaladdress { get; set; }
 
+        /// <summary>
+        /// A function is created to add strip footings sheet
+        /// </summary>
+        /// <param name="package"></param>
+        /// <param name="IsolatedFootingsList"></param>
+        /// <param name="areaUnit"></param>
+        /// <returns package including the new excel sheet></returns>
         public static ExcelPackage StripFootingssheetcreation(ExcelPackage package, IList<Element> IsolatedFootingsList, ForgeTypeId areaUnit)
         {
             StripFootingsSheet = package.Workbook.Worksheets.Add("Strip Footings");
-            StripFootings = new FoundationWall();
+            StripFootings = new FoundationSurfaceAreas();
 
             tableaddress = StripFootingsSheet.Cells[1, 1]
                 .LoadFromDataTable(StripFootings.faceinfotype(IsolatedFootingsList, areaUnit)).Address;

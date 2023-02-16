@@ -15,7 +15,7 @@ namespace Substructure_Area._5__Excel_Export
 
         #region Members
         private static ExcelWorksheet columnsSheet { get; set; }
-        private static ColumnBeamCalculation Columns { get; set; }
+        private static ColumnBeamSurfaceArea Columns { get; set; }
         private static DataTable datatable { get; set; }
         private static string tableaddress { get; set; }
         private static double GrandTotal { get; set; }
@@ -36,7 +36,7 @@ namespace Substructure_Area._5__Excel_Export
         {
             // Sheet is created using table that was used for data grid
             columnsSheet = package.Workbook.Worksheets.Add("Columns");
-            Columns = new ColumnBeamCalculation();
+            Columns = new ColumnBeamSurfaceArea();
             datatable = Columns.Faceinfoinstances(columnsList, areaUnit);
 
 

@@ -14,7 +14,7 @@ namespace Substructure_Area._5__Excel_Export
     {
         #region Members
         private static ExcelWorksheet IsolatedFootingsSheet { get; set; }
-        private static FoundationWall IsolatedFootings { get; set; }
+        private static FoundationSurfaceAreas IsolatedFootings { get; set; }
         private static DataTable datatable { get; set; }
         private static string tableaddress { get; set; }
         private static double GrandTotal { get; set; }
@@ -33,7 +33,7 @@ namespace Substructure_Area._5__Excel_Export
         public static ExcelPackage IsolatedFootingssheetcreation(ExcelPackage package, IList<Element> IsolatedFootingsList, ForgeTypeId areaUnit)
         {
             IsolatedFootingsSheet = package.Workbook.Worksheets.Add("Isolated Footings");
-            IsolatedFootings = new FoundationWall();
+            IsolatedFootings = new FoundationSurfaceAreas();
 
             datatable = IsolatedFootings.faceinfoinstances(IsolatedFootingsList, areaUnit);
             

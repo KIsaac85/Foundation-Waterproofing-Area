@@ -18,7 +18,7 @@ namespace Substructure_Area._5__Excel_Export
         #region Members
         private static ExcelWorksheet RetainingWallSheet { get; set; }
 
-        private static FoundationWall foundationWall { get; set; }
+        private static FoundationSurfaceAreas foundationWall { get; set; }
         private static string tableaddress { get; set; }
         private static double GrandTotal { get; set; }
         private static string lastcelladdress { get; set; }
@@ -44,7 +44,7 @@ namespace Substructure_Area._5__Excel_Export
         public static ExcelPackage retainingwallsheetcreation(ExcelPackage package, IList<Element> WallList, ForgeTypeId areaUnit)
         {
             RetainingWallSheet = package.Workbook.Worksheets.Add("Retaining Walls");
-            foundationWall = new FoundationWall();
+            foundationWall = new FoundationSurfaceAreas();
 
             tableaddress = RetainingWallSheet.Cells[1, 1]
                 .LoadFromDataTable(foundationWall.faceinfotype(WallList, areaUnit)).Address;

@@ -14,7 +14,7 @@ namespace Substructure_Area._5__Excel_Export
         #region Members
         private static ExcelWorksheet beamsSheet { get; set; }
 
-        private static ColumnBeamCalculation Beams { get; set; }
+        private static ColumnBeamSurfaceArea Beams { get; set; }
         private static string tableaddress { get; set; }
         private static double GrandTotal { get; set; }
         private static string lastcelladdress { get; set; }
@@ -31,7 +31,7 @@ namespace Substructure_Area._5__Excel_Export
         public static ExcelPackage beamssheetcreation(ExcelPackage package, IList<Element> beamsList, ForgeTypeId areaUnit)
         {
             beamsSheet = package.Workbook.Worksheets.Add("Semells");
-            Beams = new ColumnBeamCalculation();
+            Beams = new ColumnBeamSurfaceArea();
 
             tableaddress = beamsSheet.Cells[1, 1]
                 .LoadFromDataTable(Beams.FaceinfoTypes(beamsList, areaUnit)).Address;

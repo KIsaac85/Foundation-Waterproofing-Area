@@ -13,7 +13,7 @@ namespace Substructure_Area._5__Excel_Export
     {
         #region Members
         private static ExcelWorksheet RaftFootingsSheet { get; set; }
-        private static FoundationWall RaftFootings { get; set; }
+        private static FoundationSurfaceAreas RaftFootings { get; set; }
         private static string tableaddress { get; set; }
         private static double GrandTotal { get; set; }
         private static string lastcelladdress { get; set; }
@@ -31,7 +31,7 @@ namespace Substructure_Area._5__Excel_Export
         public static ExcelPackage RaftFootingssheetcreation(ExcelPackage package, IList<Element> RaftFootingsList, ForgeTypeId areaUnit)
         {
             RaftFootingsSheet = package.Workbook.Worksheets.Add("Raft Foundation");
-            RaftFootings = new FoundationWall();
+            RaftFootings = new FoundationSurfaceAreas();
 
             tableaddress = RaftFootingsSheet.Cells[1, 1]
                 .LoadFromDataTable(RaftFootings.faceinfotype(RaftFootingsList, areaUnit)).Address;

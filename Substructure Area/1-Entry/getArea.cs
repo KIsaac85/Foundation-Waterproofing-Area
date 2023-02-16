@@ -1,9 +1,6 @@
-﻿
-using Autodesk.Revit.DB;
+﻿using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Autodesk.Revit.UI.Selection;
 using Autodesk.Revit.Attributes;
-using System;
 
 namespace Substructure_Area
 {
